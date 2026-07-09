@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -153,6 +153,10 @@ body.guide-bg::after { background: rgba(8,17,31,0.72); }
 .trend-section-lbl { font-family:'Kanit'; font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:10px; text-align:center; letter-spacing:.3px; }
 .trend-gauge-area .gauge-wrap { background:none; padding:0; }
 .trend-gauge-area .gauge-svg { width:180px; height:102px; filter:drop-shadow(0 3px 12px rgba(66,165,245,0.3)); }
+#trendGaugeHtml .gauge-wrap { background:none; padding:16px 0 4px; }
+#trendGaugeHtml .gauge-svg { width:280px; height:158px; filter:drop-shadow(0 3px 14px rgba(66,165,245,0.3)); }
+#trendGaugeHtml .gauge-v { font-size:34px; }
+#trendGaugeHtml .gauge-pct { font-size:14px; }
 .trend-gauge-area .gauge-v { font-size:28px; font-weight:800; color:#fff; margin-top:4px; }
 .trend-gauge-area .gauge-pct { font-size:12px; color:rgba(255,255,255,0.45); margin-top:2px; font-family:'Kanit'; }
 .trend-gauge-area .gauge-l { color:rgba(255,255,255,0.35); }
@@ -206,6 +210,57 @@ body.guide-bg::after { background: rgba(8,17,31,0.72); }
 
 .tab-content { display:none; padding:20px 24px 40px; animation:fadeUp .35s; }
 .bleed-card { margin-left:-24px; margin-right:-24px; }
+
+/* ─── EXPERT ANALYSIS ─── */
+.ana-btn {
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center;
+  aspect-ratio:1/1; width:100%; max-width:230px; margin:0 auto; padding:20px; border-radius:20px; cursor:pointer;
+  font-family:'Kanit'; transition:all .25s; border:1px solid rgba(255,255,255,0.15);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+}
+.ana-btn-sugar { background:linear-gradient(135deg, rgba(236,72,153,0.22), rgba(168,85,247,0.16)); }
+.ana-btn-power { background:linear-gradient(135deg, rgba(245,158,11,0.22), rgba(79,157,255,0.16)); }
+.ana-btn:hover { transform:translateY(-3px); border-color:rgba(255,255,255,0.35); box-shadow:0 12px 32px rgba(0,0,0,0.35); }
+.ana-btn-ico { font-size:44px; flex-shrink:0; }
+.ana-btn-txt { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.ana-btn-txt strong { font-size:17px; color:#fff; font-weight:600; }
+.ana-btn-txt small { font-size:11.5px; color:rgba(255,255,255,0.6); font-weight:300; line-height:1.4; }
+
+/* Analysis popup — white background, high-contrast text */
+#anaOverlay .trend-box {
+  background:#ffffff; border:1px solid #e3ecf7; color:#1a2a3a;
+  box-shadow:0 24px 70px rgba(20,40,70,0.28);
+}
+#anaOverlay .trend-box-head h3 { color:#0D47A1; }
+#anaOverlay .trend-close { background:#f0f4f8; color:#4a6580; }
+#anaOverlay .trend-close:hover { background:rgba(239,68,68,0.15); color:#C62828; }
+#anaOverlay #anaBody { color:#1a2a3a; }
+
+.ana-sec {
+  font-weight:700; font-size:14.5px; color:#12202f; margin:18px 0 8px;
+  padding:8px 12px; border-radius:8px; display:flex; align-items:center; gap:8px;
+}
+.ana-sec.ov   { background:#e3f0ff;  border-left:4px solid #1565C0; }
+.ana-sec.good { background:#e8f5e9;  border-left:4px solid #2E7D32; }
+.ana-sec.bad  { background:#ffebee;  border-left:4px solid #C62828; }
+.ana-sec.cause{ background:#fff3e0;  border-left:4px solid #E65100; }
+.ana-sec.fix  { background:#f3e8fd;  border-left:4px solid #7B1FA2; }
+.ana-item { padding:7px 0 7px 18px; position:relative; border-bottom:1px solid #eef2f7; color:#2a3d52; }
+.ana-item:last-child { border-bottom:none; }
+.ana-item::before { content:''; position:absolute; left:2px; top:14px; width:7px; height:7px; border-radius:50%; background:#90a4b8; }
+.ana-item.g::before { background:#2E7D32; } .ana-item.b::before { background:#C62828; } .ana-item.w::before { background:#E65100; }
+.ana-item b { color:#0d1b2a; font-weight:700; }
+.ana-item .ana-val { color:#0D47A1; font-weight:700; }
+.ana-item .ana-ref { color:#7b8fa3; font-size:11.5px; }
+.ana-grade { display:inline-block; padding:5px 16px; border-radius:20px; font-weight:700; font-size:13px; }
+.ana-grade.pass { background:#e8f5e9; color:#1B5E20; }
+.ana-grade.warn { background:#fff3e0; color:#8a5a00; }
+.ana-grade.fail { background:#ffebee; color:#B71C1C; }
+.ana-ov-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:8px; margin:8px 0; }
+.ana-ov-cell { background:#f5f8fc; border:1px solid #e3ecf7; border-radius:10px; padding:9px 10px; text-align:center; }
+.ana-ov-cell .v { font-size:18px; font-weight:800; color:#0D47A1; }
+.ana-ov-cell .l { font-size:10.5px; color:#6b7f99; margin-top:2px; }
+@media(max-width:640px){ .ana-btn { padding:16px; max-width:170px; } .ana-btn-ico { font-size:34px; } .ana-btn-txt strong { font-size:14px; } }
 .tab-content.active { display:block; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
@@ -1813,6 +1868,20 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <!-- 3. Technical Parameters -->
   <div class="sec"><div class="dot"></div>ตัวชี้วัดทางเทคนิค (Technical Parameters)</div>
   <div class="g g4" id="techParamRow"></div>
+
+  <!-- 4. Expert Analysis Buttons -->
+  <div class="tab-divider"></div>
+  <div class="sec"><div class="dot"></div>บทวิเคราะห์ประจำวัน (Expert Analysis)</div>
+  <div class="g g2">
+    <button class="ana-btn ana-btn-sugar" onclick="openAnalysis('sugar')">
+      <span class="ana-btn-ico">🍬</span>
+      <span class="ana-btn-txt"><strong>น้ำตาล</strong><small>วิเคราะห์กระบวนการผลิตน้ำตาล — หีบสกัด / ต้มเคี่ยว / Recovery / การสูญเสีย</small></span>
+    </button>
+    <button class="ana-btn ana-btn-power" onclick="openAnalysis('power')">
+      <span class="ana-btn-ico">⚡</span>
+      <span class="ana-btn-txt"><strong>ไฟฟ้า + หม้อไอน้ำ</strong><small>วิเคราะห์ไอน้ำ / เชื้อเพลิง / การผลิต-ขายไฟ / คุณภาพน้ำ Boiler</small></span>
+    </button>
+  </div>
 </div>
 
 <!-- TAB: CANE & SUGAR -->
@@ -1879,7 +1948,8 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <div class="g g2" style="margin-bottom:14px" id="boilerFuelCards"></div>
   <div class="tab-divider"></div>
   <div class="sec"><div class="dot"></div>WATER SUPPLY — คุณภาพน้ำเข้า Boiler (Water Report)</div>
-  <div id="waterSupplySection"></div>
+  <div id="waterSupplySection" style="margin-bottom:14px"></div>
+  <div class="g g3" id="boilerWaterAnalysis"></div>
 </div>
 
 <!-- TAB: WATER -->
@@ -1932,18 +2002,80 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
       <div class="ch" style="height:300px"><canvas id="cTrendModal"></canvas></div>
       <div class="trend-legend-hint">เปรียบเทียบค่ารายวัน (Today) กับค่าสะสม (To-date) และเป้าหมาย (Target)</div>
     </div>
-    <!-- Section B: Gauge + Bar (อ้อยเข้าหีบ) -->
+    <!-- Section B: Gauge (อ้อยเข้าหีบ / น้ำตาลรวม / FM) -->
     <div id="trendCaneSection" style="display:none">
-      <div class="trend-bottom">
-        <div class="trend-gauge-area">
-          <div class="trend-section-lbl">ความคืบหน้าสู่เป้าหมาย</div>
-          <div id="trendGaugeHtml"></div>
-        </div>
-        <div class="trend-bar-area">
-          <div class="trend-section-lbl">รายวัน (Today) vs เป้าหมายต่อวัน</div>
-          <div style="height:280px"><canvas id="cTrendBar"></canvas></div>
-        </div>
-      </div>
+      <div class="trend-section-lbl" style="text-align:center">ความคืบหน้าสู่เป้าหมาย</div>
+      <div id="trendGaugeHtml" style="display:flex;justify-content:center"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERT ANALYSIS MODAL -->
+<div class="trend-overlay hidden" id="anaOverlay" onclick="if(event.target===this) closeAnalysis()">
+  <div class="trend-box" style="max-width:820px;max-height:88vh;display:flex;flex-direction:column">
+    <div class="trend-box-head" style="flex-shrink:0">
+      <h3 id="anaTitle"><i data-lucide="brain-circuit" style="width:18px;height:18px"></i> บทวิเคราะห์</h3>
+      <button class="trend-close" onclick="closeAnalysis()"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+    <div id="anaBody" style="overflow-y:auto;font-family:Kanit;font-size:13px;line-height:1.65;color:#1a2a3a;padding-right:6px"></div>
+  </div>
+</div>
+
+<!-- UPLOAD PASSWORD GATE -->
+<div class="overlay hidden" id="uploadPwOverlay" onclick="if(event.target===this) closeUploadPwModal()">
+  <div class="overlay-box" style="max-width:340px">
+    <svg viewBox="0 0 200 320" style="width:130px;height:auto;display:block;margin:0 auto 10px" xmlns="http://www.w3.org/2000/svg">
+      <!-- leaves -->
+      <g stroke="#2E7D32" stroke-width="2" stroke-linejoin="round">
+        <path d="M100 95 C 70 70, 40 40, 20 5 C 55 15, 80 40, 100 80 Z" fill="#66BB6A"/>
+        <path d="M100 95 C 80 60, 65 25, 60 -5 C 90 10, 100 45, 108 85 Z" fill="#4CAF50"/>
+        <path d="M100 95 C 100 55, 100 15, 100 -12 C 112 15, 112 55, 108 90 Z" fill="#43A047"/>
+        <path d="M100 95 C 120 60, 135 25, 140 -5 C 110 10, 100 45, 92 85 Z" fill="#4CAF50"/>
+        <path d="M100 95 C 130 70, 160 40, 180 5 C 145 15, 120 40, 100 80 Z" fill="#66BB6A"/>
+      </g>
+      <!-- small flower -->
+      <g transform="translate(100,28)">
+        <circle cx="0" cy="-9" r="7" fill="#F48FB1" stroke="#EC407A" stroke-width="1.5"/>
+        <circle cx="8" cy="-2" r="7" fill="#F48FB1" stroke="#EC407A" stroke-width="1.5"/>
+        <circle cx="-8" cy="-2" r="7" fill="#F48FB1" stroke="#EC407A" stroke-width="1.5"/>
+        <circle cx="5" cy="7" r="7" fill="#F48FB1" stroke="#EC407A" stroke-width="1.5"/>
+        <circle cx="-5" cy="7" r="7" fill="#F48FB1" stroke="#EC407A" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="5" fill="#FFEB3B"/>
+      </g>
+      <!-- top leaf band -->
+      <path d="M55 95 Q100 108 145 95 L145 112 Q100 122 55 112 Z" fill="#7CB342" stroke="#33691E" stroke-width="2"/>
+      <!-- stalk segments -->
+      <rect x="60" y="112" width="80" height="70" rx="14" fill="#D4E157" stroke="#9E9D24" stroke-width="2.5"/>
+      <rect x="55" y="178" width="90" height="75" rx="14" fill="#C0CA33" stroke="#827717" stroke-width="2.5"/>
+      <rect x="58" y="249" width="84" height="55" rx="12" fill="#D4E157" stroke="#9E9D24" stroke-width="2.5"/>
+      <!-- waving arm -->
+      <path d="M138 145 Q168 140 172 108" stroke="#AFB42B" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <circle cx="172" cy="104" r="10" fill="#FBC02D" stroke="#F9A825" stroke-width="1.5"/>
+      <!-- other arm -->
+      <path d="M62 150 Q40 175 45 205" stroke="#AFB42B" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <circle cx="45" cy="209" r="9" fill="#FBC02D" stroke="#F9A825" stroke-width="1.5"/>
+      <!-- feet -->
+      <ellipse cx="82" cy="308" rx="13" ry="8" fill="#558B2F"/>
+      <ellipse cx="118" cy="308" rx="13" ry="8" fill="#558B2F"/>
+      <!-- bow tie -->
+      <path d="M100 168 L82 158 L82 178 Z" fill="#42A5F5" stroke="#1565C0" stroke-width="1.5"/>
+      <path d="M100 168 L118 158 L118 178 Z" fill="#42A5F5" stroke="#1565C0" stroke-width="1.5"/>
+      <circle cx="100" cy="168" r="6" fill="#1E88E5"/>
+      <!-- face -->
+      <circle cx="82" cy="135" r="7" fill="#3E2723"/><circle cx="118" cy="135" r="7" fill="#3E2723"/>
+      <circle cx="84" cy="133" r="2" fill="#fff"/><circle cx="120" cy="133" r="2" fill="#fff"/>
+      <circle cx="70" cy="145" r="6" fill="#FFAB91" opacity="0.7"/><circle cx="130" cy="145" r="6" fill="#FFAB91" opacity="0.7"/>
+      <path d="M85 148 Q100 158 115 148" stroke="#5D4037" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <h3 style="text-align:center">กรุณาใส่รหัสผ่านก่อนอัปโหลดข้อมูล</h3>
+    <p style="text-align:center;margin-bottom:14px">ติดต่อผู้ดูแลระบบหากไม่ทราบรหัสผ่าน</p>
+    <input type="password" id="uploadPwInput" placeholder="รหัสผ่าน" autocomplete="off"
+      style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);font-family:'Kanit';font-size:14px;text-align:center;box-sizing:border-box;margin-bottom:8px"
+      onkeydown="if(event.key==='Enter') checkUploadPassword()">
+    <div id="uploadPwError" style="display:none;color:#EF4444;font-family:'Kanit';font-size:12.5px;text-align:center;margin-bottom:8px">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</div>
+    <div style="display:flex;gap:8px;margin-top:6px">
+      <button onclick="closeUploadPwModal()" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--text2);font-family:'Kanit';cursor:pointer">ยกเลิก</button>
+      <button onclick="checkUploadPassword()" style="flex:1;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:'Kanit';font-weight:600;cursor:pointer">ยืนยัน</button>
     </div>
   </div>
 </div>
@@ -2546,6 +2678,11 @@ function parseWaterExcel(wb, filename){
     result.moist_today = cvn(ws,moistRow,3);
     result.moist_todate = cvn(ws,moistRow,5);
   }
+  let ksbRow = findRowByLabel(ws, ['steam','bagasse'], 5, 30, 1);
+  if(ksbRow > 0){
+    result.kgsteambag_today = cvn(ws,ksbRow,3);
+    result.kgsteambag_todate = cvn(ws,ksbRow,5);
+  }
 
   // ── WATER SUPPLY section: anchor "WATER SUPPLY", fixed relative offsets from anchor ──
   let wsAnchor = findRowByLabel(ws, 'WATER SUPPLY', 10, 35, 1);
@@ -2876,7 +3013,27 @@ function openGuideSub(btn, id){
   document.getElementById('guideSubtabs').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+const UPLOAD_PASSWORD = 'Mitrlao2026';
 function goUpload(){
+  document.getElementById('uploadPwInput').value = '';
+  document.getElementById('uploadPwError').style.display = 'none';
+  document.getElementById('uploadPwOverlay').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('uploadPwInput').focus(), 50);
+}
+function closeUploadPwModal(){
+  document.getElementById('uploadPwOverlay').classList.add('hidden');
+}
+function checkUploadPassword(){
+  let val = document.getElementById('uploadPwInput').value;
+  if(val === UPLOAD_PASSWORD){
+    closeUploadPwModal();
+    goUploadReal();
+  } else {
+    document.getElementById('uploadPwError').style.display = 'block';
+    document.getElementById('uploadPwInput').select();
+  }
+}
+function goUploadReal(){
   document.getElementById('homePage').classList.add('hidden');
   document.getElementById('uploadPage').classList.remove('hidden');
   document.getElementById('appHeader').style.display='none';
@@ -3727,7 +3884,6 @@ function renderAll(){
   renderJuiceTab();
   renderJuiceTabCharts();
   renderSteamTab();
-  renderWaterSupplyCharts();
   renderWaterTab();
   renderWaterTabCharts();
   renderStopTab();
@@ -4086,7 +4242,7 @@ function openTrendModal(paramKey, label, unit, color, targetVal, dailyTargetVal,
   let lineSection = document.getElementById('trendLineSection');
   let caneSection = document.getElementById('trendCaneSection');
 
-  let gaugeKeys = ['cane','totsugar','fm'];
+  let gaugeKeys = ['cane','totsugar','fm','fc'];
   if(gaugeKeys.includes(paramKey) && tv > 0){
     // ── Gauge mode: SVG Gauge + Bar chart (สำหรับค่า weight ที่มี total target) ──
     lineSection.style.display = 'none';
@@ -4114,28 +4270,6 @@ function openTrendModal(paramKey, label, unit, color, targetVal, dailyTargetVal,
         <div class="gauge-l">To-date vs เป้าหมาย</div>
       </div>`;
 
-    let dtv = pn(dailyTargetVal);
-    let barDatasets = [{
-      type:'bar', label:'Today (รายวัน)', data:todayVals,
-      backgroundColor: todayVals.map(v => dtv > 0 ? (v >= dtv ? '#10B98199' : color+'99') : color+'99'),
-      borderColor: todayVals.map(v => dtv > 0 ? (v >= dtv ? '#10B981' : color) : color),
-      borderWidth:1.5, borderRadius:4, barPercentage:0.7
-    }];
-    if(dtv > 0){
-      barDatasets.push({
-        type:'line', label:'เป้าหมาย/วัน ('+fi(dtv)+' '+unit+')', data:labels.map(()=>dtv),
-        borderColor:'#EF4444', borderWidth:1.5, borderDash:[5,4], pointRadius:0, fill:false, tension:0
-      });
-    }
-    makeChart('cTrendBar','bar',{labels, datasets:barDatasets},{
-      plugins:{legend:{labels:{font:{family:'Kanit',size:11},usePointStyle:true,color:'rgba(255,255,255,0.7)'}},
-        tooltip:{callbacks:{label:ctx=>` ${Number(ctx.parsed.y).toLocaleString('en-US',{maximumFractionDigits:0})} ${unit}`}}},
-      scales:{
-        x:{ticks:{font:{family:'Kanit',size:9},maxRotation:45,color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.06)'}},
-        y:{ticks:{callback:v=>Number(v).toLocaleString('en-US',{maximumFractionDigits:0}),font:{size:9},color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.06)'}}
-      }
-    });
-
   } else {
     // ── Other cards: Line chart only ──
     lineSection.style.display = 'block';
@@ -4161,7 +4295,7 @@ function openTrendModal(paramKey, label, unit, color, targetVal, dailyTargetVal,
 }
 function closeTrendModal(){
   document.getElementById('trendOverlay').classList.add('hidden');
-  ['cTrendModal','cTrendBar'].forEach(id=>{
+  ['cTrendModal'].forEach(id=>{
     if(charts[id]){ charts[id].destroy(); delete charts[id]; }
   });
 }
@@ -4410,7 +4544,7 @@ function renderSteamTab(){
         <div class="kpi-tags"><span class="tag td">Todate: ${W.moist_todate||'—'}%</span></div>
       </div>`;
 
-    // ── WATER SUPPLY table (all sources × key params) ──
+    // ── WATER SUPPLY table (rows = source, one column per parameter, Today + To-date stacked in each cell) ──
     const wsSrcLabels = [
       {key:'ci',label:'Cond. In'},{key:'co',label:'Cond. Out'},
       {key:'fw1',label:'Feed W.#1'},{key:'fw2',label:'Feed W.#2'},
@@ -4418,64 +4552,370 @@ function renderSteamTab(){
       {key:'sw',label:'Soft Water'},{key:'rw',label:'Raw Water'},{key:'ct',label:'Cooling T.'}
     ];
     const wsParamLabels = [
-      {key:'ph',label:'pH'},{key:'tds',label:'TDS (ppm)'},{key:'hard',label:'Hardness (ppm)'},
-      {key:'cl',label:'Chloride (ppm)'},{key:'palk',label:'P-Alkalinity (ppm)'},{key:'malk',label:'M-Alkalinity (ppm)'}
+      {key:'ph',label:'pH',tint:'79,157,255'},{key:'tds',label:'TDS (ppm)',tint:'168,85,247'},
+      {key:'hard',label:'Hardness (ppm)',tint:'245,158,11'},{key:'cl',label:'Chloride (ppm)',tint:'239,68,68'},
+      {key:'palk',label:'P-Alk (ppm)',tint:'16,185,129'},{key:'malk',label:'M-Alk (ppm)',tint:'236,72,153'}
     ];
-    let wsHdr = '<th style="text-align:left;min-width:120px">Parameter</th>' + wsSrcLabels.map(s=>`<th style="min-width:80px">${s.label}</th>`).join('');
-    let wsBody = wsParamLabels.map(p=>{
-      let cells = wsSrcLabels.map(s=>{
-        let v = W['ws_'+p.key+'_'+s.key+'_today'];
-        let vn = pn(v);
+    let wsHdr = '<th style="text-align:left;min-width:95px">Source</th>' + wsParamLabels.map(p=>`<th style="background:rgba(${p.tint},0.14)">${p.label}</th>`).join('');
+    let wsBody = wsSrcLabels.map(s=>{
+      let cells = wsParamLabels.map(p=>{
+        let vT = W['ws_'+p.key+'_'+s.key+'_today'], vD = W['ws_'+p.key+'_'+s.key+'_todate'];
+        let vn = pn(vT);
         let cls = '';
         if(p.key==='ph' && (s.key==='bw1'||s.key==='bw2'||s.key==='bw3')){
           cls = (vn>=10.5&&vn<=12.5) ? '' : (vn>0?'bad':'');
         }
-        return `<td class="v ${cls}">${(v&&v!=='0')?v:'—'}</td>`;
+        let tv = (vT&&vT!=='0')?vT:'—', dv = (vD&&vD!=='0')?vD:'—';
+        return `<td class="v ${cls}" style="background:rgba(${p.tint},0.05)"><div style="font-weight:700">${tv}</div><div style="font-size:10px;font-weight:400;opacity:0.6">TD: ${dv}</div></td>`;
       }).join('');
-      return `<tr><td>${p.label}</td>${cells}</tr>`;
+      return `<tr><td style="text-align:left;font-weight:600">${s.label}</td>${cells}</tr>`;
     }).join('');
     document.getElementById('waterSupplySection').innerHTML=`
-      <div class="card" style="overflow-x:auto"><div class="tbl-wrap"><table class="tbl" style="min-width:1000px"><thead>
-        <tr>${wsHdr}</tr></thead><tbody>${wsBody}</tbody></table></div></div>
-      <div class="g g3" style="margin-top:16px">
-        <div class="card"><div class="card-h"><i data-lucide="activity" style="width:16px;height:16px;color:#4F9DFF"></i> Boiler Water pH Trend</div><div class="ch h280"><canvas id="cWsPh"></canvas></div></div>
-        <div class="card"><div class="card-h"><i data-lucide="bar-chart-3" style="width:16px;height:16px;color:#EF4444"></i> Boiler Water TDS Trend</div><div class="ch h280"><canvas id="cWsTds"></canvas></div></div>
-        <div class="card"><div class="card-h"><i data-lucide="droplet" style="width:16px;height:16px;color:#10B981"></i> Boiler Water Hardness Trend</div><div class="ch h280"><canvas id="cWsHard"></canvas></div></div>
-      </div>`;
+      <div class="card"><div class="tbl-wrap"><table class="tbl">
+        <thead><tr>${wsHdr}</tr></thead><tbody>${wsBody}</tbody></table></div></div>`;
+    renderBoilerWaterAnalysis();
   } else {
     document.getElementById('boilerFuelCards').innerHTML='<div class="card" style="grid-column:span 2;text-align:center;color:var(--text3);padding:30px;font-family:Kanit">ไม่พบข้อมูล Water Report สำหรับวันที่นี้</div>';
     document.getElementById('waterSupplySection').innerHTML='';
+    document.getElementById('boilerWaterAnalysis').innerHTML='';
   }
   try { lucide.createIcons(); } catch(e){}
 }
 
-function renderWaterSupplyCharts(){
-  if(!W) return;
-  let sorted = waterData.slice().sort((a,b)=>(a.fileDate||'').localeCompare(b.fileDate||'')).filter(d=>(d.fileDate||'')<=(D.fileDate||''));
-  if(sorted.length<1) return;
-  let labels = sorted.map(d=>formatDateCode(d.fileDate)||d.date||d.fileDate);
-  const bColors = ['#1565C0','#42A5F5','#10B981'];
-  const bNames  = ['Boiler #1','Boiler #2','Boiler #3'];
-  const bKeys   = ['bw1','bw2','bw3'];
-  function makeWsChart(id, param, yLabel){
-    let datasets = bKeys.map((bk,i)=>({
-      label:bNames[i], data:sorted.map(d=>pn(d['ws_'+param+'_'+bk+'_today'])||null),
-      borderColor:bColors[i], backgroundColor:bColors[i]+'22', borderWidth:2.5, tension:0.35,
-      pointRadius:4, pointBackgroundColor:bColors[i], pointBorderColor:'#fff', pointBorderWidth:1.5, fill:false, spanGaps:true
-    }));
-    makeChart(id,'line',{labels,datasets},{
-      plugins:{legend:{labels:{font:{family:'Kanit',size:10},usePointStyle:true,color:'rgba(255,255,255,0.7)'}}},
-      scales:{
-        x:{ticks:{font:{family:'Kanit',size:9},maxRotation:45,color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.06)'}},
-        y:{title:{display:true,text:yLabel,font:{family:'Kanit',size:11},color:'rgba(255,255,255,0.7)'},ticks:{color:'rgba(255,255,255,0.5)'},grid:{color:'rgba(255,255,255,0.06)'}}
-      }
+/* ─── Boiler Feedwater Quality Analysis (comment cards) ─── */
+function evalWaterParam(key, v){
+  // returns {status:'good'|'caution'|'bad', text}
+  let n = pn(v);
+  if(!v || v==='0' || v==='-') return {status:'na', text:'ไม่มีข้อมูล'};
+  switch(key){
+    case 'ph':
+      if(n>=10.5 && n<=12.5) return {status:'good', text:`pH ${v} อยู่ในช่วงด่างที่เหมาะสม (10.5–12.5) ช่วยป้องกันการกัดกร่อนของโลหะได้ดี`};
+      if(n<10.5) return {status:'bad', text:`pH ${v} ต่ำกว่าเกณฑ์ (< 10.5) เสี่ยงต่อการกัดกร่อนแบบกรด (acid attack) และ oxygen pitting บนผิวท่อ`};
+      return {status:'bad', text:`pH ${v} สูงเกินเกณฑ์ (> 12.5) เสี่ยงต่อ caustic embrittlement/caustic gouging บริเวณรอยเชื่อมและจุดอับ`};
+    case 'tds':
+      if(n<2000) return {status:'good', text:`TDS ${v} ppm อยู่ในเกณฑ์ดี ความเสี่ยง carryover/scale ต่ำ`};
+      if(n<=3500) return {status:'caution', text:`TDS ${v} ppm เริ่มสูง ควรเพิ่มอัตรา blowdown เพื่อลดความเสี่ยง carryover/priming`};
+      return {status:'bad', text:`TDS ${v} ppm สูงมาก เสี่ยง scale เกาะผิวท่อและไอน้ำพา solid carryover ไปกับ steam ควร blowdown เพิ่มด่วน`};
+    case 'hard':
+      if(n<5) return {status:'good', text:`Hardness ${v} ppm ใกล้ศูนย์ ไม่มีความเสี่ยงตะกรัน`};
+      if(n<=20) return {status:'caution', text:`Hardness ${v} ppm เริ่มพบความกระด้าง ควรตรวจสอบระบบ Softener/Demineralizer ก่อนป้อนเข้าหม้อไอน้ำ`};
+      return {status:'bad', text:`Hardness ${v} ppm สูงเกินไป เสี่ยงเกิดตะกรัน (scale) เกาะผิวท่อ ลดประสิทธิภาพการถ่ายเทความร้อนและอาจทำให้ท่อร้อนจัดจนเสียหาย`};
+    case 'cl':
+      if(n<100) return {status:'good', text:`Chloride ${v} ppm อยู่ในเกณฑ์ปกติ`};
+      if(n<=200) return {status:'caution', text:`Chloride ${v} ppm ค่อนข้างสูง ควรเฝ้าระวังการกัดกร่อนแบบ pitting และตรวจสอบว่ามีน้ำหล่อเย็นรั่วปนหรือไม่`};
+      return {status:'bad', text:`Chloride ${v} ppm สูงผิดปกติ มีความเสี่ยงสูงต่อการกัดกร่อนแบบ pitting/stress corrosion และอาจบ่งชี้ว่ามีน้ำ Condenser รั่วปนเข้าระบบ`};
+    case 'palk': case 'malk':
+      let lbl = key==='palk' ? 'P-Alkalinity' : 'M-Alkalinity';
+      if(n<100) return {status:'caution', text:`${lbl} ${v} ppm ต่ำ ความสามารถในการสำรองด่างเพื่อป้องกันการกัดกร่อนอาจไม่เพียงพอ`};
+      if(n<=700) return {status:'good', text:`${lbl} ${v} ppm อยู่ในช่วงเหมาะสม ช่วยควบคุมการกัดกร่อนและป้องกันตะกรันได้ดี`};
+      return {status:'bad', text:`${lbl} ${v} ppm สูงเกินไป เสี่ยงต่อ caustic embrittlement และการเกิดฟอง/carryover ในดรัม`};
+  }
+  return {status:'na', text:''};
+}
+function renderBoilerWaterAnalysis(){
+  const boilers = [{key:'bw1', label:'Boiler #1', color:'#4F9DFF'}, {key:'bw2', label:'Boiler #2', color:'#A855F7'}, {key:'bw3', label:'Boiler #3', color:'#F59E0B'}];
+  const params = [{key:'ph',label:'pH'},{key:'tds',label:'TDS'},{key:'hard',label:'Hardness'},{key:'cl',label:'Chloride'},{key:'palk',label:'P-Alk'},{key:'malk',label:'M-Alk'}];
+  document.getElementById('boilerWaterAnalysis').innerHTML = boilers.map(b=>{
+    let phVal = pn(W['ws_ph_'+b.key+'_today']);
+    if(phVal===0){
+      return `<div class="card">
+        <div class="card-h"><div class="ico" style="background:${b.color}26"><i data-lucide="flame" style="width:16px;height:16px;color:${b.color}"></i></div>${b.label} — คุณภาพน้ำเข้า</div>
+        <p style="font-family:Kanit;font-size:12.5px;color:var(--text3);margin-top:8px">ไม่มีข้อมูลวันนี้ (อาจไม่ได้เดินเครื่อง Boiler นี้)</p>
+      </div>`;
+    }
+    let evals = params.map(p=>({...p, ...evalWaterParam(p.key, W['ws_'+p.key+'_'+b.key+'_today'])}));
+    let hasBad = evals.some(e=>e.status==='bad');
+    let hasCaution = evals.some(e=>e.status==='caution');
+    let overall = hasBad ? {label:'ควรแก้ไข', cls:'fail'} : hasCaution ? {label:'เฝ้าระวัง', cls:'warn'} : {label:'ปกติดี', cls:'pass'};
+    let items = evals.filter(e=>e.status!=='na').map(e=>{
+      let dot = e.status==='good' ? '#10B981' : e.status==='caution' ? '#F59E0B' : '#EF4444';
+      return `<li style="margin-bottom:7px;padding-left:14px;position:relative"><span style="position:absolute;left:0;top:6px;width:6px;height:6px;border-radius:50%;background:${dot}"></span>${e.text}</li>`;
+    }).join('');
+    if(!items) items = '<li style="list-style:none;color:var(--text3)">ไม่มีข้อมูลสำหรับวันนี้</li>';
+    return `<div class="card">
+      <div class="card-h" style="justify-content:space-between">
+        <span style="display:flex;align-items:center;gap:8px"><div class="ico" style="background:${b.color}26"><i data-lucide="flame" style="width:16px;height:16px;color:${b.color}"></i></div>${b.label} — คุณภาพน้ำเข้า</span>
+        <span class="st ${overall.cls}">${overall.label}</span>
+      </div>
+      <ul style="list-style:none;padding:0;margin:8px 0 0;font-family:Kanit;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,0.82)">${items}</ul>
+    </div>`;
+  }).join('');
+  try { lucide.createIcons(); } catch(e){}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EXPERT ANALYSIS — rule engine อิง sugar-brain (Peter Rein) + steam-brain
+   ทุกกฎอิงค่าจริงจากรายงาน 3 ไฟล์ + Target ในรายงาน/benchmark ที่อ้างอิงได้
+   ═══════════════════════════════════════════════════════════════ */
+function anaNum(v){
+  if(v===undefined||v===null||v===''||v==='-'||v==='—') return null;
+  let n = parseFloat(String(v).replace(/[,\s]/g,''));
+  return isNaN(n) ? null : n;
+}
+function anaCheck(L, o){
+  let v = o.val;
+  if(v===null){ L.missing.push(o.label); return; }
+  let st = o.judge(v);
+  if(st==='skip') return;
+  let vTxt = `<span class="ana-val">${fn(v, o.dec!==undefined?o.dec:2)}${o.unit?' '+o.unit:''}</span>`;
+  let refTxt = o.ref?` <span class="ana-ref">(${o.ref})</span>`:'';
+  if(st==='good'){
+    L.goods.push(`<div class="ana-item g"><b>${o.label}</b> = ${vTxt}${refTxt} — ${o.okTxt}</div>`);
+  } else {
+    L.bads.push(`<div class="ana-item ${st==='bad'?'b':'w'}"><b>${o.label}</b> = ${vTxt}${refTxt} — ${st==='bad'?o.badTxt:(o.warnTxt||o.badTxt)}</div>`);
+    if(o.cause) L.causes.push(`<div class="ana-item w"><b>${o.label}:</b> ${o.cause}</div>`);
+    if(o.fix)   L.fixes.push(`<div class="ana-item"><b>${o.label}:</b> ${o.fix}</div>`);
+  }
+}
+const jMax = (good, warn) => v => v<=good?'good':((warn!==undefined&&v<=warn)?'warn':'bad');
+const jMin = (good, warn) => v => v>=good?'good':((warn!==undefined&&v>=warn)?'warn':'bad');
+const jBand = (lo, hi) => v => (v>=lo&&v<=hi)?'good':'bad';
+const jTgt = (targetRaw) => v => { let s=evalTargetStatus(targetRaw,v); return s==='pass'?'good':(s==='fail'?'bad':'skip'); };
+
+function buildSugarAnalysis(){
+  let L = {goods:[], bads:[], causes:[], fixes:[], missing:[]};
+  const burnt=anaNum(D.burnt_today), trash=anaNum(D.trash_today), pi=anaNum(D.prepidx_today), imb=anaNum(D.imbfiber_today), phm=anaNum(D.ph_mixed_today);
+
+  // ── อ้อยเข้าหีบ (คุณภาพวัตถุดิบ) ──
+  anaCheck(L,{label:'% อ้อยไฟไหม้', val:burnt, unit:'%', ref:'Rein: <5 ดีเยี่ยม / >20 กระทบคุณภาพชัดเจน', judge:jMax(5,20),
+    okTxt:'สัดส่วนอ้อยสดสูง ลดความเสี่ยง dextran และการเสื่อมของน้ำตาลในอ้อย',
+    badTxt:'อ้อยไฟไหม้สูง → dextran เพิ่ม, Purity ตก, CCS ลด และน้ำอ้อยเสื่อมเร็วหากค้างนาน',
+    warnTxt:'มีอ้อยไฟไหม้ปะปนระดับกลาง ควรเร่งหีบให้เร็ว (cut-to-crush < 24 ชม.)',
+    cause:'การเผาอ้อยก่อนตัดจากไร่ หรือคิวรถอ้อยค้างหน้าโรงงานนาน ทำให้เชื้อจุลินทรีย์ (Leuconostoc) สร้าง dextran',
+    fix:'จัดคิวอ้อยไฟไหม้เข้าหีบก่อนเสมอ (first-in), ประสานฝ่ายไร่ลดการเผา, เฝ้าระวัง Purity Drop ของน้ำอ้อยคู่กัน'});
+  anaCheck(L,{label:'% Trash (สิ่งปนเปื้อน)', val:trash, unit:'%', ref:'Rein: <3 ดีเยี่ยม / 5-7 พอรับได้', judge:jMax(5,7),
+    okTxt:'สิ่งปนเปื้อนต่ำ ช่วยให้ fiber ไม่บวมเกินจริงและลดภาระการหีบ',
+    badTxt:'Trash สูงทำให้ fiber เพิ่ม → กำลังหีบเสียเปล่า, การสกัดลด, เถ้าในชานอ้อยเพิ่ม (กัดกร่อนท่อหม้อไอน้ำ)',
+    cause:'การเก็บเกี่ยว (ใบ/ยอด/ดินทราย) ติดมากับอ้อย โดยเฉพาะอ้อยรถตัด',
+    fix:'ตรวจคุณภาพอ้อยหน้าแท่นเท, แจ้งผลกลับฝ่ายไร่/โควตา, พิจารณาระบบหักสิ่งปนเปื้อน'});
+
+  // ── การหีบสกัด (Milling) ──
+  anaCheck(L,{label:'Preparation Index (PI)', val:pi, unit:'', ref:'เป้ารายงาน >92 / Rein: >94 world-class', judge:jMin(92,90),
+    okTxt:'เตรียมอ้อยแตกเซลล์ดี ส่งผลตรงต่อการสกัด (PI +1 ≈ Extraction +0.17%)',
+    badTxt:'PI ต่ำกว่าเป้า เซลล์อ้อยแตกไม่พอ น้ำตาลค้างในชิ้นอ้อย → Extraction และ Pol%Bagasse แย่ตาม',
+    cause:'ค้อน shredder สึก, ระยะ clearance ค้อน-grid กว้างเกิน, หรือป้อนอ้อยไม่สม่ำเสมอ',
+    fix:'ตรวจ/พลิก-เปลี่ยนค้อน shredder, ปรับ clearance, คุมความสูงเบดอ้อยบนสายพานให้นิ่ง'});
+  anaCheck(L,{label:'Extraction % Pol', val:anaNum(D.extpol_today), unit:'%', ref:'เป้ารายงาน >97 / Rein: 96.5-97.5 ดี', judge:jMin(97,96.5),
+    okTxt:'การสกัดน้ำตาลจากอ้อยทำได้ตามเป้า world-class',
+    badTxt:'การสกัดต่ำกว่าเป้า = น้ำตาลหลุดไปกับชานอ้อยเข้าเตาเผาโดยตรง',
+    cause:'ไล่ตามลำดับ Rein: (1) PI ต่ำ (2) Imbibition % Fiber ต่ำ (3) mill setting/hydraulic (4) ป้อนอ้อยเกินกำลังหีบ',
+    fix:'แก้ที่ต้นเหตุตามลำดับ: PI ก่อน แล้วค่อยเพิ่ม imbibition ทีละน้อยไปทาง 250-300 %fiber พร้อมดู Pol%Bagasse ตอบสนอง'});
+  anaCheck(L,{label:'Pol % Bagasse', val:anaNum(D.polbag_today), unit:'%', ref:'เป้ารายงาน <1.61 / Rein: <1.5 world-class', judge:jMax(1.61,2.0),
+    okTxt:'น้ำตาลค้างในชานอ้อยต่ำ การหีบรีดได้เกือบหมด',
+    badTxt:'น้ำตาลค้างในชานอ้อยสูง — นี่คือน้ำตาลที่ถูกเผาทิ้งในหม้อไอน้ำ (Loss อันดับ 1 ที่ควบคุมได้)',
+    cause:'PI ต่ำ, imbibition น้อยหรือกระจายน้ำไม่ทั่ว, แรงกด hydraulic ลูกหีบตก, trash plate สึก',
+    fix:'เช็ค PI ก่อน → เพิ่ม imbibition % fiber → ตรวจแรงกด/ร่องลูกหีบ/trash plate ช่วงหยุดหีบ'});
+  anaCheck(L,{label:'Imbibition % Fiber', val:imb, unit:'%', ref:'Rein: 250-300 เหมาะสม (280-320 world-class)', judge:v=>(v>=250&&v<=320)?'good':(v>=200&&v<330?'warn':'bad'),
+    okTxt:'ปริมาณน้ำพรมเหมาะสม สมดุลระหว่างการสกัดกับภาระไอน้ำ',
+    badTxt:'นอกช่วงเหมาะสม — ต่ำไปการสกัดตก, สูงไปเพิ่มภาระระเหยน้ำ (steam % cane สูงขึ้น) และชานอ้อยชื้น',
+    warnTxt:'ใกล้ขอบช่วงเหมาะสม ควรจูนละเอียดโดยดู Pol%Bagasse กับ Moisture%Bagasse ประกอบ',
+    cause:'การตั้งอัตราน้ำพรมไม่สัมพันธ์กับ fiber ที่เข้าจริง หรือหัวจ่ายอุดตัน/กระจายไม่ทั่วหน้ากว้างลูกหีบ',
+    fix:'คุมอัตราน้ำพรมอิง fiber rate จริง (ไม่ใช่ค่าคงที่), ตรวจหัวจ่ายทุกกะ'});
+  anaCheck(L,{label:'Purity Drop of Cane Juice', val:anaNum(D.puritydrop_today), unit:'', ref:'เป้ารายงาน <1.0', judge:jMax(1.0),
+    okTxt:'ไม่พบการเสื่อมของน้ำอ้อยผิดปกติระหว่างหีบ',
+    badTxt:'Purity ตกระหว่างหีบมาก = เกิด inversion (ซูโครสแตกตัวเป็น reducing sugar) สูญเสียถาวร',
+    cause:'อ้อยค้างนาน/อ้อยไฟไหม้, สุขาภิบาลชุดลูกหีบไม่ดี (เชื้อสะสม), น้ำอ้อยค้างในบ่อพักนาน',
+    fix:'ล้างฆ่าเชื้อชุดลูกหีบทุกกะ (steam/biocide), ลดเวลาน้ำอ้อยค้าง, เร่งคิวอ้อยไฟไหม้'});
+
+  // ── pH กระบวนการ ──
+  anaCheck(L,{label:'pH Mixed Juice', val:phm, unit:'', ref:'เป้ารายงาน >5.3', judge:jMin(5.3,5.1),
+    okTxt:'pH น้ำอ้อยรวมอยู่ในเกณฑ์ ความเสี่ยง inversion ต่ำ',
+    badTxt:'pH ต่ำกว่า 5.3 → อัตรา inversion เพิ่มแบบเร่งตัว (ยิ่งร้อน+กรด ยิ่งเสียน้ำตาลถาวร)',
+    cause:'อ้อยเสื่อม/ไฟไหม้ค้างนาน ทำให้กรดอินทรีย์และ dextran สูงขึ้น',
+    fix:'เร่งรอบหีบอ้อยเสี่ยง, พิจารณาปรับจุดเติมปูนขาวช่วงต้น (pre-liming) ให้เร็วขึ้น'});
+  anaCheck(L,{label:'pH Limed Juice', val:anaNum(D.ph_limed_today), unit:'', ref:'เป้ารายงาน 7.2-7.8', judge:jBand(7.2,7.8),
+    okTxt:'การเติมปูนขาวคุมได้ตามช่วงควบคุม',
+    badTxt:'นอกช่วงควบคุม — ต่ำไปเสี่ยง inversion ต่อเนื่อง, สูงไป (over-liming) สีเข้ม/ตะกรันเพิ่มและเสี่ยงทำลาย reducing sugar เป็นกรด',
+    cause:'ระบบจ่ายปูน (สัดส่วน lime saccharate) แกว่ง หรือ flow น้ำอ้อยแกว่งแรงจากการหยุด-เดิน',
+    fix:'สอบเทียบระบบจ่ายปูนอัตโนมัติ, คุม flow เข้า liming ให้นิ่ง, ตรวจความเข้มข้น lime saccharate (pH 11-12.5)'});
+  anaCheck(L,{label:'pH Clarified Juice', val:anaNum(D.ph_clar_today), unit:'', ref:'เป้ารายงาน 6.8-7.4 / Rein: 7.0-7.2 ดีที่สุด', judge:jBand(6.8,7.4),
+    okTxt:'น้ำอ้อยใสอยู่ในช่วงเหมาะสมต่อการระเหยโดยไม่เกิด inversion/สีเพิ่ม',
+    badTxt:'นอกช่วง 6.8-7.4 กระทบทั้งการตกตะกอนและการสูญเสียในหม้อระเหย',
+    cause:'ต่อเนื่องจากการคุม liming และคุณภาพการตกตะกอนใน clarifier',
+    fix:'คุม liming ให้นิ่งก่อน แล้วตรวจ retention time / flocculant ใน clarifier'});
+
+  // ── Recovery & Losses ──
+  anaCheck(L,{label:'Overall Recovery', val:anaNum(D.recov_today), unit:'%', ref:(D.recov_target?('เป้ารายงาน '+D.recov_target):'ไทยเฉลี่ย 82-87 / Rein: >87.5 world-class'), judge:(D.recov_target?jTgt(D.recov_target):jMin(87.5,82)),
+    okTxt:'ประสิทธิภาพรวมของโรงงานอยู่ในเกณฑ์ดี',
+    badTxt:'Recovery ต่ำกว่าเป้า — ทุก 1% ที่หายไปคือมูลค่ามหาศาลต่อฤดู (Rein: ตรวจ Extraction → BHR → Undetermined ตามลำดับ)',
+    cause:'ดูองค์ประกอบ: Extraction ต่ำ (หีบ), BHR ต่ำ (ต้ม-เคี่ยว/กากน้ำตาล), หรือ Undetermined สูง (รั่วไหล/วัดผิด)',
+    fix:'ไล่วินิจฉัยตามลำดับ Rein: Extraction >96.5? → BHR >86? → Undetermined <2.5? แก้จุดที่หลุดเกณฑ์ก่อน'});
+  anaCheck(L,{label:'BHR (Boiling House Recovery)', val:anaNum(D.bhr_today), unit:'%', ref:(D.bhr_target?('เป้ารายงาน '+D.bhr_target):'Rein: ≥86 ดี / >91 world-class'), judge:(D.bhr_target?jTgt(D.bhr_target):jMin(88,86)),
+    okTxt:'ฝั่งต้ม-เคี่ยว-ปั่นเก็บน้ำตาลจากน้ำอ้อยได้ดี',
+    badTxt:'BHR ต่ำ = น้ำตาลหลุดไปกับกากน้ำตาลมากกว่าที่ควร',
+    cause:'FM Purity สูงเกิน (C-station เคี่ยว/บ่มไม่ถึงที่), Syrup purity ต่ำจากคุณภาพอ้อย, หรือ entrainment ที่หม้อระเหย/หม้อเคี่ยว',
+    fix:'เช็ค FM Purity ก่อน → เพิ่มเวลาบ่ม C-crystallizer (เป้า 24-36 ชม.) + คุมการเย็นตัว, ตรวจคุณภาพ seed/magma'});
+  anaCheck(L,{label:'Purity กากน้ำตาลสุดท้าย (FM)', val:anaNum(D.fm_purity_today), unit:'', ref:(D.fm_purity_target?('เป้ารายงาน '+D.fm_purity_target):'Rein: <35 ดี / <33 world-class'), judge:(D.fm_purity_target?jTgt(D.fm_purity_target):jMax(35,38)),
+    okTxt:'รีดน้ำตาลออกจากกากน้ำตาลได้เกือบสุด (exhaustion ดี)',
+    badTxt:'Purity FM สูง = ซูโครสตามกากน้ำตาลออกไปขายราคาถูก — Loss ก้อนใหญ่อันดับ 2 ของโรงงาน',
+    cause:'C-massecuite Brix ต่ำ/เคี่ยวไม่ถึง, เวลาบ่ม crystallizer สั้น, การเย็นตัวเร็วเกิน, หรือ reheating ก่อนปั่นสูงไป',
+    fix:'เคี่ยว C ให้ Brix ถึงเป้า, บ่ม 24-36 ชม. คุมโปรไฟล์อุณหภูมิเย็นตัวช้าๆ, คุมอุณหภูมิ reheat ก่อนปั่นไม่เกินจุดละลายผลึก'});
+  anaCheck(L,{label:'Undetermined Loss', val:anaNum(D.loss_undet_today), unit:'%', ref:'Benchmark: <1.5 ดีเยี่ยม / 2.5-4.0 ต้องสอบสวน / >4.0 วิกฤต', judge:jMax(2.5,4.0),
+    okTxt:'การสูญเสียที่อธิบายไม่ได้อยู่ในระดับควบคุม แสดงว่า mass balance และการเก็บตัวอย่างน่าเชื่อถือ',
+    badTxt:'Loss ที่หาสาเหตุไม่ได้สูงผิดปกติ — มีน้ำตาลหายจากระบบโดยไม่ถูกบันทึก',
+    warnTxt:'เริ่มสูงกว่าระดับดี ควรทวนสอบ mass balance และจุดรั่วไหล',
+    cause:'Entrainment ไอพาน้ำตาลที่หม้อระเหย/หม้อเคี่ยว, น้ำตาลหก-ล้น-รั่วตามพื้น, การชั่ง/วัด Brix-Pol คลาดเคลื่อน, น้ำหวานปนไปน้ำ condensate',
+    fix:'ตรวจ Sugar Content ใน condensate ทุกจุด (ดูแท็บคุณภาพน้ำ), ทวนสอบเครื่องชั่ง/flow meter, ไล่หารอยรั่ว-จุดล้นทั้งไลน์'});
+  anaCheck(L,{label:'Pol % Filter Cake', val:anaNum(D.fc_pol_today), unit:'%', ref:'เป้ารายงาน <1.26 / Rein: <1.0 ดีเยี่ยม', judge:jMax(1.26,2.0),
+    okTxt:'น้ำตาลติดไปกับกากหม้อกรองน้อย',
+    badTxt:'น้ำตาลตามกากหม้อกรองทิ้งสูงกว่าเกณฑ์',
+    cause:'น้ำล้างกาก (wash water) ไม่พอ/กระจายไม่ทั่ว, ผ้ากรอง/สุญญากาศตก, สัดส่วน bagacillo ไม่เหมาะ',
+    fix:'เพิ่ม/ปรับหัวฉีดน้ำล้างกาก, ตรวจระบบสุญญากาศหม้อกรอง, ปรับปริมาณ bagacillo'});
+
+  // ── การหยุดหีบฝั่งกระบวนการ (จาก Stoptime Report) ──
+  if(S){
+    let procStop = (anaNum(S.milling_today)||0)+(anaNum(S.boilhouse_today)||0)+(anaNum(S.evap_today)||0)+(anaNum(S.vacuum_today)||0)+(anaNum(S.centri_today)||0);
+    anaCheck(L,{label:'ชั่วโมงหยุดฝั่งกระบวนการ (หีบ+ต้ม+เคี่ยว+ปั่น)', val:procStop, unit:'ชม.', dec:2, ref:'เป้า 0 / ทุก ชม. ที่หยุด = ต้นทุน 50,000-200,000 บาท', judge:jMax(0,1),
+      okTxt:'เดินเครื่องต่อเนื่องทั้งวัน ไม่เสียเวลาหีบ',
+      badTxt:'มีการหยุดฝั่งกระบวนการ นอกจากเสียกำลังผลิตแล้ว การหยุด-เดินยังทำให้น้ำตาลค้างท่อเสื่อมและ pH/สมดุลแกว่ง',
+      warnTxt:'มีหยุดสั้นๆ ควรดูสาเหตุด้านล่างเพื่อกันเกิดซ้ำ',
+      cause:'ดูรายการสาเหตุจริงจากรายงาน Stoptime ด้านล่างประกอบ',
+      fix:'วิเคราะห์สาเหตุซ้ำซาก (top-3) แล้วทำแผน PM เฉพาะจุด, เตรียม spare part จุดเสียบ่อย'});
+  }
+  return L;
+}
+
+function buildPowerAnalysis(){
+  let L = {goods:[], bads:[], causes:[], fixes:[], missing:[]};
+
+  // ── ไอน้ำ & เชื้อเพลิง (Daily + Water Report) ──
+  anaCheck(L,{label:'Average Steam ต่อตันอ้อย', val:anaNum(D.avgsteam_today), unit:'kg/tc', dec:1, ref:'เป้ารายงาน '+(D.avgsteam_target||'<450')+' / world-class <450 (steam ~45% cane)', judge:jMax(anaNum(String(D.avgsteam_target||'').replace(/[<>]/g,''))||450,520),
+    okTxt:'การใช้ไอน้ำต่อตันอ้อยอยู่ในเกณฑ์ — ไอส่วนเกินไปผลิตไฟขายได้เต็มที่',
+    badTxt:'ใช้ไอต่อตันอ้อยสูงเกินเป้า — ไอที่เกินคือไฟฟ้าที่หายไป (ทุก 1% steam%cane ที่ลดได้ = ไฟขายเพิ่มหลาย MWh/วัน)',
+    cause:'หลัก Rillieux/steam economy: vapor bleeding ไม่ลึกพอ (pan/heater ยังกิน exhaust ตรง), Brix syrup ออกหม้อระเหยต่ำ, imbibition มากเกิน, ฉนวน/ไอรั่ว, condensate return ต่ำ',
+    fix:'ไล่ checklist steam-brain: (ฟรี/ถูก) ซ่อมรั่ว-ฉนวน-trap, จัดคิวเคี่ยวให้โหลดนิ่ง → (กลาง) เพิ่ม vapor bleeding เลี้ยง juice heater/pan → (ใหญ่) เพิ่ม effect/falling film'});
+  if(W){
+    anaCheck(L,{label:'kg ไอน้ำ / kg ชานอ้อย (Evaporation ratio)', val:anaNum(W.kgsteambag_today), unit:'', ref:'Benchmark ชานอ้อยชื้น ~50%: 2.0-2.4', judge:jMin(2.0,1.8),
+      okTxt:'หม้อไอน้ำรีดไอจากชานอ้อยได้ตามมาตรฐานหม้อสมัยใหม่',
+      badTxt:'ผลิตไอต่อเชื้อเพลิงได้ต่ำ = ประสิทธิภาพหม้อไอน้ำตก เชื้อเพลิงถูกเผาทิ้งเปล่า',
+      cause:'ไล่ตามวิธี heat-loss: (1) ความชื้นชานอ้อยสูง (L2 ใหญ่สุดของหม้อชีวมวล) (2) excess air สูง/อากาศรั่ว (3) ตะกรันฝั่งน้ำ-เขม่าฝั่งไฟทำอุณหภูมิไอเสียสูง (4) blowdown มากเกิน (5) unburnt ในเถ้า',
+      fix:'วัด O2 ไอเสีย (เป้า 4-6%) + อุณหภูมิไอเสีย (เป้า ≤150-170°C) เทียบ baseline, จูน excess air, ตรวจ TDS คุม blowdown อัตโนมัติ, ล้างตะกรัน/เขม่าตามรอบ'});
+    anaCheck(L,{label:'ความชื้นเชื้อเพลิง (Moisture of Fuel)', val:anaNum(W.moist_today), unit:'%', ref:'เป้า <50 / Rein: <48 world-class — ชื้นเพิ่ม 1% ค่าความร้อนลด ~1.2-1.5%', judge:jMax(50,52),
+      okTxt:'ความชื้นชานอ้อยเข้าเตาอยู่ในเกณฑ์ ค่าความร้อน (NCV) ไม่ถูกฉุด',
+      badTxt:'ชานอ้อยชื้นเกิน — พลังงานส่วนหนึ่งหมดไปกับการต้มน้ำในเชื้อเพลิงแทนที่จะผลิตไอ และการเผาไหม้แย่ลง (ต้องใช้ excess air เพิ่ม)',
+      cause:'การรีดน้ำที่ลูกหีบชุดสุดท้าย (dewatering mill) ไม่แน่นพอ หรือ imbibition มากเกินไปจนชานอ้อยอุ้มน้ำ',
+      fix:'ตรวจ setting ลูกหีบชุดสุดท้าย (แรงกด/ร่อง), ทบทวนอัตรา imbibition ร่วมกับฝั่งน้ำตาล — จุดนี้เชื่อมสองระบบโดยตรง'});
+  } else {
+    L.missing.push('ข้อมูล Water Report ของวันนี้ (kg ไอ/kg ชานอ้อย, ความชื้นเชื้อเพลิง, คุณภาพน้ำ Boiler)');
+  }
+
+  // ── ไฟฟ้า (Daily Report) ──
+  let edlD=anaNum(D.edl_today), caneD=anaNum(D.cane_today);
+  anaCheck(L,{label:'ไฟขาย EDL ต่อตันอ้อย', val:(edlD!==null&&caneD?edlD/caneD:null), unit:'kWh/tc', dec:1, ref:'Benchmark: >60 world-class / 30-60 ดี / 0-30 พอใช้ (วันนี้ขายรวม '+fi(edlD||0)+' kWh)', judge:v=>v>=30?'good':(v>0?'warn':'bad'),
+    okTxt:'สัดส่วนไฟขายต่ออ้อยอยู่ระดับดี แสดงว่าสมดุลไอ-ไฟทั้งโรงงานบริหารได้ดี',
+    badTxt:'แทบไม่มีไฟเหลือขาย — ไอถูก process กินหมด หรือระบบผลิตไฟหยุด/เดินโหลดต่ำ',
+    warnTxt:'ยังอยู่ระดับ "พอใช้" — โรงงาน cogen ที่จัดการไอดีทำได้ 60-130 kWh/tc มีช่องว่างให้เพิ่มรายได้อีกมาก',
+    cause:'(1) steam%cane สูง ไอเหลือเข้าช่วง condensing น้อย (2) หยุดหีบ → เชื้อเพลิง/ไอลดแต่ไฟใช้เองยังเดิน (3) TG เดินโหลดต่ำ ประสิทธิภาพตก',
+    fix:'ลด steam%cane ตามข้อ Average Steam (ทุก 1% ที่ลด = ไฟขายเพิ่มหลาย MWh/วัน), ลดไฟใช้เองช่วงหยุด, เดิน TG ที่โหลดเหมาะสม'});
+  anaCheck(L,{label:'Net kWh ใช้เอง / ตันอ้อย', val:anaNum(D.netkwh_today), unit:'kWh/tc', ref:'เป้ารายงาน '+(D.netkwh_target||'<32')+' / ปกติ 28-35, world-class <20', judge:jMax(anaNum(String(D.netkwh_target||'').replace(/[<>]/g,''))||32,35),
+    okTxt:'ไฟใช้เองต่อตันอ้อยอยู่ในเกณฑ์ เหลือไฟขายมากขึ้น',
+    badTxt:'ไฟใช้เองสูง — ทุก kWh ที่ใช้เกินคือไฟขายที่หายไป',
+    cause:'มอเตอร์เดินตัวเปล่า/โหลดต่ำช่วงหยุดหีบ, ปั๊ม-พัดลมไม่มี VFD เดินเต็มรอบตลอด, อ้อยเข้าน้อยแต่ระบบเดินเต็ม',
+    fix:'ปิดอุปกรณ์ที่ไม่จำเป็นช่วงหยุด, ตรวจโหลดมอเตอร์ใหญ่, พิจารณา VFD จุดที่ throttle ด้วยวาล์ว/damper'});
+  if(W){
+    let ksk=anaNum(W.kgsteamkw_today), kskTd=anaNum(W.kgsteamkw_todate);
+    if(ksk!==null && kskTd!==null && kskTd>0){
+      anaCheck(L,{label:'kg ไอน้ำ / kWh (ประสิทธิภาพ TG)', val:ksk, unit:'', ref:'เทียบค่าเฉลี่ยสะสมของโรงงานเอง = '+fn(kskTd,2), judge:jMax(kskTd*1.03, kskTd*1.10),
+        okTxt:'ใช้ไอผลิตไฟได้ดีเท่าหรือดีกว่าค่าเฉลี่ยฤดูนี้ของโรงงานเอง',
+        badTxt:'วันนี้ใช้ไอต่อ kWh มากกว่าค่าเฉลี่ยสะสมชัดเจน — ประสิทธิภาพ turbo-generator หรือสภาวะไอ (ความดัน/อุณหภูมิ) ผิดปกติ',
+        warnTxt:'สูงกว่าค่าเฉลี่ยสะสมเล็กน้อย เฝ้าดูแนวโน้มต่อ',
+        cause:'ความดัน/อุณหภูมิไอเข้า TG ตก, เดินโหลดต่ำ (ประสิทธิภาพ turbine ตกตามโหลด), หรือ extraction/condensing balance เปลี่ยน',
+        fix:'ตรวจความดัน-อุณหภูมิไอหม้อให้ได้พิกัด, เลี่ยงเดิน TG โหลดต่ำนานๆ ด้วยการจัดคิวโหลด process'});
+    }
+    // ── คุณภาพน้ำเข้า Boiler (Water Report — ใช้เกณฑ์เดียวกับ water treatment) ──
+    let bwIssues=[], bwOk=[];
+    [['bw1','Boiler #1'],['bw2','Boiler #2'],['bw3','Boiler #3']].forEach(([k,lbl])=>{
+      if((anaNum(W['ws_ph_'+k+'_today'])||0)===0) return; // ไม่ได้เดิน
+      let probs=[];
+      [['ph','pH'],['tds','TDS'],['hard','Hardness'],['cl','Chloride']].forEach(([p,pl])=>{
+        let ev = evalWaterParam(p, W['ws_'+p+'_'+k+'_today']);
+        if(ev.status==='bad') probs.push(ev.text);
+      });
+      if(probs.length) bwIssues.push({lbl, probs}); else bwOk.push(lbl);
+    });
+    if(bwOk.length) L.goods.push(`<div class="ana-item g"><b>คุณภาพน้ำเข้าหม้อไอน้ำ</b> — ${bwOk.join(', ')} อยู่ในเกณฑ์ทุกพารามิเตอร์หลัก (pH/TDS/Hardness/Chloride) ลดความเสี่ยงตะกรัน-กัดกร่อน-carryover</div>`);
+    bwIssues.forEach(b=>{
+      L.bads.push(`<div class="ana-item b"><b>คุณภาพน้ำ ${b.lbl}</b> — ${b.probs.join(' | ')}</div>`);
+      L.causes.push(`<div class="ana-item w"><b>น้ำ ${b.lbl}:</b> ระบบปรับสภาพน้ำ (softener/เคมี/blowdown) คุมไม่ถึงเกณฑ์ หรือมีการปนเปื้อนเข้าระบบ condensate</div>`);
+      L.fixes.push(`<div class="ana-item"><b>น้ำ ${b.lbl}:</b> คุมตามหลัก water treatment: ตะกรัน 1 mm = เชื้อเพลิงเพิ่ม ~2% — ปรับ blowdown อิง TDS, ตรวจ softener/เคมีป้อน, หาแหล่งปนเปื้อน (ดูรายละเอียดในแท็บไอน้ำและไฟฟ้า)</div>`);
     });
   }
-  makeWsChart('cWsPh','ph','pH');
-  makeWsChart('cWsTds','tds','ppm');
-  makeWsChart('cWsHard','hard','ppm');
-
+  // ── การหยุด Boiler / Power House (Stoptime Report) ──
+  if(S){
+    let bStop=anaNum(S.boiler_today)||0, pStop=anaNum(S.power_today)||0;
+    anaCheck(L,{label:'ชั่วโมงหยุดจาก Boiler + Power House', val:bStop+pStop, unit:'ชม.', dec:2, ref:'เป้า 0 / ทุก ชม. = ต้นทุน 50,000-200,000 บาท', judge:jMax(0,0.5),
+      okTxt:'หม้อไอน้ำและระบบไฟฟ้าเดินต่อเนื่อง ไม่เป็นเหตุให้หยุดหีบ',
+      badTxt:'ระบบไอน้ำ/ไฟฟ้าทำให้โรงงานหยุด — กระทบทั้งการหีบและรายได้ไฟขายพร้อมกัน',
+      warnTxt:'มีหยุดสั้น ตรวจสาเหตุจริงด้านล่างเพื่อกันเกิดซ้ำ',
+      cause:'ดูรายการสาเหตุจริงจาก Stoptime Report ด้านล่าง',
+      fix:'ทำ RCA ทุกครั้งที่ boiler/power trip, ทบทวนแผน PM และ interlock ที่ trip บ่อย'});
+  }
+  return L;
 }
+
+function anaStopCausesHtml(topic){
+  if(!S) return '';
+  let causes = getCauses(S);
+  if(!causes.length) return '';
+  const powerKw = /หม้อไอน้ำ|boiler|ไฟฟ้า|power|เทอร์ไบน์|turbine|tg/i;
+  let rows = causes.filter(c=>{
+    let hit = powerKw.test((c.d||'')+' '+(c.r||''));
+    return topic==='power' ? hit : !hit;
+  });
+  if(!rows.length) return '';
+  return `<div class="ana-sec cause">📋 บันทึกการหยุดจริงวันนี้ (Stoptime Report)</div>` +
+    rows.map(c=>`<div class="ana-item w">${c.t?`<b>${c.t}</b> `:''}${c.d?`[${c.d}] `:''}${c.r||''}</div>`).join('');
+}
+
+function openAnalysis(topic){
+  if(!D){ alert('ยังไม่มีข้อมูล กรุณาเลือกวันที่ก่อน'); return; }
+  let L = topic==='sugar' ? buildSugarAnalysis() : buildPowerAnalysis();
+  let title = topic==='sugar' ? '🍬 บทวิเคราะห์การผลิตน้ำตาล' : '⚡ บทวิเคราะห์ไฟฟ้า + หม้อไอน้ำ';
+  let nBad = L.bads.length, grade = nBad===0 ? {cls:'pass',txt:'ภาพรวมดีมาก'} : nBad<=2 ? {cls:'warn',txt:'ปกติ — มีจุดเฝ้าระวัง '+nBad+' รายการ'} : {cls:'fail',txt:'ควรปรับปรุง — พบ '+nBad+' รายการ'};
+
+  let ov;
+  if(topic==='sugar'){
+    ov = [
+      {v:fi(pn(D.cane_today)), l:'อ้อยเข้าหีบ (ตัน)'},
+      {v:D.tcph_today||'—', l:'ตันอ้อย/ชม.'},
+      {v:D.ccs_today||'—', l:'CCS'},
+      {v:fi(pn(D.totsugar_today)), l:'น้ำตาลรวม (ตัน)'},
+      {v:D.recov_today||'—', l:'Recovery %'},
+      {v:D.bhr_today||'—', l:'BHR %'}
+    ];
+  } else {
+    ov = [
+      {v:fi(pn(D.steam_today)), l:'ไอน้ำผลิต (ตัน)'},
+      {v:D.avgsteam_today||'—', l:'Steam kg/tc'},
+      {v:fi(pn(D.kwhgen_today)), l:'ไฟผลิต (kWh)'},
+      {v:fi(pn(D.edl_today)), l:'ไฟขาย EDL (kWh)'},
+      {v:(W&&W.moist_today)||'—', l:'ความชื้นเชื้อเพลิง %'},
+      {v:(W&&W.kgsteambag_today)||'—', l:'kg ไอ/kg ชานอ้อย'}
+    ];
+  }
+
+  let html = `
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
+      <div style="font-size:13.5px">วันที่ <b>${D.date||D.fileDate||'—'}</b>${currentMode==='range'?' <span class="ana-ref">(ข้อมูลรวมช่วงที่เลือก)</span>':''}</div>
+      <span class="ana-grade ${grade.cls}">${grade.txt}</span>
+    </div>
+    <div class="ana-sec ov">📊 ภาพรวมการผลิตวันนี้</div>
+    <div class="ana-ov-grid">${ov.map(c=>`<div class="ana-ov-cell"><div class="v">${c.v}</div><div class="l">${c.l}</div></div>`).join('')}</div>
+    <div class="ana-sec good">✅ จุดที่ดี (${L.goods.length})</div>
+    ${L.goods.length?L.goods.join(''):'<div class="ana-item">— ไม่มีรายการที่ผ่านเกณฑ์เด่นชัดจากข้อมูลวันนี้ —</div>'}
+    <div class="ana-sec bad">⚠️ จุดที่ด้อย (${L.bads.length})</div>
+    ${L.bads.length?L.bads.join(''):'<div class="ana-item g">— ไม่พบจุดด้อยจากตัวชี้วัดที่มีข้อมูลวันนี้ —</div>'}
+    ${L.causes.length?`<div class="ana-sec cause">🔍 สาเหตุที่เกิดขึ้น (วิเคราะห์ตามหลักวิศวกรรม)</div>${L.causes.join('')}`:''}
+    ${anaStopCausesHtml(topic)}
+    ${L.fixes.length?`<div class="ana-sec fix">🛠️ แนวทางการแก้ไขและป้องกัน</div>${L.fixes.join('')}`:''}
+    ${L.missing.length?`<div style="margin-top:14px;padding:8px 12px;border-radius:8px;background:#f5f8fc;border:1px solid #e3ecf7;font-size:11.5px;color:#6b7f99">ℹ️ ไม่มีข้อมูลสำหรับ: ${L.missing.join(', ')} — จึงไม่ประเมินรายการเหล่านี้ (ไม่เดา)</div>`:''}
+    <div style="margin-top:10px;font-size:10.5px;color:#9aabbd">เกณฑ์อ้างอิง: Target ในรายงานโรงงาน + Peter Rein "Cane Sugar Engineering" + หลักวิศวกรรมไอน้ำ (heat-loss method / water treatment)</div>`;
+
+  document.getElementById('anaTitle').innerHTML = title;
+  document.getElementById('anaBody').innerHTML = html;
+  document.getElementById('anaOverlay').classList.remove('hidden');
+}
+function closeAnalysis(){ document.getElementById('anaOverlay').classList.add('hidden'); }
 
 /* ─── WATER TAB ─── */
 const CONDWASTE_ITEMS = [
