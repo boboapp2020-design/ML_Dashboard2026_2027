@@ -1880,8 +1880,36 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <div class="tab-divider"></div>
   <div class="sec"><div class="dot"></div>บทวิเคราะห์ประจำวัน (Expert Analysis)</div>
   <div class="g g2">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+      <symbol id="icoSugarBag" viewBox="0 0 106 100">
+        <g stroke="#1a1a1a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+          <!-- bag top zigzag band -->
+          <path d="M13 11 L18 5 L23 11 L28 5 L33 11 L38 5 L43 11 L48 5 L53 11 L58 5 L63 11 L63 18 L13 18 Z" fill="#E8A33D"/>
+          <!-- bag body -->
+          <path d="M13 18 L63 18 C65 38 65 58 64 76 L12 76 C11 58 11 38 13 18 Z" fill="#F0C060"/>
+          <!-- bag bottom zigzag band -->
+          <path d="M12 76 L64 76 L64 83 L59 89 L54 83 L49 89 L44 83 L39 89 L34 83 L29 89 L24 83 L19 89 L14 83 L12 83 Z" fill="#E8A33D"/>
+        </g>
+        <text x="38" y="53" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="14" fill="#1a1a1a">SUGAR</text>
+        <!-- sugar cubes (isometric) -->
+        <g stroke="#1a1a1a" stroke-width="3.5" stroke-linejoin="round">
+          <!-- top cube -->
+          <path d="M78 42 L89 47.5 L78 53 L67 47.5 Z" fill="#ffffff"/>
+          <path d="M67 47.5 L78 53 L78 64 L67 58.5 Z" fill="#FAF0C8"/>
+          <path d="M89 47.5 L78 53 L78 64 L89 58.5 Z" fill="#F5E6A8"/>
+          <!-- bottom-left cube -->
+          <path d="M66 62 L77 67.5 L66 73 L55 67.5 Z" fill="#ffffff"/>
+          <path d="M55 67.5 L66 73 L66 84 L55 78.5 Z" fill="#FAF0C8"/>
+          <path d="M77 67.5 L66 73 L66 84 L77 78.5 Z" fill="#F5E6A8"/>
+          <!-- bottom-right cube -->
+          <path d="M90 62 L101 67.5 L90 73 L79 67.5 Z" fill="#ffffff"/>
+          <path d="M79 67.5 L90 73 L90 84 L79 78.5 Z" fill="#FAF0C8"/>
+          <path d="M101 67.5 L90 73 L90 84 L101 78.5 Z" fill="#F5E6A8"/>
+        </g>
+      </symbol>
+    </defs></svg>
     <button class="ana-btn ana-btn-sugar" onclick="openAnalysis('sugar')">
-      <span class="ana-btn-ico">🍬</span>
+      <span class="ana-btn-ico"><svg style="width:44px;height:42px;display:block"><use href="#icoSugarBag"/></svg></span>
       <span class="ana-btn-txt"><strong>น้ำตาล</strong><small>วิเคราะห์กระบวนการผลิตน้ำตาล — หีบสกัด / ต้มเคี่ยว / Recovery / การสูญเสีย</small></span>
     </button>
     <button class="ana-btn ana-btn-power" onclick="openAnalysis('power')">
@@ -4736,86 +4764,86 @@ function buildSugarAnalysis(){
     okTxt:'สัดส่วนอ้อยสดสูง ลดความเสี่ยง dextran และการเสื่อมของน้ำตาลในอ้อย',
     badTxt:'อ้อยไฟไหม้สูง → dextran เพิ่ม, Purity ตก, CCS ลด และน้ำอ้อยเสื่อมเร็วหากค้างนาน',
     warnTxt:'มีอ้อยไฟไหม้ปะปนระดับกลาง ควรเร่งหีบให้เร็ว (cut-to-crush < 24 ชม.)',
-    cause:'การเผาอ้อยก่อนตัดจากไร่ หรือคิวรถอ้อยค้างหน้าโรงงานนาน ทำให้เชื้อจุลินทรีย์ (Leuconostoc) สร้าง dextran',
-    fix:'จัดคิวอ้อยไฟไหม้เข้าหีบก่อนเสมอ (first-in), ประสานฝ่ายไร่ลดการเผา, เฝ้าระวัง Purity Drop ของน้ำอ้อยคู่กัน'});
+    cause:'กลไกเชิงลึก (Rein บทที่ 2 Cane deterioration): เมื่ออ้อยถูกไฟไหม้ ผนังเซลล์แตกและน้ำตาลรั่วออกมาเป็นอาหารให้แบคทีเรีย Leuconostoc mesenteroides ซึ่งเปลี่ยนซูโครสเป็น dextran (พอลิเมอร์สายยาว) + กรดแลกติก อัตราการเกิด dextran เพิ่มแบบทวีคูณกับ (อุณหภูมิ × เวลาค้าง) — อ้อยไฟไหม้ที่ค้าง 24 ชม. ในเขตร้อนอาจสร้าง dextran ได้ 2,000-10,000 ppm. Dextran ทำให้ (1) ความหนืดน้ำเชื่อมพุ่ง → เคี่ยวยาก, การตกผลึกช้า (2) ผลึกน้ำตาลยืดตัวผิดรูป (needle/elongated crystal) → ปั่นแยกยาก, สูญเสียตามกากน้ำตาล (3) Purity ตกและ CCS ลดโดยตรง',
+    fix:'มาตรการเรียงตามผลกระทบ: (1) ทันที — จัดคิว "first-in-first-out" บังคับ อ้อยไฟไหม้เข้าหีบก่อนเสมอ, ตั้งเพดาน cut-to-crush ≤ 16-24 ชม. (Rein benchmark: <16 ชม. = world-class) (2) สัปดาห์นี้ — เฝ้าระวังคู่: ถ้า burnt% สูง ให้เพิ่มความถี่วัด dextran (haze method) ที่น้ำอ้อยรวม และเติม dextranase enzyme ที่จุด clarification ถ้า dextran >250 ppm (3) นอกฤดู — ทำงานร่วมฝ่ายไร่ ออกมาตรการจูงใจลดการเผา (ราคาพรีเมียมอ้อยสด), วางแผนคิวรถขนส่งไม่ให้ค้างหน้าโรงงาน'});
   anaCheck(L,{label:'% Trash (สิ่งปนเปื้อน)', val:trash, unit:'%', ref:'Rein: <3 ดีเยี่ยม / 5-7 พอรับได้', judge:jMax(5,7),
     okTxt:'สิ่งปนเปื้อนต่ำ ช่วยให้ fiber ไม่บวมเกินจริงและลดภาระการหีบ',
     badTxt:'Trash สูงทำให้ fiber เพิ่ม → กำลังหีบเสียเปล่า, การสกัดลด, เถ้าในชานอ้อยเพิ่ม (กัดกร่อนท่อหม้อไอน้ำ)',
-    cause:'การเก็บเกี่ยว (ใบ/ยอด/ดินทราย) ติดมากับอ้อย โดยเฉพาะอ้อยรถตัด',
-    fix:'ตรวจคุณภาพอ้อยหน้าแท่นเท, แจ้งผลกลับฝ่ายไร่/โควตา, พิจารณาระบบหักสิ่งปนเปื้อน'});
+    cause:'กลไกเชิงลึก: ใบ/ยอด/ดินทราย (extraneous matter) ที่ติดมากับอ้อย โดยเฉพาะอ้อยรถตัด (mechanical harvest) จะ (1) เพิ่ม fiber เทียม → ลูกหีบต้องรับภาระมากขึ้นแต่สกัดน้ำตาลได้เท่าเดิม กำลังไฟฟ้า/ไอน้ำเสียเปล่า (2) ดินทราย (soil/sand) เป็นสารกัดกร่อน (abrasive) เร่งการสึกของผิวลูกหีบและ trash plate (3) ยอดอ้อย (green top) มี reducing sugar + สารอนินทรีย์สูง → เพิ่มภาระปูนขาว, ทำให้ Purity น้ำอ้อยต่ำ และเถ้าในชานอ้อยเพิ่ม (เร่ง fouling/erosion ท่อหม้อไอน้ำ)',
+    fix:'(1) ทันที — สุ่มตรวจ trash หน้าแท่นเท (cane sampling) ทุกกะ, แจ้งผลกลับฝ่ายไร่/โควตารายแปลง (2) พิจารณาติดตั้ง/ปรับ dry cleaning system หรือ cane washing (ระวัง cane washing ทำให้สูญเสีย sucrose ~0.5% หากอ้อยแตก) (3) นอกฤดู — ปรับ setting เครื่องตัด/ระบบ extractor fan ของรถตัด, ตั้งเกณฑ์หักน้ำหนัก trash เพื่อสร้างแรงจูงใจให้ส่งอ้อยสะอาด'});
 
   // ── การหีบสกัด (Milling) ──
   anaCheck(L,{label:'Preparation Index (PI)', val:pi, unit:'', ref:'เป้ารายงาน >92 / Rein: >94 world-class', judge:jMin(92,90),
     okTxt:'เตรียมอ้อยแตกเซลล์ดี ส่งผลตรงต่อการสกัด (PI +1 ≈ Extraction +0.17%)',
     badTxt:'PI ต่ำกว่าเป้า เซลล์อ้อยแตกไม่พอ น้ำตาลค้างในชิ้นอ้อย → Extraction และ Pol%Bagasse แย่ตาม',
-    cause:'ค้อน shredder สึก, ระยะ clearance ค้อน-grid กว้างเกิน, หรือป้อนอ้อยไม่สม่ำเสมอ',
-    fix:'ตรวจ/พลิก-เปลี่ยนค้อน shredder, ปรับ clearance, คุมความสูงเบดอ้อยบนสายพานให้นิ่ง'});
+    cause:'กลไกเชิงลึก (Rein บทที่ 4 Cane preparation): PI (Preparation Index) = % เซลล์อ้อยที่ถูกทำลายผนัง เซลล์ที่แตกแล้วเท่านั้นที่ยอมปล่อยน้ำตาลออกง่ายเมื่อรีดและพรมน้ำ ถ้า PI ต่ำ น้ำตาลจะติดค้างในเซลล์ที่ยังสมบูรณ์ ไม่ว่าจะเพิ่มแรงกดลูกหีบหรือน้ำพรมเท่าไรก็สกัดออกยาก. สาเหตุทางกายภาพเรียงตามความน่าจะเป็น: (1) ค้อน shredder/knife สึกหรือบิ่น → พลังงานตัดต่อชิ้นอ้อยลดลง (2) ระยะ clearance ค้อน-anvil/grid bar กว้างเกิน spec (ปกติ 6-10 mm) → อ้อยลอดโดยไม่ถูกฉีก (3) ป้อนอ้อยไม่สม่ำเสมอ (surging) ทำให้ tip speed effective ตก (4) มอเตอร์/กังหัน shredder โหลดไม่ถึงพิกัด (ดู kW draw)',
+    fix:'(1) ทันที — ตรวจ kW ของ shredder เทียบพิกัด (ควรอยู่ 70-90% ของ rated), คุมความสูงเบดอ้อยบนสายพานป้อนให้นิ่งด้วย leveller/feed control (2) หยุดซ่อม — ตรวจสภาพค้อน/มีดทุกตัว พลิกหรือเปลี่ยนที่สึก, วัดและตั้ง clearance ค้อน-grid ให้ตรง spec, ตรวจ tip speed (เป้า 60-90 m/s สำหรับ heavy-duty shredder) (3) เป้าหมาย: ดัน PI ไป >92 (เป้ารายงาน) แล้ว >94 (world-class) — คำนวณผลตอบแทน: PI +1 ≈ Extraction +0.17% ≈ 1-2 ล้านบาท/ฤดู'});
   anaCheck(L,{label:'Extraction % Pol', val:anaNum(D.extpol_today), unit:'%', ref:'เป้ารายงาน >97 / Rein: 96.5-97.5 ดี', judge:jMin(97,96.5),
     okTxt:'การสกัดน้ำตาลจากอ้อยทำได้ตามเป้า world-class',
     badTxt:'การสกัดต่ำกว่าเป้า = น้ำตาลหลุดไปกับชานอ้อยเข้าเตาเผาโดยตรง',
-    cause:'ไล่ตามลำดับ Rein: (1) PI ต่ำ (2) Imbibition % Fiber ต่ำ (3) mill setting/hydraulic (4) ป้อนอ้อยเกินกำลังหีบ',
-    fix:'แก้ที่ต้นเหตุตามลำดับ: PI ก่อน แล้วค่อยเพิ่ม imbibition ทีละน้อยไปทาง 250-300 %fiber พร้อมดู Pol%Bagasse ตอบสนอง'});
+    cause:'กลไกเชิงลึก (Rein บทที่ 5 Milling): Extraction ขึ้นกับ 2 ปัจจัยหลักที่คูณกัน — (ก) การเตรียมอ้อย (PI) เปิดเซลล์ให้น้ำตาลออกได้ (ข) การชะล้างด้วยน้ำพรม (imbibition) เจือจางน้ำตาลที่เหลือในชานอ้อยแต่ละชุด (counter-current). ไล่วินิจฉัยตามลำดับ Rein: (1) PI ต่ำ → เปิดเซลล์ไม่พอ (เช็คก่อนเสมอ) (2) Imbibition % Fiber ต่ำ → ชะล้างไม่ทั่ว (3) mill setting: work opening/แรงกด hydraulic ตก, ร่องลูกหีบ (groove) สึกจน grip อ้อยไม่อยู่, trash plate/messchaert สึก (4) crushing rate เกินกำลัง (overloading) → เวลาสัมผัส (residence time) ในลูกหีบสั้นลง สกัดไม่ทัน',
+    fix:'แก้ที่ต้นเหตุตามลำดับ Rein (ห้ามข้ามขั้น): (1) ยืนยัน PI >92 ก่อน (2) เพิ่ม imbibition % fiber ทีละ ~10-20% ไปทาง 250-300% พร้อมเฝ้าดู Pol%Bagasse ตอบสนอง (จุด optimum คือที่ Pol%Bagasse ลดจนเริ่มนิ่ง) (3) หยุดซ่อม: ตรวจ hydraulic pressure ทุกลูกหีบให้ได้ spec, วัดสภาพร่อง/trash plate, ตั้ง mill opening ตาม fiber loading (4) ถ้า overload — ลด crushing rate หรือกระจายโหลด. เป้า: Extraction >96.5% (ดี), >97.5% (world-class)'});
   anaCheck(L,{label:'Pol % Bagasse', val:anaNum(D.polbag_today), unit:'%', ref:'เป้ารายงาน <1.61 / Rein: <1.5 world-class', judge:jMax(1.61,2.0),
     okTxt:'น้ำตาลค้างในชานอ้อยต่ำ การหีบรีดได้เกือบหมด',
     badTxt:'น้ำตาลค้างในชานอ้อยสูง — นี่คือน้ำตาลที่ถูกเผาทิ้งในหม้อไอน้ำ (Loss อันดับ 1 ที่ควบคุมได้)',
-    cause:'PI ต่ำ, imbibition น้อยหรือกระจายน้ำไม่ทั่ว, แรงกด hydraulic ลูกหีบตก, trash plate สึก',
-    fix:'เช็ค PI ก่อน → เพิ่ม imbibition % fiber → ตรวจแรงกด/ร่องลูกหีบ/trash plate ช่วงหยุดหีบ'});
+    cause:'กลไกเชิงลึก: Pol%Bagasse คือการวัดโดยตรงว่ามีน้ำตาลเหลือในชานอ้อยเท่าไร — ชานอ้อยนี้จะถูกส่งเข้าเตาหม้อไอน้ำ ดังนั้นน้ำตาลส่วนนี้ = "ถูกเผาทิ้ง" (Loss ที่ควบคุมได้อันดับ 1 ตาม loss anatomy ของ Rein: bagasse ≤3.0% cane). สาเหตุเชิงระบบ 4 กลุ่ม: (1) PI ต่ำ (น้ำตาลติดในเซลล์ที่ยังไม่แตก) (2) imbibition น้อย/กระจายน้ำไม่ทั่วหน้ากว้างลูกหีบ (dry spots) (3) แรงกด hydraulic ลูกหีบชุดท้ายตก → รีดน้ำ (และน้ำตาลที่ปนอยู่) ออกไม่หมด (4) การป้อน re-absorption: ถ้า mill setting ให้ชานอ้อยคืนตัวดูดน้ำเชื่อมกลับ (reabsorption) ก่อนออกจากลูกหีบ',
+    fix:'(1) เช็ค PI + imbibition ก่อน (ต้นเหตุร่วมกับ Extraction) (2) ตรวจการกระจายน้ำพรม: หัวจ่าย (spray nozzle/weir) ต้องคลุมเต็มหน้ากว้าง ไม่มีจุดแห้ง (3) หยุดซ่อม: วัด hydraulic pressure ลูกหีบชุดสุดท้าย (dewatering mill) — จุดนี้กำหนดทั้ง Pol%Bagasse และ Moisture%Bagasse, ตรวจร่องลูกหีบ/trash plate (4) เป้า <1.5% — ทุก 1% ที่ลดได้ ≈ 5-8 ล้านบาท/ฤดู'});
   anaCheck(L,{label:'Imbibition % Fiber', val:imb, unit:'%', ref:'Rein: 250-300 เหมาะสม (280-320 world-class)', judge:v=>(v>=250&&v<=320)?'good':(v>=200&&v<330?'warn':'bad'),
     okTxt:'ปริมาณน้ำพรมเหมาะสม สมดุลระหว่างการสกัดกับภาระไอน้ำ',
     badTxt:'นอกช่วงเหมาะสม — ต่ำไปการสกัดตก, สูงไปเพิ่มภาระระเหยน้ำ (steam % cane สูงขึ้น) และชานอ้อยชื้น',
     warnTxt:'ใกล้ขอบช่วงเหมาะสม ควรจูนละเอียดโดยดู Pol%Bagasse กับ Moisture%Bagasse ประกอบ',
-    cause:'การตั้งอัตราน้ำพรมไม่สัมพันธ์กับ fiber ที่เข้าจริง หรือหัวจ่ายอุดตัน/กระจายไม่ทั่วหน้ากว้างลูกหีบ',
-    fix:'คุมอัตราน้ำพรมอิง fiber rate จริง (ไม่ใช่ค่าคงที่), ตรวจหัวจ่ายทุกกะ'});
+    cause:'กลไกเชิงลึก (Rein: imbibition เป็นตัวแปร trade-off): น้ำพรมมากขึ้น → ชะน้ำตาลออกจากชานอ้อยได้ดีขึ้น (Extraction ↑, Pol%Bagasse ↓) แต่ต้องแลกกับ (ก) น้ำอ้อยรวมเจือจางลง → หม้อระเหยต้องระเหยน้ำมากขึ้น → steam%cane ↑ เชื่อมตรงไปฝั่งไฟฟ้า (ข) ชานอ้อยชื้นขึ้นถ้าลูกหีบท้ายรีดไม่ทัน → ค่าความร้อนเชื้อเพลิงตก. ค่า optimum จึงไม่ใช่ "มากที่สุด" แต่คือจุดที่ Pol%Bagasse เริ่มนิ่ง (diminishing return) ก่อนที่ภาระไอน้ำจะพุ่ง — โดยทั่วไปอยู่ที่ 250-300% fiber. สาเหตุที่หลุดช่วง: ตั้งอัตราน้ำพรมเป็นค่าคงที่แทนที่จะอิง fiber rate จริง หรือหัวจ่ายอุดตัน/กระจายไม่ทั่ว',
+    fix:'(1) คุมอัตราน้ำพรมแบบ ratio control อิง fiber rate จริง (ไม่ใช่ flow คงที่) — ต้องประมาณ fiber loading จาก crushing rate × fiber%cane (2) ใช้ imbibition แบบ compound counter-current (น้ำพรมลูกท้ายสุด แล้วไหลย้อนขึ้นลูกหน้า) เพื่อประสิทธิภาพการชะสูงสุด (3) จูนโดยดู 2 ค่าคู่กัน: Pol%Bagasse (อยากให้ต่ำ) กับ Moisture%Bagasse (อยากให้ ≤50%) — ถ้าเพิ่มน้ำแล้ว Pol ไม่ลงแต่ Moisture พุ่ง = เกิน optimum แล้ว (4) ตรวจหัวจ่ายทุกกะ'});
   anaCheck(L,{label:'Purity Drop of Cane Juice', val:anaNum(D.puritydrop_today), unit:'', ref:'เป้ารายงาน <1.0', judge:jMax(1.0),
     okTxt:'ไม่พบการเสื่อมของน้ำอ้อยผิดปกติระหว่างหีบ',
     badTxt:'Purity ตกระหว่างหีบมาก = เกิด inversion (ซูโครสแตกตัวเป็น reducing sugar) สูญเสียถาวร',
-    cause:'อ้อยค้างนาน/อ้อยไฟไหม้, สุขาภิบาลชุดลูกหีบไม่ดี (เชื้อสะสม), น้ำอ้อยค้างในบ่อพักนาน',
-    fix:'ล้างฆ่าเชื้อชุดลูกหีบทุกกะ (steam/biocide), ลดเวลาน้ำอ้อยค้าง, เร่งคิวอ้อยไฟไหม้'});
+    cause:'กลไกเชิงลึก: Purity Drop วัดการลดลงของ Purity ระหว่างน้ำอ้อยแรก (first expressed) กับน้ำอ้อยรวม (mixed) — การตกนี้เกิดจาก 2 กลไกที่แยกกันไม่ได้ด้วยตาเปล่า: (1) Chemical inversion — ซูโครสในสภาวะกรด (pH ต่ำ) + ร้อน แตกตัวเป็นกลูโคส+ฟรุกโตส (reducing sugar) สูญเสียถาวร ไม่สามารถตกผลึกได้ (2) Microbial degradation — แบคทีเรียที่สะสมในชุดลูกหีบ (ซอกร่อง, trash plate, บ่อพักน้ำอ้อย) กินซูโครสสร้าง dextran+กรด. ยิ่งน้ำอ้อยค้าง (residence time) นานและอุณหภูมิสูง ยิ่งเสียมาก',
+    fix:'(1) สุขาภิบาลชุดลูกหีบ (mill sanitation) — ฉีดไอน้ำ/biocide ที่ลูกหีบและ juice gutter ทุกกะเพื่อฆ่า colony แบคทีเรีย (นี่คือมาตรการที่ได้ผลสุดต่อ microbial part) (2) ลดเวลาน้ำอ้อยค้าง: ทำความสะอาดบ่อพัก/รางน้ำอ้อยไม่ให้มีจุดอับ, ส่งน้ำอ้อยเข้า liming ให้เร็ว (3) เร่งคิวอ้อยไฟไหม้/อ้อยเสื่อม (แหล่งกรด+เชื้อ) (4) ถ้ายังสูง — วัด lactic acid/dextran ที่น้ำอ้อยเพื่อยืนยันว่าเป็น microbial แล้วจัดการที่ต้นตอ'});
 
   // ── pH กระบวนการ ──
   anaCheck(L,{label:'pH Mixed Juice', val:phm, unit:'', ref:'เป้ารายงาน >5.3', judge:jMin(5.3,5.1),
     okTxt:'pH น้ำอ้อยรวมอยู่ในเกณฑ์ ความเสี่ยง inversion ต่ำ',
     badTxt:'pH ต่ำกว่า 5.3 → อัตรา inversion เพิ่มแบบเร่งตัว (ยิ่งร้อน+กรด ยิ่งเสียน้ำตาลถาวร)',
-    cause:'อ้อยเสื่อม/ไฟไหม้ค้างนาน ทำให้กรดอินทรีย์และ dextran สูงขึ้น',
-    fix:'เร่งรอบหีบอ้อยเสี่ยง, พิจารณาปรับจุดเติมปูนขาวช่วงต้น (pre-liming) ให้เร็วขึ้น'});
+    cause:'กลไกเชิงลึก (Rein บทที่ 7 Clarification): อัตราการเกิด acid inversion ของซูโครสแปรผันตาม [H⁺] และอุณหภูมิแบบ exponential (Arrhenius) — ที่ pH 5.0 อัตราจะสูงกว่า pH 5.5 หลายเท่า. น้ำอ้อยรวมที่ pH ต่ำมักมาจาก: (1) อ้อยเสื่อม/ไฟไหม้ค้างนาน → กรดอินทรีย์ (lactic, acetic) + dextran จากแบคทีเรียสูง (2) การปนเปื้อนจุลินทรีย์ในชุดลูกหีบ (3) พันธุ์อ้อย/สภาพดินบางแหล่ง. pH ต่ำในน้ำอ้อยดิบเป็นสัญญาณเตือนต้นทางว่าจะเสียน้ำตาลตลอดสายการผลิต',
+    fix:'(1) แก้ต้นตอ: เร่งรอบหีบอ้อยเสี่ยง + สุขาภิบาลลูกหีบ (ลดแหล่งกรด) (2) กระบวนการ: พิจารณา pre-liming/defecation ให้เร็วขึ้นเพื่อยกน้ำอ้อยพ้นโซนกรดโดยเร็ว — แต่ต้องระวังไม่ให้ไปกดที่จุด clarified juice สูงเกิน (3) ตรวจสอบว่า pH ต่ำเป็นทั้งวันหรือเฉพาะช่วง (ถ้าเฉพาะช่วง = เชื่อมกับล็อตอ้อยเสื่อม)'});
   anaCheck(L,{label:'pH Limed Juice', val:anaNum(D.ph_limed_today), unit:'', ref:'เป้ารายงาน 7.2-7.8', judge:jBand(7.2,7.8),
     okTxt:'การเติมปูนขาวคุมได้ตามช่วงควบคุม',
     badTxt:'นอกช่วงควบคุม — ต่ำไปเสี่ยง inversion ต่อเนื่อง, สูงไป (over-liming) สีเข้ม/ตะกรันเพิ่มและเสี่ยงทำลาย reducing sugar เป็นกรด',
-    cause:'ระบบจ่ายปูน (สัดส่วน lime saccharate) แกว่ง หรือ flow น้ำอ้อยแกว่งแรงจากการหยุด-เดิน',
-    fix:'สอบเทียบระบบจ่ายปูนอัตโนมัติ, คุม flow เข้า liming ให้นิ่ง, ตรวจความเข้มข้น lime saccharate (pH 11-12.5)'});
+    cause:'กลไกเชิงลึก (Rein: defecation process): การเติมปูนขาว (Ca(OH)₂) ทำหน้าที่ (ก) ทำให้กรดเป็นกลาง หยุด inversion (ข) ตกตะกอน phosphate เป็น calcium phosphate ที่ดูดจับสิ่งเจือปน. ช่วง pH 7.2-7.8 คือ optimum ที่สมดุลระหว่างการหยุด inversion กับการไม่ทำลายน้ำตาล. ถ้า over-liming (pH สูงเกิน) → (1) reducing sugar ถูกทำลายในสภาวะด่างร้อน (alkaline degradation) เกิดกรดอินทรีย์และสารสีเข้ม (caramel/melanoidin) (2) แคลเซียมส่วนเกินไปตกตะกรันในหม้อระเหย. ถ้า under-liming → inversion ต่อเนื่อง. สาเหตุที่คุมไม่ได้: ระบบจ่ายปูนแกว่ง (ความเข้มข้น lime saccharate ไม่คงที่) หรือ flow น้ำอ้อยแกว่งจากการหยุด-เดินเครื่อง',
+    fix:'(1) สอบเทียบระบบจ่ายปูนอัตโนมัติ (automatic pH control loop) — ตรวจ electrode pH ให้สะอาด/calibrate สม่ำเสมอ เพราะ electrode เปื้อนคือสาเหตุอันดับ 1 ของการคุม pH เพี้ยน (2) คุมความเข้มข้น lime saccharate ให้คงที่ (pH ~11-12.5, Brix สม่ำเสมอ) (3) คุม flow น้ำอ้อยเข้า liming ให้นิ่ง (buffer tank/flow control) — pH loop จะคุมได้ก็ต่อเมื่อ flow นิ่ง (4) ตั้ง target ที่ 7.0-7.2 (Rein optimum) เผื่อ overshoot'});
   anaCheck(L,{label:'pH Clarified Juice', val:anaNum(D.ph_clar_today), unit:'', ref:'เป้ารายงาน 6.8-7.4 / Rein: 7.0-7.2 ดีที่สุด', judge:jBand(6.8,7.4),
     okTxt:'น้ำอ้อยใสอยู่ในช่วงเหมาะสมต่อการระเหยโดยไม่เกิด inversion/สีเพิ่ม',
     badTxt:'นอกช่วง 6.8-7.4 กระทบทั้งการตกตะกอนและการสูญเสียในหม้อระเหย',
-    cause:'ต่อเนื่องจากการคุม liming และคุณภาพการตกตะกอนใน clarifier',
-    fix:'คุม liming ให้นิ่งก่อน แล้วตรวจ retention time / flocculant ใน clarifier'});
+    cause:'กลไกเชิงลึก: pH ของ clarified juice คือ pH ที่น้ำอ้อยจะพกติดตัวเข้าหม้อระเหย+หม้อเคี่ยว ซึ่งใช้เวลานานและร้อน ดังนั้นถ้า pH ไม่เหมาะจะสะสมความเสียหายตลอดสาย: ต่ำไป (< 6.8) → inversion ต่อเนื่องในหม้อระเหย (สูญเสีย + เพิ่ม reducing sugar ที่ทำให้ molasses purity สูง); สูงไป (> 7.4) → เกิดสีเข้มจาก alkaline degradation + ตะกรันแคลเซียม. โดยปกติ pH clarified จะต่ำกว่า limed เล็กน้อย (จากปฏิกิริยาต่อเนื่อง) — ค่านี้จึงสะท้อนคุณภาพการคุม liming + การตกตะกอนใน clarifier รวมกัน',
+    fix:'(1) คุมต้นทาง (limed juice pH) ให้นิ่งก่อน — clarified pH เป็นผลตาม (2) ตรวจ clarifier: retention time (ไม่ควรนานเกินจน inversion, Rein: <1 ชม. ดี), dosing flocculant เหมาะสม, อุณหภูมิ juice heater ก่อนเข้า clarifier (103-105°C ไล่อากาศให้ตะกอนจม) (3) เป้า pH 7.0-7.2 (Rein optimum) เพื่อ minimize ทั้ง inversion และ color'});
 
   // ── Recovery & Losses ──
   anaCheck(L,{label:'Overall Recovery', val:anaNum(D.recov_today), unit:'%', ref:(D.recov_target?('เป้ารายงาน '+D.recov_target):'ไทยเฉลี่ย 82-87 / Rein: >87.5 world-class'), judge:(D.recov_target?jTgt(D.recov_target):jMin(87.5,82)),
     okTxt:'ประสิทธิภาพรวมของโรงงานอยู่ในเกณฑ์ดี',
     badTxt:'Recovery ต่ำกว่าเป้า — ทุก 1% ที่หายไปคือมูลค่ามหาศาลต่อฤดู (Rein: ตรวจ Extraction → BHR → Undetermined ตามลำดับ)',
-    cause:'ดูองค์ประกอบ: Extraction ต่ำ (หีบ), BHR ต่ำ (ต้ม-เคี่ยว/กากน้ำตาล), หรือ Undetermined สูง (รั่วไหล/วัดผิด)',
-    fix:'ไล่วินิจฉัยตามลำดับ Rein: Extraction >96.5? → BHR >86? → Undetermined <2.5? แก้จุดที่หลุดเกณฑ์ก่อน'});
+    cause:'กลไกเชิงลึก: Overall Recovery = Extraction (ฝั่งหีบ) × BHR (ฝั่งต้ม-เคี่ยว) ÷ 100 โดยประมาณ — ดังนั้นการที่ Recovery ต่ำต้องเกิดจากจุดใดจุดหนึ่งใน 3 องค์ประกอบ: (1) Extraction ต่ำ → น้ำตาลหลุดกับชานอ้อย (2) BHR ต่ำ → น้ำตาลหลุดกับกากน้ำตาล (3) Undetermined Loss สูง → น้ำตาลหายโดยไม่ถูกบันทึก (รั่ว/entrainment/วัดผิด). Rein เน้นว่าต้อง "หาว่าน้ำตาลหายที่ไหน" ก่อนแก้ ห้ามเดา',
+    fix:'ไล่วินิจฉัยตามลำดับ Rein (diagnostic tree): (1) Extraction >96.5%? ถ้าไม่ → แก้ฝั่งหีบ (PI/imbibition/mill) (2) BHR >86%? ถ้าไม่ → แก้ฝั่งต้ม-เคี่ยว (FM purity/syrup purity/entrainment) (3) Undetermined <2.5%? ถ้าไม่ → ไล่หารอยรั่ว/ตรวจเครื่องวัด. แก้จุดที่หลุดเกณฑ์มากสุดก่อน (biggest gap first) — ทุก 1% Recovery ≈ 10-15 ล้านบาท/ฤดู'});
   anaCheck(L,{label:'BHR (Boiling House Recovery)', val:anaNum(D.bhr_today), unit:'%', ref:(D.bhr_target?('เป้ารายงาน '+D.bhr_target):'Rein: ≥86 ดี / >91 world-class'), judge:(D.bhr_target?jTgt(D.bhr_target):jMin(88,86)),
     okTxt:'ฝั่งต้ม-เคี่ยว-ปั่นเก็บน้ำตาลจากน้ำอ้อยได้ดี',
     badTxt:'BHR ต่ำ = น้ำตาลหลุดไปกับกากน้ำตาลมากกว่าที่ควร',
-    cause:'FM Purity สูงเกิน (C-station เคี่ยว/บ่มไม่ถึงที่), Syrup purity ต่ำจากคุณภาพอ้อย, หรือ entrainment ที่หม้อระเหย/หม้อเคี่ยว',
-    fix:'เช็ค FM Purity ก่อน → เพิ่มเวลาบ่ม C-crystallizer (เป้า 24-36 ชม.) + คุมการเย็นตัว, ตรวจคุณภาพ seed/magma'});
+    cause:'กลไกเชิงลึก (Rein บทที่ 11-12 Crystallization): BHR วัดว่าฝั่ง boiling house ดึงน้ำตาลจากน้ำเชื่อมออกมาเป็นผลึกได้กี่ % — ตัวฉุดหลักคือ FM Purity (ยิ่งสูง ยิ่งเสีย). BHR ต่ำเกิดจาก: (1) FM Purity สูง — exhaustion ของ C-massecuite ไม่ดี (เคี่ยว/บ่มไม่ถึงที่) (2) Syrup/target purity สูงจากคุณภาพอ้อยต่ำ (reducing sugar/ash สูง ทำให้ molasses "อิ่มตัว" ที่ purity สูงกว่าปกติ — target purity ตามสมการ SJM) (3) entrainment — ไอในหม้อระเหย/หม้อเคี่ยวพาละอองน้ำเชื่อมหลุดไปกับ condensate/vapor (ตรวจได้จาก sugar in condensate)',
+    fix:'(1) เช็ค FM Purity ก่อน (ตัวแปรที่ควบคุมได้มากสุด) → ถ้าสูง แก้ที่ C-station (2) ประเมิน target purity: ถ้าอ้อยคุณภาพต่ำ (RS/ash สูง) molasses จะ exhaust ได้ที่ purity สูงกว่าปกติ — ต้องยอมรับหรือแก้ที่ต้นทางอ้อย (3) ตรวจ entrainment: วัด sugar ใน condensate ทุกจุด (แท็บคุณภาพน้ำ) — ถ้าพบ = มี carryover ต้องตรวจ mist eliminator/ระดับน้ำเชื่อมในหม้อ/โหลดที่พุ่งเกิน'});
   anaCheck(L,{label:'Purity กากน้ำตาลสุดท้าย (FM)', val:anaNum(D.fm_purity_today), unit:'', ref:(D.fm_purity_target?('เป้ารายงาน '+D.fm_purity_target):'Rein: <35 ดี / <33 world-class'), judge:(D.fm_purity_target?jTgt(D.fm_purity_target):jMax(35,38)),
     okTxt:'รีดน้ำตาลออกจากกากน้ำตาลได้เกือบสุด (exhaustion ดี)',
     badTxt:'Purity FM สูง = ซูโครสตามกากน้ำตาลออกไปขายราคาถูก — Loss ก้อนใหญ่อันดับ 2 ของโรงงาน',
-    cause:'C-massecuite Brix ต่ำ/เคี่ยวไม่ถึง, เวลาบ่ม crystallizer สั้น, การเย็นตัวเร็วเกิน, หรือ reheating ก่อนปั่นสูงไป',
-    fix:'เคี่ยว C ให้ Brix ถึงเป้า, บ่ม 24-36 ชม. คุมโปรไฟล์อุณหภูมิเย็นตัวช้าๆ, คุมอุณหภูมิ reheat ก่อนปั่นไม่เกินจุดละลายผลึก'});
+    cause:'กลไกเชิงลึก (Rein: C-massecuite exhaustion): กากน้ำตาลสุดท้ายควรถูก "รีด" ให้เหลือน้ำตาลน้อยสุด (target purity ต่ำ) การที่ FM Purity สูงหมายถึงมีซูโครสที่ยังตกผลึกได้แต่ไม่ถูกดึงออก หลุดไปกับกากน้ำตาล (ขายราคา ~1/5 ของน้ำตาล = Loss อันดับ 2). สาเหตุเชิงกระบวนการ: (1) C-massecuite Brix ต่ำ/เคี่ยวไม่ถึง — supersaturation ไม่พอให้ผลึกโต (2) เวลาบ่มใน C-crystallizer สั้น — ผลึกยังโตต่อได้แต่ถูกปั่นก่อน (kinetics ต้องการ 24-48 ชม.) (3) การเย็นตัวเร็วเกิน/ไม่เป็น profile — ทำให้เกิด false grain แทนที่ผลึกจะโต (4) reheating ก่อนปั่นสูงเกิน → ผลึกละลายกลับ (dissolution) เพิ่ม purity molasses',
+    fix:'(1) เคี่ยว C-massecuite ให้ Brix/แข็งถึงเป้า (สูงสุดที่ยังปั่นไหว, ~99-100 Brix) (2) เพิ่มเวลาบ่ม C-crystallizer เป็น 24-36 ชม. (world-class 36-48) พร้อมคุม cooling profile แบบช้าๆเป็นเส้น (linear cooling) เพื่อรักษา supersaturation ในโซนที่ผลึกโตโดยไม่เกิด false grain (3) คุมอุณหภูมิ reheat ก่อนปั่นให้พอละลายผลึกละเอียด (fines) โดยไม่ละลายผลึกหลัก — โดยทั่วไปเพิ่ม ~5-8°C จากอุณหภูมิ crystallizer (4) ตรวจคุณภาพ seed/magma และ movement water ที่ centrifugal (น้ำล้างมากไปละลายผลึก) — ทุก 1% FM purity ที่ลด ≈ 3-5 ล้านบาท/ฤดู'});
   anaCheck(L,{label:'Undetermined Loss', val:anaNum(D.loss_undet_today), unit:'%', ref:'Benchmark: <1.5 ดีเยี่ยม / 2.5-4.0 ต้องสอบสวน / >4.0 วิกฤต', judge:jMax(2.5,4.0),
     okTxt:'การสูญเสียที่อธิบายไม่ได้อยู่ในระดับควบคุม แสดงว่า mass balance และการเก็บตัวอย่างน่าเชื่อถือ',
     badTxt:'Loss ที่หาสาเหตุไม่ได้สูงผิดปกติ — มีน้ำตาลหายจากระบบโดยไม่ถูกบันทึก',
     warnTxt:'เริ่มสูงกว่าระดับดี ควรทวนสอบ mass balance และจุดรั่วไหล',
-    cause:'Entrainment ไอพาน้ำตาลที่หม้อระเหย/หม้อเคี่ยว, น้ำตาลหก-ล้น-รั่วตามพื้น, การชั่ง/วัด Brix-Pol คลาดเคลื่อน, น้ำหวานปนไปน้ำ condensate',
-    fix:'ตรวจ Sugar Content ใน condensate ทุกจุด (ดูแท็บคุณภาพน้ำ), ทวนสอบเครื่องชั่ง/flow meter, ไล่หารอยรั่ว-จุดล้นทั้งไลน์'});
+    cause:'กลไกเชิงลึก: Undetermined Loss = (น้ำตาลเข้า) − (น้ำตาลออกที่วัดได้ทั้งหมด: sugar+bagasse+filter cake+molasses) — เป็น "ส่วนที่หายโดยไม่มีบัญชี" จึงต้องเป็นอย่างใดอย่างหนึ่งใน 3 กลุ่ม: (1) การสูญเสียจริงที่ไม่ได้วัด — entrainment ไอพาน้ำเชื่อมที่หม้อระเหย/หม้อเคี่ยวไปกับ condensate, น้ำหวานหก-ล้น-รั่วตามพื้น/ท่อ, inversion+microbial degradation ที่ทำลายน้ำตาลจนวัด pol ไม่เจอ (2) ความคลาดเคลื่อนการวัด — เครื่องชั่งอ้อย/flow meter เพี้ยน, การเก็บตัวอย่าง Brix/Pol ไม่ representative (3) sanitation ต่ำทั้งระบบ. Undetermined สูงคือ "สัญญาณเตือน" ว่ามีปัญหาซ่อนอยู่',
+    fix:'ไล่ทีละชั้น: (1) ตรวจ sugar content ใน condensate ทุกจุด (แท็บคุณภาพน้ำ) — ถ้าพบน้ำตาล = entrainment/carryover ยืนยันการสูญเสียจริง (2) ไล่หารอยรั่ว-จุดล้น-overflow ทั้งไลน์ (โดยเฉพาะ juice/syrup/molasses pump gland, ถังที่ไม่มี level control) (3) ทวนสอบเครื่องวัด: calibrate เครื่องชั่งอ้อย/juice flow meter, ตรวจวิธีเก็บตัวอย่าง (4) ถ้ายังสูง — ทำ detailed pol balance รายสถานี (station-by-station) เพื่อ narrow down จุดที่ balance ไม่ปิด'});
   anaCheck(L,{label:'Pol % Filter Cake', val:anaNum(D.fc_pol_today), unit:'%', ref:'เป้ารายงาน <1.26 / Rein: <1.0 ดีเยี่ยม', judge:jMax(1.26,2.0),
     okTxt:'น้ำตาลติดไปกับกากหม้อกรองน้อย',
     badTxt:'น้ำตาลตามกากหม้อกรองทิ้งสูงกว่าเกณฑ์',
-    cause:'น้ำล้างกาก (wash water) ไม่พอ/กระจายไม่ทั่ว, ผ้ากรอง/สุญญากาศตก, สัดส่วน bagacillo ไม่เหมาะ',
-    fix:'เพิ่ม/ปรับหัวฉีดน้ำล้างกาก, ตรวจระบบสุญญากาศหม้อกรอง, ปรับปริมาณ bagacillo'});
+    cause:'กลไกเชิงลึก (Rein: rotary vacuum filter): กากตะกอนจาก clarifier (mud) ถูกกรองบน rotary drum filter โดยมีน้ำล้าง (wash water) ชะน้ำตาลออกก่อนกากหลุดออก. Pol%Filter Cake สูง = น้ำตาลชะออกไม่หมด เกิดจาก: (1) น้ำล้างไม่พอ/กระจายไม่ทั่ว drum (dry spot) (2) ผ้ากรอง (filter cloth) อุดตัน/สุญญากาศ (vacuum) ตก → ชั้นกากหนาเกิน น้ำล้างซึมไม่ถึง (3) สัดส่วน bagacillo (ใยชานอ้อยละเอียดที่ผสมช่วยสร้างชั้นกรอง) ไม่เหมาะ → ชั้นกากแน่นเกินหรือหลวมเกิน (4) ความเร็ว drum เร็วเกิน → เวลาชะสั้น',
+    fix:'(1) ตรวจ+ปรับหัวฉีดน้ำล้างให้คลุมเต็มหน้า drum ไม่มีจุดแห้ง, ปริมาณน้ำล้างเหมาะสม (มากไปเพิ่มภาระ evaporator, น้อยไปชะไม่หมด) (2) ตรวจระบบสุญญากาศ (vacuum pump/valve) ให้ได้ระดับ spec, เปลี่ยน/ล้างผ้ากรองที่อุดตัน (3) ปรับปริมาณ bagacillo ให้ชั้นกรองมี porosity เหมาะ (4) ปรับความเร็ว drum ให้ชั้นกากมีเวลาชะพอ. Loss นี้เล็ก (~0.33% cane target) แต่แก้ง่าย/ต้นทุนต่ำ'});
 
   // ── การหยุดหีบฝั่งกระบวนการ (จาก Stoptime Report) ──
   if(S){
@@ -4824,8 +4852,8 @@ function buildSugarAnalysis(){
       okTxt:'เดินเครื่องต่อเนื่องทั้งวัน ไม่เสียเวลาหีบ',
       badTxt:'มีการหยุดฝั่งกระบวนการ นอกจากเสียกำลังผลิตแล้ว การหยุด-เดินยังทำให้น้ำตาลค้างท่อเสื่อมและ pH/สมดุลแกว่ง',
       warnTxt:'มีหยุดสั้นๆ ควรดูสาเหตุด้านล่างเพื่อกันเกิดซ้ำ',
-      cause:'ดูรายการสาเหตุจริงจากรายงาน Stoptime ด้านล่างประกอบ',
-      fix:'วิเคราะห์สาเหตุซ้ำซาก (top-3) แล้วทำแผน PM เฉพาะจุด, เตรียม spare part จุดเสียบ่อย'});
+      cause:'ผลกระทบเชิงลึกของการหยุด (ไม่ใช่แค่เสียเวลา): (1) น้ำอ้อย/น้ำเชื่อมที่ค้างในหม้อระเหย/ท่อระหว่างหยุด จะเสื่อม (inversion+microbial) และเมื่อ restart จะพา slug ของน้ำตาลเสื่อม + สีเข้มเข้าระบบ (2) สมดุล pH/liming แกว่งตอน start-stop → เพิ่ม inversion (3) การเย็นตัวใน crystallizer เสียจังหวะ → กระทบ FM purity (4) หม้อไอน้ำต้องปรับโหลดกะทันหัน → ประสิทธิภาพตก. ดูรายการสาเหตุจริงจาก Stoptime ด้านล่างเพื่อระบุ root cause',
+      fix:'(1) วิเคราะห์ Pareto: จัดอันดับสาเหตุการหยุดสะสม (top-3 by hours) แล้วทุ่มแก้จุดที่กินเวลาสูงสุด (2) ทำ RCA (root cause analysis) จุดที่หยุดซ้ำซาก แล้วทำแผน PM เชิงป้องกันเฉพาะจุด + เตรียม critical spare part (3) ตั้งเป้า reduce loss-time%available (Rein: <5% = world-class) — ทุก ชม. downtime ≈ 50,000-200,000 บาท'});
   }
   return L;
 }
@@ -4837,19 +4865,19 @@ function buildPowerAnalysis(){
   anaCheck(L,{label:'Average Steam ต่อตันอ้อย', val:anaNum(D.avgsteam_today), unit:'kg/tc', dec:1, ref:'เป้ารายงาน '+(D.avgsteam_target||'<450')+' / world-class <450 (steam ~45% cane)', judge:jMax(anaNum(String(D.avgsteam_target||'').replace(/[<>]/g,''))||450,520),
     okTxt:'การใช้ไอน้ำต่อตันอ้อยอยู่ในเกณฑ์ — ไอส่วนเกินไปผลิตไฟขายได้เต็มที่',
     badTxt:'ใช้ไอต่อตันอ้อยสูงเกินเป้า — ไอที่เกินคือไฟฟ้าที่หายไป (ทุก 1% steam%cane ที่ลดได้ = ไฟขายเพิ่มหลาย MWh/วัน)',
-    cause:'หลัก Rillieux/steam economy: vapor bleeding ไม่ลึกพอ (pan/heater ยังกิน exhaust ตรง), Brix syrup ออกหม้อระเหยต่ำ, imbibition มากเกิน, ฉนวน/ไอรั่ว, condensate return ต่ำ',
-    fix:'ไล่ checklist steam-brain: (ฟรี/ถูก) ซ่อมรั่ว-ฉนวน-trap, จัดคิวเคี่ยวให้โหลดนิ่ง → (กลาง) เพิ่ม vapor bleeding เลี้ยง juice heater/pan → (ใหญ่) เพิ่ม effect/falling film'});
+    cause:'กลไกเชิงลึก (steam economy — หลัก Rillieux): ผู้ใช้ไอรายใหญ่คือชุดหม้อระเหย (evaporator) และหม้อเคี่ยว (pan) หัวใจการประหยัดไออยู่ที่ "vapor management" — ตามหลัก Rillieux ไอ 1 kg ที่ bleed จาก effect ที่ n ประหยัด live steam ได้ ~n เท่าเทียบการระเหยเท่ากัน. สาเหตุที่ steam%cane สูงเรียงตามผลกระทบ: (1) vapor bleeding ไม่ลึกพอ — pan/juice heater ยังใช้ exhaust steam ตรงแทนที่จะใช้ไอ V1/V2 จาก effect ต้นๆ (2) Brix syrup ออก evaporator ต่ำ (<60) → ต้องระเหยน้ำมากขึ้นทั้งใน evap และ pan (3) imbibition มากเกินไป → น้ำเข้าระบบมากต้องระเหยออกมาก (เชื่อมตรงกับฝั่งน้ำตาล) (4) ฉนวนเสีย/ไอรั่ว/steam trap เปิดค้าง (5) condensate return ต่ำ (<90%) → ต้องอุ่นน้ำ make-up เย็นใหม่',
+    fix:'ไล่ checklist steam-brain เรียงตาม CAPEX: (ก) ฟรี/ถูก ทำก่อน — ซ่อมไอรั่ว/ฉนวน/steam trap ที่เสีย, จัดคิวเคี่ยว (pan scheduling) ให้โหลดไอนิ่ง ลด peak, เพิ่ม condensate & flash recovery (ข) กลาง — เพิ่ม vapor bleeding เลี้ยง juice heater/pan ให้ลึกขึ้น (ดึง V1/V2), เพิ่ม direct-contact juice heater ด้วยไอท้ายชุด, ดัน Brix syrup ออก evap ให้ถึง 65-70 (ค) ใหญ่ — เพิ่มจำนวน effect (quad→quintuple) หรือเปลี่ยนเป็น falling-film evaporator (ΔT ต่ำ bleed ลึกได้), continuous pan เคี่ยวด้วย V1/V2. เป้า: steam%cane <45% (world-class) — ทุก 1% ที่ลด ไอที่เหลือผ่านช่วง condensing ของกังหันได้ไฟเพิ่ม ~220-260 kWh/ตันไอ'});
   if(W){
     anaCheck(L,{label:'kg ไอน้ำ / kg ชานอ้อย (Evaporation ratio)', val:anaNum(W.kgsteambag_today), unit:'', ref:'Benchmark ชานอ้อยชื้น ~50%: 2.0-2.4', judge:jMin(2.0,1.8),
       okTxt:'หม้อไอน้ำรีดไอจากชานอ้อยได้ตามมาตรฐานหม้อสมัยใหม่',
       badTxt:'ผลิตไอต่อเชื้อเพลิงได้ต่ำ = ประสิทธิภาพหม้อไอน้ำตก เชื้อเพลิงถูกเผาทิ้งเปล่า',
-      cause:'ไล่ตามวิธี heat-loss: (1) ความชื้นชานอ้อยสูง (L2 ใหญ่สุดของหม้อชีวมวล) (2) excess air สูง/อากาศรั่ว (3) ตะกรันฝั่งน้ำ-เขม่าฝั่งไฟทำอุณหภูมิไอเสียสูง (4) blowdown มากเกิน (5) unburnt ในเถ้า',
-      fix:'วัด O2 ไอเสีย (เป้า 4-6%) + อุณหภูมิไอเสีย (เป้า ≤150-170°C) เทียบ baseline, จูน excess air, ตรวจ TDS คุม blowdown อัตโนมัติ, ล้างตะกรัน/เขม่าตามรอบ'});
+      cause:'กลไกเชิงลึก (วิธี heat-loss / indirect efficiency): Evaporation ratio (kg ไอ/kg เชื้อเพลิง) ตกเมื่อประสิทธิภาพหม้อลด η = 100 − Σloss ไล่ loss ตามขนาดจากใหญ่ไปเล็ก: (1) L2 ความชื้นเชื้อเพลิง — ใหญ่สุดของหม้อชานอ้อย พลังงานถูกใช้ต้มน้ำในเชื้อเพลิงแทนผลิตไอ (ชื้น +1% → NCV −1.2-1.5%) (2) L1 ก๊าซไอเสียแห้ง — จาก excess air สูง/อากาศรั่วเข้า furnace-duct (%EA ≈ O2/(21−O2)×100) หรืออุณหภูมิไอเสียสูง (3) ตะกรันฝั่งน้ำ (scale 1 mm → เชื้อเพลิง +2%, 3 mm → +5-8%) หรือเขม่า/fouling ฝั่งไฟ → ยกอุณหภูมิไอเสีย (4) L7 blowdown มากเกิน (5) L5 unburnt carbon ในเถ้า',
+      fix:'วินิจฉัยด้วยเครื่องมือ (ห้ามเดา): (1) วัด O2 ในไอเสีย เป้า 4-6% (EA 25-45% สำหรับชานอ้อย) — ถ้าสูง จูน damper/O2 trim, หารูรั่วอากาศ (2) วัดอุณหภูมิไอเสีย เป้า ≤150-170°C (มี economizer+air heater) เทียบ baseline ที่โหลดเดียวกัน — สูงขึ้น = ตะกรัน/เขม่า ต้องล้างตามรอบ (กติกา: ไอเสียเย็นลง 20°C ≈ ประสิทธิภาพ +1%) (3) ตรวจ TDS น้ำในหม้อ คุม blowdown แบบ automatic TDS control (มักลดเชื้อเพลิง 1-2%) + blowdown heat recovery (4) ตรวจ unburnt ในเถ้า, ปรับการกระจายเชื้อเพลิงบน grate. **ที่ต้นทาง: ลดความชื้นเชื้อเพลิง = คุ้มสุด (ดูข้อถัดไป)**'});
     anaCheck(L,{label:'ความชื้นเชื้อเพลิง (Moisture of Fuel)', val:anaNum(W.moist_today), unit:'%', ref:'เป้า <50 / Rein: <48 world-class — ชื้นเพิ่ม 1% ค่าความร้อนลด ~1.2-1.5%', judge:jMax(50,52),
       okTxt:'ความชื้นชานอ้อยเข้าเตาอยู่ในเกณฑ์ ค่าความร้อน (NCV) ไม่ถูกฉุด',
       badTxt:'ชานอ้อยชื้นเกิน — พลังงานส่วนหนึ่งหมดไปกับการต้มน้ำในเชื้อเพลิงแทนที่จะผลิตไอ และการเผาไหม้แย่ลง (ต้องใช้ excess air เพิ่ม)',
-      cause:'การรีดน้ำที่ลูกหีบชุดสุดท้าย (dewatering mill) ไม่แน่นพอ หรือ imbibition มากเกินไปจนชานอ้อยอุ้มน้ำ',
-      fix:'ตรวจ setting ลูกหีบชุดสุดท้าย (แรงกด/ร่อง), ทบทวนอัตรา imbibition ร่วมกับฝั่งน้ำตาล — จุดนี้เชื่อมสองระบบโดยตรง'});
+      cause:'กลไกเชิงลึก (เชื้อเพลิงชานอ้อย): GCV ชานอ้อยแห้งสนิท ~19,200-19,600 kJ/kg แต่ที่ความชื้น 50% เหลือ NCV เพียง ~7,400-7,900 kJ/kg — ความชื้นคือตัวแปรใหญ่สุดของค่าความร้อน. ความชื้นสูงส่งผลซ้อน 2 ทาง: (1) พลังงานส่วนหนึ่งต้องใช้ระเหยน้ำในเชื้อเพลิง (latent heat) ก่อนจึงจะเผาไหม้ได้ → L2 loss พุ่ง (2) การเผาไหม้แย่ลง เปลวไฟเย็น ต้องใช้ excess air มากขึ้น → L1 loss เพิ่มตาม. ต้นตอทางกายภาพ: (ก) การรีดน้ำที่ลูกหีบชุดสุดท้าย (dewatering mill) แรงกดไม่พอ (ข) imbibition มากเกินจนชานอ้อยอุ้มน้ำเกินกำลังรีด — จุดนี้คือ trade-off ที่เชื่อมฝั่งน้ำตาลกับฝั่งไอน้ำโดยตรง',
+      fix:'(1) ตรวจ setting ลูกหีบชุดสุดท้าย: hydraulic pressure ให้ได้ spec, สภาพร่องลูกหีบ — จุดนี้กำหนดทั้ง Moisture%Bagasse และ Pol%Bagasse (2) ทบทวนอัตรา imbibition ร่วมกับฝั่งน้ำตาล: ถ้าเพิ่มน้ำแล้ว Pol%Bagasse ไม่ลงแต่ Moisture พุ่ง = เกิน optimum ต้องลด (3) นอกฤดู — พิจารณา bagasse dryer ใช้ไอเสีย (flue gas) อุ่นชานอ้อยก่อนเข้าเตา, หรือ dewatering mill เพิ่ม. เป้า <48% (world-class) — ทุก 1% ที่ลด NCV เพิ่ม ~1.2-1.5% = เชื้อเพลิงเหลือขาย/ไอเพิ่ม'});
   } else {
     L.missing.push('ข้อมูล Water Report ของวันนี้ (kg ไอ/kg ชานอ้อย, ความชื้นเชื้อเพลิง, คุณภาพน้ำ Boiler)');
   }
@@ -4860,13 +4888,13 @@ function buildPowerAnalysis(){
     okTxt:'สัดส่วนไฟขายต่ออ้อยอยู่ระดับดี แสดงว่าสมดุลไอ-ไฟทั้งโรงงานบริหารได้ดี',
     badTxt:'แทบไม่มีไฟเหลือขาย — ไอถูก process กินหมด หรือระบบผลิตไฟหยุด/เดินโหลดต่ำ',
     warnTxt:'ยังอยู่ระดับ "พอใช้" — โรงงาน cogen ที่จัดการไอดีทำได้ 60-130 kWh/tc มีช่องว่างให้เพิ่มรายได้อีกมาก',
-    cause:'(1) steam%cane สูง ไอเหลือเข้าช่วง condensing น้อย (2) หยุดหีบ → เชื้อเพลิง/ไอลดแต่ไฟใช้เองยังเดิน (3) TG เดินโหลดต่ำ ประสิทธิภาพตก',
-    fix:'ลด steam%cane ตามข้อ Average Steam (ทุก 1% ที่ลด = ไฟขายเพิ่มหลาย MWh/วัน), ลดไฟใช้เองช่วงหยุด, เดิน TG ที่โหลดเหมาะสม'});
+    cause:'กลไกเชิงลึก (steam & power balance): ไฟขายคือ "ส่วนเกิน" หลังหักไฟใช้เอง โครงสร้าง cogen ทั่วไป: หม้อความดันสูง → turbo-alternator (extraction-condensing) → exhaust 1-2.5 barg เลี้ยง process. ไฟขายต่ำเกิดจาก 3 กลไก: (1) steam%cane สูง → ไอถูกดึงไปเลี้ยง process (extraction) มาก เหลือผ่านช่วง condensing (ที่ผลิตไฟส่วนเพิ่ม) น้อย (2) หยุดหีบ → เชื้อเพลิง/ไอลดแต่ไฟใช้เอง (auxiliary) ยังเดิน สัดส่วนไฟขายจึงตก (3) อุปกรณ์ยังขับด้วยกังหันเดี่ยว (mill turbine, ID fan turbine ที่ η_s เพียง 40-55%) แทนมอเตอร์ไฟฟ้า → เสียโอกาสเอาไอไปผ่าน turbo-generator ประสิทธิภาพสูง',
+    fix:'(1) ลด steam%cane ตามข้อ Average Steam ด้านบน — ทุก 1% ที่ลด ไอที่เหลือไปช่วง condensing ได้ไฟเพิ่มหลาย MWh/วัน (2) ลดไฟใช้เองช่วงหยุด (ดูข้อ Net kWh) (3) เชิงกลยุทธ์ (นอกฤดู): เปลี่ยน prime mover ของ mill/fan/pump จากกังหันเดี่ยวเป็นมอเตอร์+VFD แล้วเอาไอไปผ่าน turbo-generator แทน — ได้ไฟสุทธิเพิ่มเสมอ (แม้ไฟใช้เองเพิ่มแต่ได้ไอคืนมากกว่า). เป้า >60 kWh/tc (world-class 60-130)'});
   anaCheck(L,{label:'Net kWh ใช้เอง / ตันอ้อย', val:anaNum(D.netkwh_today), unit:'kWh/tc', ref:'เป้ารายงาน '+(D.netkwh_target||'<32')+' / ปกติ 28-35, world-class <20', judge:jMax(anaNum(String(D.netkwh_target||'').replace(/[<>]/g,''))||32,35),
     okTxt:'ไฟใช้เองต่อตันอ้อยอยู่ในเกณฑ์ เหลือไฟขายมากขึ้น',
     badTxt:'ไฟใช้เองสูง — ทุก kWh ที่ใช้เกินคือไฟขายที่หายไป',
-    cause:'มอเตอร์เดินตัวเปล่า/โหลดต่ำช่วงหยุดหีบ, ปั๊ม-พัดลมไม่มี VFD เดินเต็มรอบตลอด, อ้อยเข้าน้อยแต่ระบบเดินเต็ม',
-    fix:'ปิดอุปกรณ์ที่ไม่จำเป็นช่วงหยุด, ตรวจโหลดมอเตอร์ใหญ่, พิจารณา VFD จุดที่ throttle ด้วยวาล์ว/damper'});
+    cause:'กลไกเชิงลึก: ไฟใช้เอง (parasitic load) ต่อตันอ้อยพุ่งเมื่อ (1) อ้อยเข้าน้อย/หยุดหีบ แต่มอเตอร์ใหญ่ (pump/fan/agitator) ยังเดินเต็ม → ตัวหารลด ตัวตั้งเท่าเดิม kWh/tc จึงสูง (2) ปั๊ม-พัดลมที่ควบคุมด้วยวาล์ว/damper (throttling) แทน VFD — การ throttle คือการเผาพลังงานทิ้งที่วาล์ว มอเตอร์ยังกินไฟเต็มแม้ต้องการ flow น้อย (affinity law: ลดรอบ 20% ประหยัดไฟ ~50%) (3) มอเตอร์เดินตัวเปล่า (idle) ช่วงรอป้อน',
+    fix:'(1) ทันที — ปิด/หยุดอุปกรณ์ที่ไม่จำเป็นช่วงหยุดหีบ (interlock กับ crushing), ตรวจมอเตอร์ที่เดิน idle (2) ตรวจโหลดมอเตอร์ใหญ่: วัด kW จริงเทียบพิกัด หา oversized motor ที่เดินโหลดต่ำ (ประสิทธิภาพ+power factor ตก) (3) เชิงลงทุน — ติด VFD ที่จุดควบคุม flow ด้วยวาล์ว/damper (feedwater pump, ID/FD fan, injection pump) คืนทุนเร็วจากค่าไฟที่ประหยัด. เป้า <20 kWh/tc (world-class)'});
   if(W){
     let ksk=anaNum(W.kgsteamkw_today), kskTd=anaNum(W.kgsteamkw_todate);
     if(ksk!==null && kskTd!==null && kskTd>0){
@@ -4874,8 +4902,8 @@ function buildPowerAnalysis(){
         okTxt:'ใช้ไอผลิตไฟได้ดีเท่าหรือดีกว่าค่าเฉลี่ยฤดูนี้ของโรงงานเอง',
         badTxt:'วันนี้ใช้ไอต่อ kWh มากกว่าค่าเฉลี่ยสะสมชัดเจน — ประสิทธิภาพ turbo-generator หรือสภาวะไอ (ความดัน/อุณหภูมิ) ผิดปกติ',
         warnTxt:'สูงกว่าค่าเฉลี่ยสะสมเล็กน้อย เฝ้าดูแนวโน้มต่อ',
-        cause:'ความดัน/อุณหภูมิไอเข้า TG ตก, เดินโหลดต่ำ (ประสิทธิภาพ turbine ตกตามโหลด), หรือ extraction/condensing balance เปลี่ยน',
-        fix:'ตรวจความดัน-อุณหภูมิไอหม้อให้ได้พิกัด, เลี่ยงเดิน TG โหลดต่ำนานๆ ด้วยการจัดคิวโหลด process'});
+        cause:'กลไกเชิงลึก (Rankine cycle): ค่า kg ไอ/kWh (steam rate) ยิ่งต่ำยิ่งดี — งานที่กังหันทำได้ = enthalpy drop (Δh) ระหว่างไอเข้ากับไอออก × η_isentropic. ค่านี้แย่ลงเมื่อ (1) ความดัน/อุณหภูมิไอเข้า TG ตกจากพิกัด → Δh ที่ทำได้ลดลง (หม้อผลิตไอไม่ถึง spec หรือ pressure drop ในสาย) (2) เดินโหลดต่ำ — η ของกังหันตกตามโหลด (part-load efficiency) โดยเฉพาะต่ำกว่า ~50% ของพิกัด (3) extraction/condensing balance เปลี่ยน — ถ้าดึง extraction (สำหรับ process) สัดส่วนมากขึ้น ไอที่ผ่าน condensing (ทำงานเต็ม Δh) น้อยลง (4) vacuum ที่ condenser ตก → ไอออกที่ความดันสูงขึ้น Δh ลด',
+        fix:'(1) ตรวจความดัน-อุณหภูมิไอหม้อ/ที่หน้า TG ให้ได้พิกัด — หา pressure drop/desuperheat ที่ผิดปกติ (2) ตรวจ condenser vacuum + cooling tower performance (vacuum ตก = Δh หาย) (3) เลี่ยงเดิน TG โหลดต่ำนานๆ — จัดคิวโหลด process (pan scheduling) ให้ไอนิ่ง หรือรวมโหลดไปเดินเครื่องที่ประสิทธิภาพสูงเครื่องเดียว (4) ตรวจ steam trap/รั่วในสายไอหลัก'});
     }
     // ── คุณภาพน้ำเข้า Boiler (Water Report — ใช้เกณฑ์เดียวกับ water treatment) ──
     let bwIssues=[], bwOk=[];
@@ -4891,8 +4919,8 @@ function buildPowerAnalysis(){
     if(bwOk.length) L.goods.push(`<div class="ana-item g"><b>คุณภาพน้ำเข้าหม้อไอน้ำ</b> — ${bwOk.join(', ')} อยู่ในเกณฑ์ทุกพารามิเตอร์หลัก (pH/TDS/Hardness/Chloride) ลดความเสี่ยงตะกรัน-กัดกร่อน-carryover</div>`);
     bwIssues.forEach(b=>{
       L.bads.push(`<div class="ana-item b"><b>คุณภาพน้ำ ${b.lbl}</b> — ${b.probs.join(' | ')}</div>`);
-      L.causes.push(`<div class="ana-item w"><b>น้ำ ${b.lbl}:</b> ระบบปรับสภาพน้ำ (softener/เคมี/blowdown) คุมไม่ถึงเกณฑ์ หรือมีการปนเปื้อนเข้าระบบ condensate</div>`);
-      L.fixes.push(`<div class="ana-item"><b>น้ำ ${b.lbl}:</b> คุมตามหลัก water treatment: ตะกรัน 1 mm = เชื้อเพลิงเพิ่ม ~2% — ปรับ blowdown อิง TDS, ตรวจ softener/เคมีป้อน, หาแหล่งปนเปื้อน (ดูรายละเอียดในแท็บไอน้ำและไฟฟ้า)</div>`);
+      L.causes.push(`<div class="ana-item w"><div class="ana-item-row"><b>น้ำ ${b.lbl}:</b></div><div class="ana-item-desc">กลไกเชิงลึก (boiler water treatment): ปัญหาน้ำหม้อไอน้ำมี 3 กลุ่มหลัก — (1) ตะกรัน (scale) จาก Ca/Mg/silica ที่หลุดผ่าน softener/demineralizer → เกาะผิวท่อร้อน เป็นฉนวนความร้อน (2) การกัดกร่อน (corrosion) จาก O2 ละลาย (pitting), pH ต่ำ, หรือ CO2 ในสาย condensate (grooving) (3) carryover/foaming จาก TDS สูง/น้ำมันปน/ระดับน้ำสูง → ไอเปียกพา solid ไปเกาะ superheater/ใบกังหัน. ค่าที่หลุดเกณฑ์บ่งชี้ว่าระบบปรับสภาพน้ำ (external: softener/RO/deaerator หรือ internal: phosphate/scavenger) คุมไม่ถึง หรือมีการปนเปื้อน (เช่น condenser leak ทำ chloride พุ่ง)</div></div>`);
+      L.fixes.push(`<div class="ana-item"><div class="ana-item-row"><b>น้ำ ${b.lbl}:</b></div><div class="ana-item-desc">คุมตามหลัก water treatment (ผลกระทบเชิงเงิน: ตะกรัน 1 mm = เชื้อเพลิง +2%, 3 mm = +5-8%): (1) TDS/conductivity — คุม blowdown แบบ automatic TDS control (%BD = S_feed/(S_max−S_feed)×100), เพิ่ม COC ด้วยน้ำป้อนคุณภาพดีขึ้น + condensate return สูง (2) Hardness — ตรวจ softener (resin หมด/regeneration), เป้าน้ำป้อน hardness ~0 (3) pH — คุม 10.5-12.5 (ในหม้อ) ด้วย phosphate/alkalinity program (4) Chloride สูง — ตรวจ condenser tube leak (chloride เป็น tracer ที่ไวสุด) (5) O2 — ตรวจ deaerator (เป้า O2 ≤7 ppb) + oxygen scavenger residual. ดูรายละเอียดค่าแต่ละตัวในการ์ด "คุณภาพน้ำเข้า Boiler" แท็บไอน้ำและไฟฟ้า</div></div>`);
     });
   }
   // ── การหยุด Boiler / Power House (Stoptime Report) ──
@@ -4902,8 +4930,8 @@ function buildPowerAnalysis(){
       okTxt:'หม้อไอน้ำและระบบไฟฟ้าเดินต่อเนื่อง ไม่เป็นเหตุให้หยุดหีบ',
       badTxt:'ระบบไอน้ำ/ไฟฟ้าทำให้โรงงานหยุด — กระทบทั้งการหีบและรายได้ไฟขายพร้อมกัน',
       warnTxt:'มีหยุดสั้น ตรวจสาเหตุจริงด้านล่างเพื่อกันเกิดซ้ำ',
-      cause:'ดูรายการสาเหตุจริงจาก Stoptime Report ด้านล่าง',
-      fix:'ทำ RCA ทุกครั้งที่ boiler/power trip, ทบทวนแผน PM และ interlock ที่ trip บ่อย'});
+      cause:'ผลกระทบเชิงลึกของ boiler/power trip: เมื่อหม้อไอน้ำหรือ TG หยุด จะกระทบพร้อมกัน 2 ทาง (double loss) — (1) ไอไม่พอเลี้ยง process → โรงงานต้องลดโหลด/หยุดหีบ เสียกำลังผลิต (2) หยุดผลิต/ขายไฟ เสียรายได้ไฟฟ้า. สาเหตุ trip ที่พบบ่อยของหม้อชานอ้อย: ระดับน้ำต่ำ (low water — safety interlock), เชื้อเพลิงป้อนสะดุด (bagasse feed jam/แห้งเป็นจังหวะช่วงหยุดหีบ), ID/FD fan trip, ตะกรัน/ท่อรั่ว, หรือฝั่งไฟ: generator protection trip, grid disturbance. **ดูรายการสาเหตุจริงจาก Stoptime Report ด้านล่างเพื่อระบุ root cause**',
+      fix:'(1) ทำ RCA (root cause analysis) ทุกครั้งที่ boiler/power trip — อย่าแค่ reset แล้วเดินต่อ (2) ตรวจ interlock/protection ที่ trip บ่อย: ปรับ setpoint ที่ไวเกินจริง (nuisance trip) โดยไม่ลดความปลอดภัย (ห้าม bypass safety device — โดยเฉพาะ low-water/safety valve ตามกฎหมายหม้อน้ำ) (3) เตรียม bagasse storage/reclaim + เชื้อเพลิงเสริม (ใบอ้อย/ไม้สับ/แกลบ) ให้หม้อเดินต่อเนื่องช่วงป้อนสะดุด (4) ทำแผน PM เชิงป้องกันจุด trip ซ้ำซาก. ทุก ชม. downtime ≈ 50,000-200,000 บาท (เสียทั้งการหีบ+ไฟขาย)'});
   }
   return L;
 }
@@ -4924,7 +4952,7 @@ function anaStopCausesHtml(topic){
 
 function openAnalysis(topic){
   if(!D){ alert('ยังไม่มีข้อมูล กรุณาเลือกวันที่ก่อน'); return; }
-  let title = topic==='sugar' ? '🍬 บทวิเคราะห์การผลิตน้ำตาล' : '⚡ บทวิเคราะห์ไฟฟ้า + หม้อไอน้ำ';
+  let title = topic==='sugar' ? '<svg style="width:22px;height:21px;vertical-align:-4px"><use href="#icoSugarBag"/></svg> บทวิเคราะห์การผลิตน้ำตาล' : '⚡ บทวิเคราะห์ไฟฟ้า + หม้อไอน้ำ';
 
   if(!(pn(D.cane_today) > 0)){
     document.getElementById('anaTitle').innerHTML = title;
