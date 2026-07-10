@@ -137,29 +137,33 @@ body.guide-bg::after { background: rgba(8,17,31,0.72); }
 }
 .trend-overlay.hidden { display:none; }
 .trend-box {
-  background:rgba(15,32,53,0.97); border:1px solid rgba(79,157,255,0.3);
+  background:#ffffff; border:1px solid #e3ecf7;
   border-radius:20px; padding:26px 28px 22px; max-width:900px; width:100%;
-  box-shadow:0 24px 70px rgba(0,0,0,0.5); position:relative;
+  box-shadow:0 24px 70px rgba(20,40,70,0.28); position:relative;
 }
 .trend-box-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
-.trend-box-head h3 { font-family:'Kanit'; font-size:17px; color:#fff; font-weight:600; display:flex; align-items:center; gap:9px; }
-.trend-close { background:rgba(255,255,255,0.1); border:none; color:rgba(255,255,255,0.7); width:30px; height:30px; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s; }
-.trend-close:hover { background:rgba(239,68,68,0.25); color:#fff; }
+.trend-box-head h3 { font-family:'Kanit'; font-size:17px; color:#0D47A1; font-weight:600; display:flex; align-items:center; gap:9px; }
+.trend-close { background:#f0f4f8; border:none; color:#4a6580; width:30px; height:30px; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s; }
+.trend-close:hover { background:rgba(239,68,68,0.15); color:#C62828; }
 .trend-box .ch { height:210px; }
-.trend-legend-hint { font-family:'Kanit'; font-size:11px; color:rgba(255,255,255,0.4); text-align:center; margin-top:10px; }
+.trend-legend-hint { font-family:'Kanit'; font-size:11px; color:#7b8fa3; text-align:center; margin-top:10px; }
 .trend-bottom { display:grid; grid-template-columns:210px 1fr; gap:24px; margin-top:4px; }
 .trend-gauge-area { display:flex; flex-direction:column; align-items:center; padding-top:8px; }
 .trend-bar-area { }
-.trend-section-lbl { font-family:'Kanit'; font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:10px; text-align:center; letter-spacing:.3px; }
+.trend-section-lbl { font-family:'Kanit'; font-size:11px; color:#7b8fa3; margin-bottom:10px; text-align:center; letter-spacing:.3px; }
 .trend-gauge-area .gauge-wrap { background:none; padding:0; }
-.trend-gauge-area .gauge-svg { width:180px; height:102px; filter:drop-shadow(0 3px 12px rgba(66,165,245,0.3)); }
-#trendGaugeHtml .gauge-wrap { background:none; padding:16px 0 4px; }
-#trendGaugeHtml .gauge-svg { width:280px; height:158px; filter:drop-shadow(0 3px 14px rgba(66,165,245,0.3)); }
-#trendGaugeHtml .gauge-v { font-size:34px; }
-#trendGaugeHtml .gauge-pct { font-size:14px; }
-.trend-gauge-area .gauge-v { font-size:28px; font-weight:800; color:#fff; margin-top:4px; }
-.trend-gauge-area .gauge-pct { font-size:12px; color:rgba(255,255,255,0.45); margin-top:2px; font-family:'Kanit'; }
-.trend-gauge-area .gauge-l { color:rgba(255,255,255,0.35); }
+.trend-gauge-area .gauge-svg { width:180px; height:102px; filter:drop-shadow(0 3px 12px rgba(13,71,161,0.15)); }
+#trendGaugeHtml .gauge-wrap { background:none; padding:12px 0 4px; }
+#trendGaugeHtml .gauge-svg { width:190px; height:107px; filter:drop-shadow(0 3px 14px rgba(13,71,161,0.18)); }
+#trendGaugeHtml .gauge-v { font-size:26px; }
+#trendGaugeHtml .gauge-pct { font-size:12.5px; }
+.trend-box-compact { max-width:340px !important; }
+.trend-gauge-area .gauge-v, #trendGaugeHtml .gauge-v { font-weight:800; color:#12202f; margin-top:4px; }
+.trend-gauge-area .gauge-pct, #trendGaugeHtml .gauge-pct { color:#4a6580; margin-top:2px; font-family:'Kanit'; }
+.trend-gauge-area .gauge-l, #trendGaugeHtml .gauge-l { color:#7b8fa3; }
+body.dashboard-bg #trendOverlay .gauge-v { color:#12202f; }
+body.dashboard-bg #trendOverlay .gauge-pct { color:#4a6580; }
+body.dashboard-bg #trendOverlay .gauge-l { color:#7b8fa3; }
 
 /* ─── DOWNLOAD DROPDOWN ─── */
 .dl-wrap { position:relative; display:none; }
@@ -213,18 +217,18 @@ body.guide-bg::after { background: rgba(8,17,31,0.72); }
 
 /* ─── EXPERT ANALYSIS ─── */
 .ana-btn {
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center;
-  aspect-ratio:1/1; width:100%; max-width:230px; margin:0 auto; padding:20px; border-radius:20px; cursor:pointer;
+  display:flex; align-items:center; gap:14px; text-align:left;
+  padding:18px 22px; border-radius:16px; cursor:pointer;
   font-family:'Kanit'; transition:all .25s; border:1px solid rgba(255,255,255,0.15);
   backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
 }
 .ana-btn-sugar { background:linear-gradient(135deg, rgba(236,72,153,0.22), rgba(168,85,247,0.16)); }
 .ana-btn-power { background:linear-gradient(135deg, rgba(245,158,11,0.22), rgba(79,157,255,0.16)); }
 .ana-btn:hover { transform:translateY(-3px); border-color:rgba(255,255,255,0.35); box-shadow:0 12px 32px rgba(0,0,0,0.35); }
-.ana-btn-ico { font-size:44px; flex-shrink:0; }
-.ana-btn-txt { display:flex; flex-direction:column; align-items:center; gap:4px; }
-.ana-btn-txt strong { font-size:17px; color:#fff; font-weight:600; }
-.ana-btn-txt small { font-size:11.5px; color:rgba(255,255,255,0.6); font-weight:300; line-height:1.4; }
+.ana-btn-ico { font-size:30px; flex-shrink:0; }
+.ana-btn-txt { display:flex; flex-direction:column; gap:2px; }
+.ana-btn-txt strong { font-size:16px; color:#fff; font-weight:600; }
+.ana-btn-txt small { font-size:11.5px; color:rgba(255,255,255,0.55); font-weight:300; }
 
 /* Analysis popup — white background, high-contrast text */
 #anaOverlay .trend-box {
@@ -250,8 +254,11 @@ body.guide-bg::after { background: rgba(8,17,31,0.72); }
 .ana-item::before { content:''; position:absolute; left:2px; top:14px; width:7px; height:7px; border-radius:50%; background:#90a4b8; }
 .ana-item.g::before { background:#2E7D32; } .ana-item.b::before { background:#C62828; } .ana-item.w::before { background:#E65100; }
 .ana-item b { color:#0d1b2a; font-weight:700; }
-.ana-item .ana-val { color:#0D47A1; font-weight:700; }
-.ana-item .ana-ref { color:#7b8fa3; font-size:11.5px; }
+.ana-item-row { display:flex; align-items:baseline; gap:6px; flex-wrap:nowrap; white-space:nowrap; }
+.ana-item .ana-eq { color:#7b8fa3; }
+.ana-item .ana-val { color:#0D47A1; font-weight:700; white-space:nowrap; }
+.ana-item-ref { color:#7b8fa3; font-size:11.5px; margin-top:2px; white-space:normal; }
+.ana-item-desc { margin-top:3px; white-space:normal; }
 .ana-grade { display:inline-block; padding:5px 16px; border-radius:20px; font-weight:700; font-size:13px; }
 .ana-grade.pass { background:#e8f5e9; color:#1B5E20; }
 .ana-grade.warn { background:#fff3e0; color:#8a5a00; }
@@ -260,7 +267,7 @@ body.guide-bg::after { background: rgba(8,17,31,0.72); }
 .ana-ov-cell { background:#f5f8fc; border:1px solid #e3ecf7; border-radius:10px; padding:9px 10px; text-align:center; }
 .ana-ov-cell .v { font-size:18px; font-weight:800; color:#0D47A1; }
 .ana-ov-cell .l { font-size:10.5px; color:#6b7f99; margin-top:2px; }
-@media(max-width:640px){ .ana-btn { padding:16px; max-width:170px; } .ana-btn-ico { font-size:34px; } .ana-btn-txt strong { font-size:14px; } }
+@media(max-width:640px){ .ana-btn { padding:14px 16px; } .ana-btn-txt strong { font-size:14px; } }
 .tab-content.active { display:block; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
@@ -1992,7 +1999,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
 
 <!-- TREND MODAL -->
 <div class="trend-overlay hidden" id="trendOverlay" onclick="if(event.target===this) closeTrendModal()">
-  <div class="trend-box">
+  <div class="trend-box" id="trendBox">
     <div class="trend-box-head">
       <h3><i data-lucide="trending-up" style="width:18px;height:18px;color:var(--accent)"></i> <span id="trendTitle">แนวโน้ม</span></h3>
       <button class="trend-close" onclick="closeTrendModal()"><i data-lucide="x" style="width:16px;height:16px"></i></button>
@@ -2890,12 +2897,13 @@ function renderCausesRows(){
       <td style="${P};text-align:left;padding-left:200px">${c.r||'-'}</td>
     </tr>`;
   }).join('');
+  let totalHr=(totalMin/60).toFixed(2);
   if(tfoot) tfoot.innerHTML=`<tr style="border-top:2px solid rgba(255,255,255,0.15);">
     <td colspan="5" style="text-align:right;padding:10px 16px;font-family:Kanit;font-size:13px;color:rgba(255,255,255,0.55);">รวม${dept?' ('+dept+')':''}</td>
-    <td style="text-align:center;font-weight:700;color:var(--warning);font-size:14px;">${totalMin} นาที</td>
+    <td style="text-align:center;font-weight:700;color:var(--warning);font-size:14px;">${totalMin} นาที (${totalHr} ชม.)</td>
   </tr>`;
   let badge=document.getElementById('causesCountBadge');
-  if(badge) badge.textContent='รวม '+totalMin+' นาที'+(dept?' ('+filtered.length+'/'+all.length+')':'');
+  if(badge) badge.textContent='รวม '+totalMin+' นาที ('+totalHr+' ชม.)'+(dept?' ('+filtered.length+'/'+all.length+')':'');
 }
 
 
@@ -4243,10 +4251,12 @@ function openTrendModal(paramKey, label, unit, color, targetVal, dailyTargetVal,
   let caneSection = document.getElementById('trendCaneSection');
 
   let gaugeKeys = ['cane','totsugar','fm','fc'];
+  let trendBox = document.getElementById('trendBox');
   if(gaugeKeys.includes(paramKey) && tv > 0){
-    // ── Gauge mode: SVG Gauge + Bar chart (สำหรับค่า weight ที่มี total target) ──
+    // ── Gauge mode: SVG Gauge (สำหรับค่า weight ที่มี total target) ──
     lineSection.style.display = 'none';
     caneSection.style.display = 'block';
+    trendBox.classList.add('trend-box-compact');
 
     let latestTodate = sorted.length ? pn(sorted[sorted.length-1][paramKey+'_todate']) : 0;
     let gPct = Math.min(latestTodate / tv, 1);
@@ -4274,6 +4284,7 @@ function openTrendModal(paramKey, label, unit, color, targetVal, dailyTargetVal,
     // ── Other cards: Line chart only ──
     lineSection.style.display = 'block';
     caneSection.style.display = 'none';
+    trendBox.classList.remove('trend-box-compact');
 
     let datasets = [
       {label:'Today (รายวัน)', data:todayVals, borderColor:'#38BDF8', backgroundColor:'#38BDF822', borderWidth:2.5, tension:0.35, pointRadius:4, pointBackgroundColor:'#38BDF8', pointBorderColor:'#fff', pointBorderWidth:1.5, fill:false},
@@ -4283,10 +4294,10 @@ function openTrendModal(paramKey, label, unit, color, targetVal, dailyTargetVal,
       datasets.push({label:'Target', data:labels.map(()=>tv), borderColor:'#4ADE80', borderWidth:2, borderDash:[3,5], pointRadius:0, fill:false});
     }
     makeChart('cTrendModal','line',{labels,datasets},{
-      plugins:{legend:{labels:{font:{family:'Kanit',size:11},usePointStyle:true,color:'rgba(255,255,255,0.85)'}}},
+      plugins:{legend:{labels:{font:{family:'Kanit',size:11},usePointStyle:true,color:'#2a3d52'}}},
       scales:{
-        x:{ticks:{font:{family:'Kanit',size:10},maxRotation:45,color:'rgba(255,255,255,0.7)'},grid:{color:'rgba(255,255,255,0.06)'}},
-        y:{ticks:{callback:v=>Number(v).toLocaleString('en-US',{maximumFractionDigits:2})+(unit?' '+unit:''),color:'rgba(255,255,255,0.7)'},grid:{color:'rgba(255,255,255,0.06)'}}
+        x:{ticks:{font:{family:'Kanit',size:10},maxRotation:45,color:'#4a6580'},grid:{color:'#eef2f7'}},
+        y:{ticks:{callback:v=>Number(v).toLocaleString('en-US',{maximumFractionDigits:2})+(unit?' '+unit:''),color:'#4a6580'},grid:{color:'#eef2f7'}}
       }
     });
   }
@@ -4585,36 +4596,78 @@ function renderSteamTab(){
 /* ─── Boiler Feedwater Quality Analysis (comment cards) ─── */
 function evalWaterParam(key, v){
   // returns {status:'good'|'caution'|'bad', text}
+  // เกณฑ์อ้างอิง JIS B8223/ASME สำหรับหม้อไอน้ำ water-tube ความดันปานกลาง (bagasse boiler 20-45 barg ทั่วไป)
   let n = pn(v);
   if(!v || v==='0' || v==='-') return {status:'na', text:'ไม่มีข้อมูล'};
   switch(key){
     case 'ph':
-      if(n>=10.5 && n<=12.5) return {status:'good', text:`pH ${v} อยู่ในช่วงด่างที่เหมาะสม (10.5–12.5) ช่วยป้องกันการกัดกร่อนของโลหะได้ดี`};
-      if(n<10.5) return {status:'bad', text:`pH ${v} ต่ำกว่าเกณฑ์ (< 10.5) เสี่ยงต่อการกัดกร่อนแบบกรด (acid attack) และ oxygen pitting บนผิวท่อ`};
-      return {status:'bad', text:`pH ${v} สูงเกินเกณฑ์ (> 12.5) เสี่ยงต่อ caustic embrittlement/caustic gouging บริเวณรอยเชื่อมและจุดอับ`};
+      if(n>=10.5 && n<=12.5) return {status:'good', text:`pH ${v} อยู่ในช่วงด่างที่เหมาะสมสำหรับน้ำในหม้อไอน้ำ (10.5–12.5) ฟิล์มแมกนีไทต์ (Fe₃O₄) เกาะผิวท่อได้ดี ป้องกันการกัดกร่อน`};
+      if(n<10.5) return {status:'bad', text:`pH ${v} ต่ำกว่าเกณฑ์ (< 10.5) ฟิล์มป้องกันผิวท่อ (magnetite) ไม่เสถียร เสี่ยงกัดกร่อนแบบกรด (acid attack) และ oxygen pitting`};
+      return {status:'bad', text:`pH ${v} สูงเกินเกณฑ์ (> 12.5) เสี่ยง caustic embrittlement/caustic gouging บริเวณรอยเชื่อม-จุดอับที่มีความเข้มข้นสูงเฉพาะจุด (concentration cell)`};
     case 'tds':
-      if(n<2000) return {status:'good', text:`TDS ${v} ppm อยู่ในเกณฑ์ดี ความเสี่ยง carryover/scale ต่ำ`};
-      if(n<=3500) return {status:'caution', text:`TDS ${v} ppm เริ่มสูง ควรเพิ่มอัตรา blowdown เพื่อลดความเสี่ยง carryover/priming`};
-      return {status:'bad', text:`TDS ${v} ppm สูงมาก เสี่ยง scale เกาะผิวท่อและไอน้ำพา solid carryover ไปกับ steam ควร blowdown เพิ่มด่วน`};
+      if(n<2000) return {status:'good', text:`TDS ${v} ppm อยู่ในเกณฑ์ดี (< 2,000) ความเสี่ยง carryover/priming ต่ำ`};
+      if(n<=3500) return {status:'caution', text:`TDS ${v} ppm เริ่มสูง (2,000–3,500) ใกล้ขีดจำกัดบนของหม้อ water-tube — ควรเพิ่มอัตรา blowdown`};
+      return {status:'bad', text:`TDS ${v} ppm เกินขีดจำกัด (> 3,500) เสี่ยง carryover ของแข็งไปกับไอ (silica/solid ติดใบกังหันได้) และตะกรันสะสมเร็วขึ้น — ต้อง blowdown เพิ่มทันที`};
     case 'hard':
-      if(n<5) return {status:'good', text:`Hardness ${v} ppm ใกล้ศูนย์ ไม่มีความเสี่ยงตะกรัน`};
-      if(n<=20) return {status:'caution', text:`Hardness ${v} ppm เริ่มพบความกระด้าง ควรตรวจสอบระบบ Softener/Demineralizer ก่อนป้อนเข้าหม้อไอน้ำ`};
-      return {status:'bad', text:`Hardness ${v} ppm สูงเกินไป เสี่ยงเกิดตะกรัน (scale) เกาะผิวท่อ ลดประสิทธิภาพการถ่ายเทความร้อนและอาจทำให้ท่อร้อนจัดจนเสียหาย`};
+      if(n<5) return {status:'good', text:`Hardness ${v} ppm ใกล้ศูนย์ (มาตรฐานน้ำหม้อไอน้ำต้องเป็น ~0) ไม่มีความเสี่ยงตะกรัน Ca/Mg`};
+      if(n<=20) return {status:'caution', text:`Hardness ${v} ppm เริ่มพบความกระด้างหลุดเข้าระบบ (ควรเป็น 0) ให้ตรวจสอบ Softener/Demineralizer ก่อนป้อนเข้าหม้อ`};
+      return {status:'bad', text:`Hardness ${v} ppm สูงผิดปกติ (มาตรฐานต้อง ~0) ตะกรัน Ca/Mg จะเกาะผิวท่อ — ตะกรันหนา 1 mm ≈ สิ้นเปลืองเชื้อเพลิงเพิ่ม ~2%, 3 mm ≈ 5-8% และเสี่ยงท่อร้อนจัดจนบวม/แตก`};
     case 'cl':
-      if(n<100) return {status:'good', text:`Chloride ${v} ppm อยู่ในเกณฑ์ปกติ`};
-      if(n<=200) return {status:'caution', text:`Chloride ${v} ppm ค่อนข้างสูง ควรเฝ้าระวังการกัดกร่อนแบบ pitting และตรวจสอบว่ามีน้ำหล่อเย็นรั่วปนหรือไม่`};
-      return {status:'bad', text:`Chloride ${v} ppm สูงผิดปกติ มีความเสี่ยงสูงต่อการกัดกร่อนแบบ pitting/stress corrosion และอาจบ่งชี้ว่ามีน้ำ Condenser รั่วปนเข้าระบบ`};
+      if(n<100) return {status:'good', text:`Chloride ${v} ppm อยู่ในเกณฑ์ปกติ ไม่มีสัญญาณน้ำหล่อเย็นปนเข้าระบบ`};
+      if(n<=200) return {status:'caution', text:`Chloride ${v} ppm ค่อนข้างสูง เฝ้าระวังการกัดกร่อนแบบ pitting/stress corrosion และเป็นตัวชี้วัดต้นว่าอาจมีน้ำหล่อเย็นรั่วปน`};
+      return {status:'bad', text:`Chloride ${v} ppm สูงผิดปกติ ความเสี่ยง pitting/stress corrosion สูง — Chloride เป็น tracer ที่ไวที่สุดของน้ำ Condenser รั่วปนเข้าระบบ ควรตรวจ tube leak โดยด่วน`};
     case 'palk': case 'malk':
       let lbl = key==='palk' ? 'P-Alkalinity' : 'M-Alkalinity';
-      if(n<100) return {status:'caution', text:`${lbl} ${v} ppm ต่ำ ความสามารถในการสำรองด่างเพื่อป้องกันการกัดกร่อนอาจไม่เพียงพอ`};
-      if(n<=700) return {status:'good', text:`${lbl} ${v} ppm อยู่ในช่วงเหมาะสม ช่วยควบคุมการกัดกร่อนและป้องกันตะกรันได้ดี`};
-      return {status:'bad', text:`${lbl} ${v} ppm สูงเกินไป เสี่ยงต่อ caustic embrittlement และการเกิดฟอง/carryover ในดรัม`};
+      if(n<100) return {status:'caution', text:`${lbl} ${v} ppm ต่ำ ปริมาณด่างสำรอง (alkalinity reserve) เพื่อป้องกันการกัดกร่อนอาจไม่เพียงพอ`};
+      if(n<=700) return {status:'good', text:`${lbl} ${v} ppm อยู่ในช่วงเหมาะสม ควบคุมการกัดกร่อนและป้องกันตะกรันได้ดี`};
+      return {status:'bad', text:`${lbl} ${v} ppm สูงเกินไป เสี่ยง caustic embrittlement และฟอง/carryover ในดรัม`};
   }
   return {status:'na', text:''};
+}
+// วิเคราะห์เชิงวิศวกรรมหม้อไอน้ำ: Cycles of Concentration, สัดส่วน P/M Alkalinity, การวินิจฉัยแบบไขว้พารามิเตอร์
+function boilerEngineerInsights(bkey, evalsByKey){
+  let out = [];
+  let tdsBoiler = pn(W['ws_tds_'+bkey+'_today']);
+  let tdsFeed = pn(W['ws_tds_fw1_today']) || pn(W['ws_tds_fw2_today']) || pn(W['ws_tds_sw_today']) || 0;
+  if(tdsBoiler>0 && tdsFeed>0){
+    let coc = tdsBoiler/tdsFeed;
+    if(coc>1){
+      let bdPct = 100/(coc-1);
+      let bdTxt = bdPct<=100 ? bdPct.toFixed(1)+'% ของน้ำป้อน' : 'ต่ำมาก (COC เกือบเท่าน้ำป้อน)';
+      // สถานะอิงจากค่า TDS ในหม้อจริง (evalsByKey.tds) ไม่ใช่ตัวเลข COC เดี่ยวๆ — COC สูงจากน้ำป้อนสะอาดคือเรื่องดี ไม่ใช่ปัญหา
+      let tdsSt0 = evalsByKey.tds?.status;
+      let cocStatus = tdsSt0==='bad' ? 'bad' : (tdsSt0==='caution' ? 'caution' : 'good');
+      let cocNote = tdsSt0==='good'
+        ? 'น้ำป้อนสะอาดมาก ระบบ blowdown ปัจจุบันเพียงพอ ไม่จำเป็นต้องเพิ่ม'
+        : 'TDS ในหม้อเข้าใกล้/เกินขีดจำกัดแล้ว ควรเพิ่มอัตรา blowdown ตามค่าประมาณข้างต้น หรือปรับปรุงคุณภาพน้ำป้อนเพื่อลด COC';
+      out.push({status:cocStatus,
+        text:`Cycles of Concentration (COC) ≈ ${coc.toFixed(1)} เท่า (TDS หม้อ ${fn(tdsBoiler,0)} ÷ TDS น้ำป้อน ${fn(tdsFeed,0)} ppm) — อัตรา blowdown ที่ใช้อยู่เทียบเท่า ≈ ${bdTxt}; ${cocNote}`});
+    }
+  }
+  let palk=pn(W['ws_palk_'+bkey+'_today']), malk=pn(W['ws_malk_'+bkey+'_today']);
+  if(palk>0 && malk>0){
+    let ratio = palk/malk;
+    if(ratio<0.3) out.push({status:'caution', text:`สัดส่วน P/M-Alkalinity ≈ ${ratio.toFixed(2)} (P ต่ำเทียบ M) — ด่างส่วนใหญ่อยู่ในรูปคาร์บอเนต/ไบคาร์บอเนต ไฮดรอกไซด์อิสระ (free OH⁻) น้อย เฝ้าระวัง CO₂ corrosion ที่สาย condensate`});
+    else if(ratio>0.8) out.push({status:'caution', text:`สัดส่วน P/M-Alkalinity ≈ ${ratio.toFixed(2)} (P สูงเทียบ M) — มีไฮดรอกไซด์อิสระมาก หากคู่กับ M-Alkalinity สูงด้วย เพิ่มความเสี่ยง caustic embrittlement`});
+    else out.push({status:'good', text:`สัดส่วน P/M-Alkalinity ≈ ${ratio.toFixed(2)} สมดุลดี (hydroxide/carbonate balance เหมาะสม)`});
+  }
+  // วินิจฉัยไขว้: Chloride สูงแต่ Hardness/TDS ปกติ → เจาะจง condenser leak มากกว่าปัญหาระบบปรับสภาพน้ำ
+  let clSt = evalsByKey.cl?.status, hardSt = evalsByKey.hard?.status, tdsSt = evalsByKey.tds?.status;
+  if((clSt==='bad'||clSt==='caution') && hardSt==='good' && tdsSt!=='bad'){
+    out.push({status:'caution', text:`รูปแบบข้อมูล: Chloride สูงเดี่ยวๆ ขณะที่ Hardness/TDS ปกติ — สอดคล้องกับ Condenser tube leak (น้ำหล่อเย็นรั่วปน) มากกว่าความล้มเหลวของระบบปรับสภาพน้ำ ควรตรวจ conductivity condensate/leak test ที่ condenser ก่อน`});
+  }
+  if(hardSt==='bad' && clSt==='good'){
+    out.push({status:'caution', text:`รูปแบบข้อมูล: Hardness สูงแต่ Chloride ปกติ — ชี้ไปที่ Softener/Demineralizer ทำงานบกพร่อง (resin หมด/regeneration ไม่สมบูรณ์) มากกว่าน้ำหล่อเย็นรั่ว`});
+  }
+  return out;
 }
 function renderBoilerWaterAnalysis(){
   const boilers = [{key:'bw1', label:'Boiler #1', color:'#4F9DFF'}, {key:'bw2', label:'Boiler #2', color:'#A855F7'}, {key:'bw3', label:'Boiler #3', color:'#F59E0B'}];
   const params = [{key:'ph',label:'pH'},{key:'tds',label:'TDS'},{key:'hard',label:'Hardness'},{key:'cl',label:'Chloride'},{key:'palk',label:'P-Alk'},{key:'malk',label:'M-Alk'}];
+  function li(e){
+    let dot = e.status==='good' ? '#10B981' : e.status==='caution' ? '#F59E0B' : '#EF4444';
+    return `<li style="margin-bottom:7px;padding-left:14px;position:relative"><span style="position:absolute;left:0;top:6px;width:6px;height:6px;border-radius:50%;background:${dot}"></span>${e.text}</li>`;
+  }
   document.getElementById('boilerWaterAnalysis').innerHTML = boilers.map(b=>{
     let phVal = pn(W['ws_ph_'+b.key+'_today']);
     if(phVal===0){
@@ -4624,20 +4677,21 @@ function renderBoilerWaterAnalysis(){
       </div>`;
     }
     let evals = params.map(p=>({...p, ...evalWaterParam(p.key, W['ws_'+p.key+'_'+b.key+'_today'])}));
-    let hasBad = evals.some(e=>e.status==='bad');
-    let hasCaution = evals.some(e=>e.status==='caution');
+    let evalsByKey = {}; evals.forEach(e=>evalsByKey[e.key]=e);
+    let insights = boilerEngineerInsights(b.key, evalsByKey);
+    let hasBad = evals.some(e=>e.status==='bad') || insights.some(e=>e.status==='bad');
+    let hasCaution = evals.some(e=>e.status==='caution') || insights.some(e=>e.status==='caution');
     let overall = hasBad ? {label:'ควรแก้ไข', cls:'fail'} : hasCaution ? {label:'เฝ้าระวัง', cls:'warn'} : {label:'ปกติดี', cls:'pass'};
-    let items = evals.filter(e=>e.status!=='na').map(e=>{
-      let dot = e.status==='good' ? '#10B981' : e.status==='caution' ? '#F59E0B' : '#EF4444';
-      return `<li style="margin-bottom:7px;padding-left:14px;position:relative"><span style="position:absolute;left:0;top:6px;width:6px;height:6px;border-radius:50%;background:${dot}"></span>${e.text}</li>`;
-    }).join('');
+    let items = evals.filter(e=>e.status!=='na').map(li).join('');
     if(!items) items = '<li style="list-style:none;color:var(--text3)">ไม่มีข้อมูลสำหรับวันนี้</li>';
+    let insightItems = insights.map(li).join('');
     return `<div class="card">
       <div class="card-h" style="justify-content:space-between">
         <span style="display:flex;align-items:center;gap:8px"><div class="ico" style="background:${b.color}26"><i data-lucide="flame" style="width:16px;height:16px;color:${b.color}"></i></div>${b.label} — คุณภาพน้ำเข้า</span>
         <span class="st ${overall.cls}">${overall.label}</span>
       </div>
       <ul style="list-style:none;padding:0;margin:8px 0 0;font-family:Kanit;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,0.82)">${items}</ul>
+      ${insightItems?`<div style="margin-top:10px;padding-top:8px;border-top:1px dashed rgba(255,255,255,0.12)"><div style="font-family:Kanit;font-size:11.5px;font-weight:600;color:rgba(255,255,255,0.55);margin-bottom:6px">🔧 วิเคราะห์เชิงวิศวกรรม (Boiler Engineer)</div><ul style="list-style:none;padding:0;margin:0;font-family:Kanit;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,0.82)">${insightItems}</ul></div>`:''}
     </div>`;
   }).join('');
   try { lucide.createIcons(); } catch(e){}
@@ -4657,14 +4711,15 @@ function anaCheck(L, o){
   if(v===null){ L.missing.push(o.label); return; }
   let st = o.judge(v);
   if(st==='skip') return;
-  let vTxt = `<span class="ana-val">${fn(v, o.dec!==undefined?o.dec:2)}${o.unit?' '+o.unit:''}</span>`;
-  let refTxt = o.ref?` <span class="ana-ref">(${o.ref})</span>`:'';
+  let valTxt = fn(v, o.dec!==undefined?o.dec:2) + (o.unit?' '+o.unit:'');
+  let head = `<div class="ana-item-row"><b>${o.label}</b><span class="ana-eq">=</span><span class="ana-val">${valTxt}</span></div>`;
+  let refTxt = o.ref?`<div class="ana-item-ref">${o.ref}</div>`:'';
   if(st==='good'){
-    L.goods.push(`<div class="ana-item g"><b>${o.label}</b> = ${vTxt}${refTxt} — ${o.okTxt}</div>`);
+    L.goods.push(`<div class="ana-item g">${head}${refTxt}<div class="ana-item-desc">— ${o.okTxt}</div></div>`);
   } else {
-    L.bads.push(`<div class="ana-item ${st==='bad'?'b':'w'}"><b>${o.label}</b> = ${vTxt}${refTxt} — ${st==='bad'?o.badTxt:(o.warnTxt||o.badTxt)}</div>`);
-    if(o.cause) L.causes.push(`<div class="ana-item w"><b>${o.label}:</b> ${o.cause}</div>`);
-    if(o.fix)   L.fixes.push(`<div class="ana-item"><b>${o.label}:</b> ${o.fix}</div>`);
+    L.bads.push(`<div class="ana-item ${st==='bad'?'b':'w'}">${head}${refTxt}<div class="ana-item-desc">— ${st==='bad'?o.badTxt:(o.warnTxt||o.badTxt)}</div></div>`);
+    if(o.cause) L.causes.push(`<div class="ana-item w"><div class="ana-item-row"><b>${o.label}:</b></div><div class="ana-item-desc">${o.cause}</div></div>`);
+    if(o.fix)   L.fixes.push(`<div class="ana-item"><div class="ana-item-row"><b>${o.label}:</b></div><div class="ana-item-desc">${o.fix}</div></div>`);
   }
 }
 const jMax = (good, warn) => v => v<=good?'good':((warn!==undefined&&v<=warn)?'warn':'bad');
@@ -4869,8 +4924,21 @@ function anaStopCausesHtml(topic){
 
 function openAnalysis(topic){
   if(!D){ alert('ยังไม่มีข้อมูล กรุณาเลือกวันที่ก่อน'); return; }
-  let L = topic==='sugar' ? buildSugarAnalysis() : buildPowerAnalysis();
   let title = topic==='sugar' ? '🍬 บทวิเคราะห์การผลิตน้ำตาล' : '⚡ บทวิเคราะห์ไฟฟ้า + หม้อไอน้ำ';
+
+  if(!(pn(D.cane_today) > 0)){
+    document.getElementById('anaTitle').innerHTML = title;
+    document.getElementById('anaBody').innerHTML = `
+      <div style="text-align:center;padding:40px 20px">
+        <div style="font-size:40px;margin-bottom:10px">🌾</div>
+        <div style="font-size:15px;font-weight:600;color:#12202f;margin-bottom:6px">วันนี้ไม่มีอ้อยเข้าหีบ</div>
+        <div style="font-size:13px;color:#6b7f99">วันที่ ${D.date||D.fileDate||'—'} ไม่มีการเดินเครื่องผลิต (Tons Cane Crushed = 0) จึงไม่สามารถวิเคราะห์กระบวนการผลิตน้ำตาล/ไฟฟ้า-หม้อไอน้ำของวันนี้ได้ — กรุณาเลือกวันที่มีการหีบอ้อย</div>
+      </div>`;
+    document.getElementById('anaOverlay').classList.remove('hidden');
+    return;
+  }
+
+  let L = topic==='sugar' ? buildSugarAnalysis() : buildPowerAnalysis();
   let nBad = L.bads.length, grade = nBad===0 ? {cls:'pass',txt:'ภาพรวมดีมาก'} : nBad<=2 ? {cls:'warn',txt:'ปกติ — มีจุดเฝ้าระวัง '+nBad+' รายการ'} : {cls:'fail',txt:'ควรปรับปรุง — พบ '+nBad+' รายการ'};
 
   let ov;
@@ -5206,9 +5274,10 @@ function renderStopTab(){
     <tr><th style="text-align:left">รายการ</th><th>Today (ชม.)</th><th>Period (ชม.)</th><th>To-date (ชม.)</th><th>Target</th></tr></thead>
     <tbody>${body}</tbody></table></div>`;
 
-  // causes log — รวมทุกวันเรียงตามวันที่
+  // causes log — รวมทุกวันเรียงตามวันที่ (ข้ามวันที่ไม่มีชั่วโมงหยุดหีบจริง)
   let allCauses=[];
   [...stopData].sort((a,b)=>(a.fileDate||'').localeCompare(b.fileDate||'')).forEach(sd=>{
+    if(!(pn(sd.stopprod_today) > 0)) return;
     let dateLabel = cleanDateLabel(sd.date) || formatDateCode(sd.fileDate) || sd.fileDate || '';
     getCauses(sd).forEach(c=>allCauses.push({...c, date:dateLabel}));
   });
@@ -5233,7 +5302,7 @@ function renderStopTab(){
       </select>
       <span id="causesCountBadge" style="font-family:Kanit;font-size:12px;background:rgba(21,101,192,0.3);
             border:1px solid rgba(66,165,245,0.3);color:#79c3ff;padding:4px 12px;border-radius:12px;">
-        รวม ${totalMin} นาที
+        รวม ${totalMin} นาที (${(totalMin/60).toFixed(2)} ชม.)
       </span>
     </div>`;
     causeEl.innerHTML = deptSel + `<div style="overflow-x:auto;border-top:1px solid rgba(255,255,255,0.08);"><table class="tbl" style="table-layout:fixed;width:100%;">
