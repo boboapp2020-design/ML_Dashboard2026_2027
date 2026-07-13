@@ -1098,15 +1098,48 @@ html, body { max-width:100%; overflow-x:hidden; }
 .vchip {
   display:inline-block; font-family:'Inter'; font-weight:700; font-size:12px;
   padding:5px 12px; border-radius:30px; white-space:nowrap;
-  background:rgba(46,125,50,0.28); color:#7ed87e; border:1px solid rgba(126,216,126,0.28);
-  box-shadow:0 1px 4px rgba(0,0,0,0.2);
+  background:#c8ecc9; color:#1b5e20; border:1px solid rgba(27,94,32,0.25);
+  box-shadow:0 1px 4px rgba(0,0,0,0.12);
 }
-.vchip.warn { background:rgba(230,81,0,0.25); color:#ffb74d; border-color:rgba(255,183,77,0.28); box-shadow:0 1px 4px rgba(0,0,0,0.2); }
-.vchip.neu  { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.55); border-color:rgba(255,255,255,0.15); box-shadow:none; }
+.vchip.warn { background:#ffe0b2; color:#8a4b00; border-color:rgba(138,75,0,0.25); box-shadow:0 1px 4px rgba(0,0,0,0.12); }
+.vchip.neu  { background:#e4e4ea; color:#3a3a45; border-color:rgba(0,0,0,0.12); box-shadow:none; }
 .rel-list { font-size:12px; color:rgba(255,255,255,0.52); line-height:1.75; }
 .rel-list b { color:rgba(255,255,255,0.82); }
 .effect-up { color:#7ed87e; font-weight:600; }
 .effect-dn { color:#ff7878; font-weight:600; }
+
+/* beginner-friendly color legend — explains what green/orange/grey chips mean */
+.guide-legend { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:22px; }
+.gleg-item { display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+  border-radius:14px; padding:9px 16px; font-family:'Kanit'; font-size:12px; color:rgba(255,255,255,0.78); backdrop-filter:blur(10px); }
+.gleg-dot { width:11px; height:11px; border-radius:50%; flex-shrink:0; }
+.gleg-dot.ok { background:#7ed87e; box-shadow:0 0 8px rgba(126,216,126,0.6); }
+.gleg-dot.warn { background:#ffb74d; box-shadow:0 0 8px rgba(255,183,77,0.6); }
+.gleg-dot.neu { background:rgba(255,255,255,0.4); }
+
+/* one-line plain-language analogy under each department banner */
+.db-eli5 { font-family:'Kanit'; font-size:12.5px !important; margin-top:9px !important; padding:8px 14px; background:rgba(255,255,255,0.18) !important;
+  border-radius:12px; display:inline-flex; align-items:center; gap:7px; position:relative; z-index:1; backdrop-filter:blur(6px); opacity:1 !important; color:#fff !important; }
+
+/* parameter cards — replaces dense table with scannable cards for beginners */
+.pcard-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; padding:18px; }
+.pcard { background:#fff; border:1px solid rgba(0,0,0,0.08); border-radius:18px; padding:16px 18px;
+  transition:all .2s; box-shadow:0 4px 16px rgba(0,0,0,0.14); }
+.pcard:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.2); }
+.pcard.pcard-crit { background:#fff5f5; border-color:rgba(255,96,96,0.35); box-shadow:inset 4px 0 0 #ff6060, 0 4px 16px rgba(0,0,0,0.14); }
+.pcard-head { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:12px; padding-bottom:12px; border-bottom:1px dashed rgba(0,0,0,0.12); }
+.pcard-name { font-family:'Kanit'; font-weight:700; color:#1a1a2e; font-size:14.5px; }
+.pcard-name small { display:block; font-weight:400; color:rgba(0,0,0,0.45); font-size:11px; margin-top:2px; }
+.pcard-std { flex-shrink:0; }
+.pcard-sec { margin-bottom:10px; }
+.pcard-sec:last-child { margin-bottom:0; }
+.pcard-lbl { font-family:'Kanit'; font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.4px; color:rgba(0,0,0,0.4); margin-bottom:5px; }
+.pcard-body { font-family:'Kanit'; font-size:12.5px; color:rgba(0,0,0,0.78); line-height:1.7; }
+.pcard-body .effect-up { color:#2e7d32; }
+.pcard-body .effect-dn { color:#d32f2f; }
+.pcard-body .rel-list { color:rgba(0,0,0,0.6); }
+.pcard-body .rel-list b { color:rgba(0,0,0,0.85); }
+.pcard-body b { color:#1a1a2e; }
 
 /* info callout */
 .guide-note {
@@ -1119,17 +1152,20 @@ html, body { max-width:100%; overflow-x:hidden; }
 .guide-note p { font-family:'Kanit'; font-size:13px; color:rgba(255,255,255,0.8); line-height:1.75; }
 
 /* relationship map cards */
-.rel-group { border-radius:20px; padding:20px 24px; margin-bottom:18px; border:1px solid rgba(255,255,255,0.1);
-  background:rgba(255,255,255,0.07); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:0 8px 28px rgba(0,0,0,0.22); }
-.rel-group h3 { font-family:'Kanit'; font-size:15px; margin-bottom:14px; display:flex; align-items:center; gap:8px; color:#fff; }
-.rel-flow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:12px 0; border-bottom:1px dashed rgba(255,255,255,0.12); font-family:'Kanit'; font-size:13px; }
+.rel-group { border-radius:20px; padding:20px 24px; margin-bottom:18px; border:1px solid rgba(0,0,0,0.08);
+  background:#fff; box-shadow:0 8px 28px rgba(0,0,0,0.14); border-left:5px solid transparent; }
+.rel-group h3 { font-family:'Kanit'; font-size:15px; margin-bottom:14px; display:flex; align-items:center; gap:8px; color:#1a1a2e; }
+.rel-flow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:12px 0; border-bottom:1px dashed rgba(0,0,0,0.1); font-family:'Kanit'; font-size:13px; }
 .rel-flow:last-child { border-bottom:none; }
-.rel-tok { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.18); border-radius:10px; padding:6px 13px; font-weight:600; color:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.2); transition:transform .2s; }
+.rel-tok { background:#eef1f5; border:1px solid rgba(0,0,0,0.1); border-radius:10px; padding:6px 13px; font-weight:600; color:#1a1a2e; box-shadow:0 1px 3px rgba(0,0,0,0.08); transition:transform .2s; }
 .rel-flow:hover .rel-tok { transform:translateY(-1px); }
-.rel-arrow { color:#42A5F5; font-weight:700; font-size:16px; }
-.rel-why { color:rgba(255,255,255,0.42); font-size:12px; font-style:italic; margin-left:auto; }
-.rg-cane{background:rgba(27,94,32,0.35);} .rg-mill{background:rgba(13,71,161,0.35);} .rg-clar{background:rgba(74,20,140,0.3);}
-.rg-boil{background:rgba(136,14,79,0.3);} .rg-energy{background:rgba(0,96,100,0.35);}
+.rel-arrow { color:#1565C0; font-weight:700; font-size:16px; }
+.rel-why { color:rgba(0,0,0,0.5); font-size:12px; font-style:italic; margin-left:auto; }
+.rg-cane{border-left-color:#2E7D32;} .rg-cane .rel-tok{background:#e3f2e4;}
+.rg-mill{border-left-color:#1565C0;} .rg-mill .rel-tok{background:#e3ecfa;}
+.rg-clar{border-left-color:#6A1B9A;} .rg-clar .rel-tok{background:#f0e5f7;}
+.rg-boil{border-left-color:#AD1457;} .rg-boil .rel-tok{background:#fbe4ee;}
+.rg-energy{border-left-color:#00838F;} .rg-energy .rel-tok{background:#dff3f4;}
 
 .guide-back {
   display:inline-flex; align-items:center; gap:8px; cursor:pointer;
@@ -1146,6 +1182,7 @@ html, body { max-width:100%; overflow-x:hidden; }
   .ptbl{ font-size:11.5px; }
   .ptbl thead th, .ptbl tbody td{ padding:11px 10px; }
   .guide-subtabs{ top:64px; }
+  .pcard-grid{ grid-template-columns:1fr; padding:12px; }
 }
 
 /* ═══════════ DASHBOARD DARK THEME OVERRIDES ═══════════ */
@@ -1447,23 +1484,30 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
     </div>
   </div>
 
+  <!-- COLOR LEGEND: อธิบายความหมายของสีสำหรับมือใหม่ -->
+  <div class="guide-legend">
+    <div class="gleg-item"><span class="gleg-dot ok"></span>เขียว = ค่าอยู่ในเกณฑ์ดี ไม่ต้องกังวล</div>
+    <div class="gleg-item"><span class="gleg-dot warn"></span>ส้ม = ใกล้/เกินเกณฑ์วิกฤต ควรเฝ้าระวัง</div>
+    <div class="gleg-item"><span class="gleg-dot neu"></span>เทา = ไม่มีเกณฑ์ตายตัว ขึ้นกับสภาพโรงงาน</div>
+  </div>
+
   <!-- SUB-TAB NAV -->
   <div class="guide-subtabs" id="guideSubtabs">
-    <div class="gtab active" onclick="openGuideSub(this,'g-cane')"><span class="gt-ico">🌿</span>อ้อย</div>
-    <div class="gtab" onclick="openGuideSub(this,'g-mill')"><span class="gt-ico">⚙️</span>หีบ &amp; Extraction</div>
-    <div class="gtab" onclick="openGuideSub(this,'g-juice')"><span class="gt-ico">🧪</span>น้ำอ้อย &amp; pH</div>
-    <div class="gtab" onclick="openGuideSub(this,'g-evap')"><span class="gt-ico">🔥</span>ระเหย &amp; เคี่ยว</div>
-    <div class="gtab" onclick="openGuideSub(this,'g-loss')"><span class="gt-ico">📉</span>Loss &amp; Recovery</div>
-    <div class="gtab" onclick="openGuideSub(this,'g-energy')"><span class="gt-ico">⚡</span>พลังงาน &amp; เวลา</div>
-    <div class="gtab" onclick="openGuideSub(this,'g-sugar')"><span class="gt-ico">📦</span>คุณภาพน้ำตาล</div>
-    <div class="gtab" onclick="openGuideSub(this,'g-rel')"><span class="gt-ico">🗺️</span>แผนที่ความสัมพันธ์</div>
+    <div class="gtab active" id="gtab-g-cane" onclick="openGuideSub(this,'g-cane')"><span class="gt-ico">🌿</span>อ้อย</div>
+    <div class="gtab" id="gtab-g-mill" onclick="openGuideSub(this,'g-mill')"><span class="gt-ico">⚙️</span>หีบ &amp; Extraction</div>
+    <div class="gtab" id="gtab-g-juice" onclick="openGuideSub(this,'g-juice')"><span class="gt-ico">🧪</span>น้ำอ้อย &amp; pH</div>
+    <div class="gtab" id="gtab-g-evap" onclick="openGuideSub(this,'g-evap')"><span class="gt-ico">🔥</span>ระเหย &amp; เคี่ยว</div>
+    <div class="gtab" id="gtab-g-loss" onclick="openGuideSub(this,'g-loss')"><span class="gt-ico">📉</span>Loss &amp; Recovery</div>
+    <div class="gtab" id="gtab-g-energy" onclick="openGuideSub(this,'g-energy')"><span class="gt-ico">⚡</span>พลังงาน &amp; เวลา</div>
+    <div class="gtab" id="gtab-g-sugar" onclick="openGuideSub(this,'g-sugar')"><span class="gt-ico">📦</span>คุณภาพน้ำตาล</div>
+    <div class="gtab" id="gtab-g-rel" onclick="openGuideSub(this,'g-rel')"><span class="gt-ico">🗺️</span>แผนที่ความสัมพันธ์</div>
   </div>
 
   <!-- ===== 1. CANE ===== -->
   <div class="gpage active" id="sp-g-cane">
     <div class="dept-banner db-cane">
       <div class="db-ico">🌿</div>
-      <div><h2>CANE — ข้อมูลอ้อย</h2><p>วัตถุดิบตั้งต้น คุณภาพอ้อยกำหนดศักยภาพของทั้งโรงงาน</p></div>
+      <div><h2>CANE — ข้อมูลอ้อย</h2><p>วัตถุดิบตั้งต้น คุณภาพอ้อยกำหนดศักยภาพของทั้งโรงงาน</p><p class="db-eli5">🍭 พูดง่ายๆ: อ้อยดีเหมือนวัตถุดิบทำอาหารดี — อ้อยสด สะอาด หวานจัด = น้ำตาลได้เยอะ ไม่ว่าขั้นตอนหลังจะเก่งแค่ไหนก็แก้อ้อยแย่ไม่ได้</p></div>
     </div>
     <div class="ptbl-wrap"><table class="ptbl">
       <thead><tr><th style="width:15%">พารามิเตอร์</th><th style="width:11%">ค่ามาตรฐาน</th><th style="width:33%">คืออะไร / บ่งบอกอะไร</th><th style="width:24%">ผลต่อการผลิต</th><th style="width:17%">ความสัมพันธ์</th></tr></thead>
@@ -1500,7 +1544,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <div class="gpage" id="sp-g-mill">
     <div class="dept-banner db-mill">
       <div class="db-ico">⚙️</div>
-      <div><h2>MILLING HOUSE — การหีบและสกัด</h2><p>สกัดน้ำตาลออกจากอ้อยให้ได้มากที่สุด ลดน้ำตาลค้างในชานอ้อย</p></div>
+      <div><h2>MILLING HOUSE — การหีบและสกัด</h2><p>สกัดน้ำตาลออกจากอ้อยให้ได้มากที่สุด ลดน้ำตาลค้างในชานอ้อย</p><p class="db-eli5">🧴 พูดง่ายๆ: เหมือนบีบน้ำจากผ้าขี้ริ้วเปียก — บีบแรงและราดน้ำช่วยบีบ (Imbibition) ยิ่งบีบเกลี้ยงเท่าไหร่ ยิ่งได้น้ำตาลออกมามากเท่านั้น เหลือติดผ้า (ชานอ้อย) น้อย</p></div>
     </div>
     <div class="ptbl-wrap"><table class="ptbl">
       <thead><tr><th style="width:15%">พารามิเตอร์</th><th style="width:11%">ค่ามาตรฐาน</th><th style="width:33%">คืออะไร / บ่งบอกอะไร</th><th style="width:24%">ผลต่อการผลิต</th><th style="width:17%">ความสัมพันธ์</th></tr></thead>
@@ -1541,7 +1585,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <div class="gpage" id="sp-g-juice">
     <div class="dept-banner db-juice">
       <div class="db-ico">🧪</div>
-      <div><h2>JUICE, pH &amp; CLARIFICATION — น้ำอ้อย การทำใส</h2><p>ค่า pH ทุกจุดคือตัวควบคุม Inversion และสีของน้ำตาล</p></div>
+      <div><h2>JUICE, pH &amp; CLARIFICATION — น้ำอ้อย การทำใส</h2><p>ค่า pH ทุกจุดคือตัวควบคุม Inversion และสีของน้ำตาล</p><p class="db-eli5">🧪 พูดง่ายๆ: เหมือนกรองน้ำให้ใสก่อนต้ม — ต้องคุม pH ให้พอดี (ไม่เปรี้ยวไม่ด่างเกิน) ไม่งั้นน้ำตาลจะสลายตัว (Inversion) หรือสีเข้มขึ้น</p></div>
     </div>
     <div class="ptbl-wrap"><table class="ptbl">
       <thead><tr><th style="width:15%">พารามิเตอร์</th><th style="width:11%">ค่ามาตรฐาน</th><th style="width:33%">คืออะไร / บ่งบอกอะไร</th><th style="width:24%">ผลต่อการผลิต</th><th style="width:17%">ความสัมพันธ์</th></tr></thead>
@@ -1582,7 +1626,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <div class="gpage" id="sp-g-evap">
     <div class="dept-banner db-evap">
       <div class="db-ico">🔥</div>
-      <div><h2>EVAPORATION &amp; BOILING HOUSE — ระเหยและเคี่ยว</h2><p>เปลี่ยนน้ำอ้อยใสเป็นผลึกน้ำตาล จุดที่กำหนด Recovery ปลายทาง</p></div>
+      <div><h2>EVAPORATION &amp; BOILING HOUSE — ระเหยและเคี่ยว</h2><p>เปลี่ยนน้ำอ้อยใสเป็นผลึกน้ำตาล จุดที่กำหนด Recovery ปลายทาง</p><p class="db-eli5">🍯 พูดง่ายๆ: เหมือนเคี่ยวน้ำเชื่อมให้ข้นจนตกผลึก — เคี่ยวจนน้ำระเหยออกให้เหลือน้ำตาลตกผลึกให้มากที่สุด เคี่ยวไม่สุด = น้ำตาลยังละลายอยู่ในกากน้ำตาล (สูญเสีย)</p></div>
     </div>
     <div class="ptbl-wrap"><table class="ptbl">
       <thead><tr><th style="width:15%">พารามิเตอร์</th><th style="width:11%">ค่ามาตรฐาน</th><th style="width:33%">คืออะไร / บ่งบอกอะไร</th><th style="width:24%">ผลต่อการผลิต</th><th style="width:17%">ความสัมพันธ์</th></tr></thead>
@@ -1619,7 +1663,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <div class="gpage" id="sp-g-loss">
     <div class="dept-banner db-loss">
       <div class="db-ico">📉</div>
-      <div><h2>BALANCE &amp; RECOVERY — หัวใจของรายงาน</h2><p>ผลลัพธ์สุดท้าย "Report Card" ของโรงงาน ดูค่าเดียวให้ดู Overall Recovery</p></div>
+      <div><h2>BALANCE &amp; RECOVERY — หัวใจของรายงาน</h2><p>ผลลัพธ์สุดท้าย "Report Card" ของโรงงาน ดูค่าเดียวให้ดู Overall Recovery</p><p class="db-eli5">🎯 พูดง่ายๆ: เหมือนใบเช็คคะแนนสอบ — Recovery คือ "% น้ำตาลที่เก็บได้จริงจากที่มีอยู่ในอ้อย" ส่วน Loss ต่างๆ คือ "น้ำตาลที่หายไประหว่างทาง" อยู่ตรงไหนบ้าง</p></div>
     </div>
     <div class="guide-note">
       <h3>นี่คือส่วนสำคัญที่สุดของรายงาน</h3>
@@ -1660,7 +1704,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <div class="gpage" id="sp-g-energy">
     <div class="dept-banner db-energy">
       <div class="db-ico">⚡</div>
-      <div><h2>STEAM, ELECTRICITY &amp; TIME — พลังงานและเวลา</h2><p>ประสิทธิภาพพลังงานและการใช้เวลา = รายได้เสริมจากการขายไฟ</p></div>
+      <div><h2>STEAM, ELECTRICITY &amp; TIME — พลังงานและเวลา</h2><p>ประสิทธิภาพพลังงานและการใช้เวลา = รายได้เสริมจากการขายไฟ</p><p class="db-eli5">⏱️ พูดง่ายๆ: ยิ่งเดินเครื่องได้นาน ใช้ไอน้ำ/ไฟฟ้าอย่างประหยัด ยิ่งเหลือชานอ้อยไปขายไฟได้มาก เหมือนขับรถประหยัดน้ำมัน ยิ่งประหยัดยิ่งมีเงินเหลือ</p></div>
     </div>
     <div class="ptbl-wrap"><table class="ptbl">
       <thead><tr><th style="width:15%">พารามิเตอร์</th><th style="width:11%">ค่ามาตรฐาน</th><th style="width:33%">คืออะไร / บ่งบอกอะไร</th><th style="width:24%">ผลต่อการผลิต</th><th style="width:17%">ความสัมพันธ์</th></tr></thead>
@@ -1697,7 +1741,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <div class="gpage" id="sp-g-sugar">
     <div class="dept-banner db-sugar">
       <div class="db-ico">📦</div>
-      <div><h2>SUGAR QUALITY — คุณภาพน้ำตาล</h2><p>คุณภาพปลายทางที่กำหนดราคาขายและการยอมรับของลูกค้า</p></div>
+      <div><h2>SUGAR QUALITY — คุณภาพน้ำตาล</h2><p>คุณภาพปลายทางที่กำหนดราคาขายและการยอมรับของลูกค้า</p><p class="db-eli5">📦 พูดง่ายๆ: เหมือนตรวจสินค้าก่อนส่งลูกค้า — น้ำตาลต้องขาว สะอาด ไม่ชื้น เม็ดสม่ำเสมอ ถ้าคุณภาพไม่ผ่านเกณฑ์ อาจถูกลูกค้าตีกลับหรือกดราคา</p></div>
     </div>
     <div class="ptbl-wrap"><table class="ptbl">
       <thead><tr><th style="width:15%">พารามิเตอร์</th><th style="width:11%">ค่ามาตรฐาน</th><th style="width:33%">คืออะไร / บ่งบอกอะไร</th><th style="width:24%">ผลต่อการผลิต</th><th style="width:17%">ความสัมพันธ์</th></tr></thead>
@@ -1747,7 +1791,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <div class="gpage" id="sp-g-rel">
     <div class="dept-banner db-rel">
       <div class="db-ico">🗺️</div>
-      <div><h2>แผนที่ความสัมพันธ์ของพารามิเตอร์</h2><p>กฎเหล็ก: ทุกอย่างเชื่อมโยงกัน — เมื่อค่าหนึ่งเปลี่ยน จะส่งผลลูกโซ่</p></div>
+      <div><h2>แผนที่ความสัมพันธ์ของพารามิเตอร์</h2><p>กฎเหล็ก: ทุกอย่างเชื่อมโยงกัน — เมื่อค่าหนึ่งเปลี่ยน จะส่งผลลูกโซ่</p><p class="db-eli5">🔗 พูดง่ายๆ: เหมือนโดมิโน่ — ค่าตัวหนึ่งเปลี่ยน จะไปดันค่าอื่นต่อเป็นทอดๆ หน้านี้รวมทุก "สายโดมิโน่" หลักไว้ให้ดูภาพรวมทีเดียว</p></div>
     </div>
 
     <div class="rel-group rg-cane">
@@ -3039,6 +3083,35 @@ function goGuide(){
   document.body.classList.add('guide-bg');
   window.scrollTo(0,0);
   if(window.lucide) lucide.createIcons();
+  guideTablesToCards();
+}
+
+/* Turns each dense parameter table into a scannable card grid — same data, friendlier for beginners. */
+function guideTablesToCards(){
+  document.querySelectorAll('#guidePage .ptbl-wrap').forEach(wrap=>{
+    const table = wrap.querySelector('table.ptbl');
+    if(!table || wrap.dataset.cardified) return;
+    const heads = Array.from(table.querySelectorAll('thead th')).map(th=>th.textContent.trim());
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
+    const grid = document.createElement('div');
+    grid.className = 'pcard-grid';
+    rows.forEach(tr=>{
+      const isCrit = tr.classList.contains('row-crit');
+      const cells = Array.from(tr.children);
+      const card = document.createElement('div');
+      card.className = 'pcard' + (isCrit ? ' pcard-crit' : '');
+      const nameHTML = cells[0] ? cells[0].innerHTML : '';
+      const stdHTML = cells[1] ? cells[1].innerHTML : '';
+      const secs = cells.slice(2).map((c,i)=>
+        `<div class="pcard-sec"><div class="pcard-lbl">${heads[i+2]||''}</div><div class="pcard-body">${c.innerHTML}</div></div>`
+      ).join('');
+      card.innerHTML = `<div class="pcard-head"><div class="pcard-name">${nameHTML}</div><div class="pcard-std">${stdHTML}</div></div>${secs}`;
+      grid.appendChild(card);
+    });
+    wrap.innerHTML = '';
+    wrap.appendChild(grid);
+    wrap.dataset.cardified = '1';
+  });
 }
 
 function openGuideSub(btn, id){
@@ -4262,6 +4335,11 @@ function renderCaneTab(){
 }
 
 /* ─── TREND MODAL (คลิกที่การ์ดเพื่อดูแนวโน้ม) ─── */
+// วันที่ไม่มีอ้อยเข้าหีบ (cane_today = 0) — ใช้ตัดค่า "Today" ออกจากกราฟแนวโน้ม ไม่ให้จุด 0 ทำกราฟเสียรูป
+function hasCaneOnDate(fileDate){
+  let dd = dailyData.find(x=>x.fileDate===fileDate);
+  return dd ? pn(dd.cane_today) > 0 : true;
+}
 function openTrendModal(paramKey, label, unit, color, targetVal, dailyTargetVal, source){
   document.getElementById('trendTitle').textContent = 'แนวโน้ม: ' + label;
   document.getElementById('trendOverlay').classList.remove('hidden');
@@ -4271,14 +4349,14 @@ function openTrendModal(paramKey, label, unit, color, targetVal, dailyTargetVal,
     .sort((a,b)=>(a.fileDate||'').localeCompare(b.fileDate||''))
     .filter(d=>(d.fileDate||'') <= (D.fileDate||''));
   let labels = sorted.map(d=>formatDateCode(d.fileDate)||d.date||d.fileDate);
-  let todayVals = sorted.map(d=>pn(d[paramKey+'_today']));
+  let todayVals = sorted.map(d=>hasCaneOnDate(d.fileDate) ? pn(d[paramKey+'_today']) : null);
   let todateVals = sorted.map(d=>pn(d[paramKey+'_todate']));
   let tv = pn(targetVal);
 
   let lineSection = document.getElementById('trendLineSection');
   let caneSection = document.getElementById('trendCaneSection');
 
-  let gaugeKeys = ['cane','totsugar','fm','fc'];
+  let gaugeKeys = ['cane','totsugar','fm','fc','edl'];
   let trendBox = document.getElementById('trendBox');
   if(gaugeKeys.includes(paramKey) && tv > 0){
     // ── Gauge mode: SVG Gauge (สำหรับค่า weight ที่มี total target) ──
@@ -4299,7 +4377,7 @@ function openTrendModal(paramKey, label, unit, color, targetVal, dailyTargetVal,
             <stop offset="0%" stop-color="${gColor}"/>
             <stop offset="100%" stop-color="${c2}"/>
           </linearGradient></defs>
-          <path d="M15 70 A55 55 0 0 1 125 70" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10" stroke-linecap="round"/>
+          <path d="M15 70 A55 55 0 0 1 125 70" fill="none" stroke="#e3ecf7" stroke-width="10" stroke-linecap="round"/>
           <path d="M15 70 A55 55 0 0 1 125 70" fill="none" stroke="url(#gg_trend)" stroke-width="10" stroke-linecap="round"
             stroke-dasharray="${dash}" stroke-dashoffset="${off}"/>
         </svg>
@@ -4315,7 +4393,7 @@ function openTrendModal(paramKey, label, unit, color, targetVal, dailyTargetVal,
     trendBox.classList.remove('trend-box-compact');
 
     let datasets = [
-      {label:'Today (รายวัน)', data:todayVals, borderColor:'#38BDF8', backgroundColor:'#38BDF822', borderWidth:2.5, tension:0.35, pointRadius:4, pointBackgroundColor:'#38BDF8', pointBorderColor:'#fff', pointBorderWidth:1.5, fill:false},
+      {label:'Today (รายวัน)', data:todayVals, borderColor:'#38BDF8', backgroundColor:'#38BDF822', borderWidth:2.5, tension:0.35, pointRadius:4, pointBackgroundColor:'#38BDF8', pointBorderColor:'#fff', pointBorderWidth:1.5, fill:false, spanGaps:true},
       {label:'To-date (สะสม)', data:todateVals, borderColor:'#FBBF24', backgroundColor:'#FBBF2418', borderWidth:2.5, borderDash:[7,4], tension:0.35, pointRadius:3, pointBackgroundColor:'#FBBF24', pointBorderColor:'#fff', pointBorderWidth:1.5, fill:false}
     ];
     if(tv > 0){
@@ -4960,7 +5038,7 @@ function openAnalysis(topic){
       <div style="text-align:center;padding:40px 20px">
         <div style="font-size:40px;margin-bottom:10px">🌾</div>
         <div style="font-size:15px;font-weight:600;color:#12202f;margin-bottom:6px">วันนี้ไม่มีอ้อยเข้าหีบ</div>
-        <div style="font-size:13px;color:#6b7f99">วันที่ ${D.date||D.fileDate||'—'} ไม่มีการเดินเครื่องผลิต (Tons Cane Crushed = 0) จึงไม่สามารถวิเคราะห์กระบวนการผลิตน้ำตาล/ไฟฟ้า-หม้อไอน้ำของวันนี้ได้ — กรุณาเลือกวันที่มีการหีบอ้อย</div>
+        <div style="font-size:13px;color:#6b7f99">วันที่ ${formatDateCode(D.fileDate)||cleanDateLabel(D.date)||D.fileDate||'—'} ไม่มีการเดินเครื่องผลิต (Tons Cane Crushed = 0) จึงไม่สามารถวิเคราะห์กระบวนการผลิตน้ำตาล/ไฟฟ้า-หม้อไอน้ำของวันนี้ได้ — กรุณาเลือกวันที่มีการหีบอ้อย</div>
       </div>`;
     document.getElementById('anaOverlay').classList.remove('hidden');
     return;
@@ -4992,7 +5070,7 @@ function openAnalysis(topic){
 
   let html = `
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
-      <div style="font-size:13.5px">วันที่ <b>${D.date||D.fileDate||'—'}</b>${currentMode==='range'?' <span class="ana-ref">(ข้อมูลรวมช่วงที่เลือก)</span>':''}</div>
+      <div style="font-size:13.5px">วันที่ <b>${formatDateCode(D.fileDate)||cleanDateLabel(D.date)||D.fileDate||'—'}</b>${currentMode==='range'?' <span class="ana-ref">(ข้อมูลรวมช่วงที่เลือก)</span>':''}</div>
       <span class="ana-grade ${grade.cls}">${grade.txt}</span>
     </div>
     <div class="ana-sec ov">📊 ภาพรวมการผลิตวันนี้</div>
