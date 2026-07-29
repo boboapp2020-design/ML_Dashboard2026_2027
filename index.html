@@ -2175,7 +2175,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
     <div id="uploadPwError" style="display:none;color:#EF4444;font-family:'Kanit';font-size:12.5px;text-align:center;margin-bottom:8px">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</div>
     <div style="display:flex;gap:8px;margin-top:6px">
       <button onclick="closeUploadPwModal()" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--text2);font-family:'Kanit';cursor:pointer">ยกเลิก</button>
-      <button onclick="checkUploadPassword()" style="flex:1;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:'Kanit';font-weight:600;cursor:pointer">ยืนยัน</button>
+      <button id="uploadPwBtn" onclick="checkUploadPassword()" style="flex:1;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:'Kanit';font-weight:600;cursor:pointer">ยืนยัน</button>
     </div>
   </div>
 </div>
@@ -3143,8 +3143,22 @@ function openGuideSub(btn, id){
   document.getElementById('guideSubtabs').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-const UPLOAD_PASSWORD = 'Mitrlao2026';
+/* ── สิทธิ์การอัปโหลด ──────────────────────────────────────────
+   รหัสผ่านอยู่ฝั่ง Apps Script ไม่ได้ฝังในหน้าเว็บแล้ว
+   ตรวจผ่านแล้วได้ token กลับมา เก็บไว้ใน sessionStorage
+   (หมดอายุเมื่อปิดแท็บ) แล้วแนบไปกับทุก request ที่เขียนข้อมูล  */
+const UPLOAD_TOKEN_KEY = 'mlUploadToken';
+
+function getUploadToken(){
+  try { return sessionStorage.getItem(UPLOAD_TOKEN_KEY) || ''; } catch(e){ return ''; }
+}
+function setUploadToken(t){
+  try { t ? sessionStorage.setItem(UPLOAD_TOKEN_KEY, t) : sessionStorage.removeItem(UPLOAD_TOKEN_KEY); } catch(e){}
+}
+
 function goUpload(){
+  // มี token ที่ยังไม่หมดอายุอยู่แล้ว ไม่ต้องถามรหัสซ้ำ
+  if(getUploadToken()){ goUploadReal(); return; }
   document.getElementById('uploadPwInput').value = '';
   document.getElementById('uploadPwError').style.display = 'none';
   document.getElementById('uploadPwOverlay').classList.remove('hidden');
@@ -3153,14 +3167,44 @@ function goUpload(){
 function closeUploadPwModal(){
   document.getElementById('uploadPwOverlay').classList.add('hidden');
 }
-function checkUploadPassword(){
-  let val = document.getElementById('uploadPwInput').value;
-  if(val === UPLOAD_PASSWORD){
-    closeUploadPwModal();
-    goUploadReal();
-  } else {
-    document.getElementById('uploadPwError').style.display = 'block';
-    document.getElementById('uploadPwInput').select();
+
+async function checkUploadPassword(){
+  const input   = document.getElementById('uploadPwInput');
+  const errEl   = document.getElementById('uploadPwError');
+  const val     = input.value;
+  if(!val){ errEl.style.display='block'; input.select(); return; }
+
+  const btn = document.getElementById('uploadPwBtn');
+  const btnText = btn ? btn.textContent : '';
+  if(btn){ btn.disabled = true; btn.textContent = 'กำลังตรวจสอบ...'; }
+  errEl.style.display = 'none';
+
+  try {
+    const resp = await fetch(API_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({ action:'verifyPassword', password: val })
+    });
+    const result = await resp.json();
+    if(result.success && result.token){
+      setUploadToken(result.token);
+      input.value = '';
+      closeUploadPwModal();
+      goUploadReal();
+    } else if(result.error && result.error.indexOf('Unknown action') !== -1){
+      // Apps Script ยังเป็นเวอร์ชันเก่า ยังไม่รู้จัก verifyPassword
+      errEl.textContent = 'ระบบหลังบ้านยังไม่อัปเดต — กรุณา Deploy Apps Script เวอร์ชันใหม่ก่อน';
+      errEl.style.display = 'block';
+    } else {
+      errEl.textContent = result.error || 'รหัสผ่านไม่ถูกต้อง';
+      errEl.style.display = 'block';
+      input.select();
+    }
+  } catch(e){
+    errEl.textContent = 'เชื่อมต่อไม่ได้ กรุณาลองใหม่';
+    errEl.style.display = 'block';
+  } finally {
+    if(btn){ btn.disabled = false; btn.textContent = btnText; }
   }
 }
 function goUploadReal(){
@@ -3593,12 +3637,21 @@ async function processUpload(){
         headers:{'Content-Type':'text/plain'},
         body: JSON.stringify({
           action:'saveBoth',
+          token: getUploadToken(),
           daily: parsedDaily,
           water: parsedWater,
           stop: parsedStop
         })
       });
       let result = await resp.json();
+      if(result.authRequired){
+        setUploadToken('');          // token หมดอายุ → ให้ใส่รหัสใหม่
+        sumEl.querySelector('.ui-status').className='ui-status err';
+        sumEl.querySelector('.ui-status').textContent='✗ หมดเวลาเข้าใช้งาน กรุณาใส่รหัสผ่านใหม่';
+        hideUploadProgress();
+        goUpload(); // token ถูกล้างแล้ว จึงเด้งถามรหัสอีกครั้ง
+        return;
+      }
       if(result.success){
         sumEl.querySelector('.ui-status').className='ui-status ok';
         sumEl.querySelector('.ui-status').textContent='✓ บันทึกสำเร็จ (Daily:'+result.dailySaved+' Water:'+result.waterSaved+' Stop:'+(result.stopSaved||0)+')';
@@ -3676,7 +3729,7 @@ async function sendEmailNotification(daily, water, stop, statusDiv){
     const imageBase64 = generateKPIImage(kpis, dateLabel);
     const resp = await fetch(API_URL, {
       method:'POST', headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify({ action:'sendEmailWithImage', imageBase64, dateLabel, revNote })
+      body: JSON.stringify({ action:'sendEmailWithImage', token: getUploadToken(), imageBase64, dateLabel, revNote })
     });
     const result = await resp.json();
     if(result.success){
