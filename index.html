@@ -270,6 +270,56 @@ body.dashboard-bg #trendOverlay .gauge-l { color:#7b8fa3; }
 .ana-sec.bad  { background:#ffebee;  border-left:4px solid #C62828; }
 .ana-sec.cause{ background:#fff3e0;  border-left:4px solid #E65100; }
 .ana-sec.fix  { background:#f3e8fd;  border-left:4px solid #7B1FA2; }
+.ana-sec.mb   { background:#e0f7fa;  border-left:4px solid #00838F; }
+
+/* ─── MASS BALANCE ─── */
+.mb-wrap { border:1px solid #e3ecf7; border-radius:12px; padding:14px 16px; background:#fbfdff; margin-bottom:6px; }
+.mb-lead { font-size:12.5px; color:#4a6580; margin-bottom:12px; line-height:1.7; }
+.mb-lead b { color:#0d1b2a; }
+/* สีตามชนิด: เขียว=เก็บได้ / ไล่แดงตามขนาดการสูญเสีย */
+.s-ok { background:#2E7D32; } .s-l1 { background:#F9A825; } .s-l2 { background:#EF6C00; }
+.s-l3 { background:#D84315; } .s-l4 { background:#B71C1C; }
+.mb-bar { display:flex; height:30px; border-radius:8px; overflow:hidden; box-shadow:inset 0 1px 3px rgba(0,0,0,0.12); }
+.mb-seg { display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:700;
+  font-family:'Inter'; transition:filter .15s; }
+.mb-seg:hover { filter:brightness(1.15); }
+.mb-legend { display:flex; flex-wrap:wrap; gap:12px; margin-top:9px; font-size:11.5px; color:#4a6580; }
+.mb-legend span { display:flex; align-items:center; gap:5px; }
+.mb-legend i { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+.mb-tbl { width:100%; border-collapse:collapse; margin-top:14px; font-size:12.5px; }
+.mb-tbl th { text-align:left; font-size:11px; font-weight:600; color:#7b8fa3; text-transform:uppercase;
+  letter-spacing:.3px; padding:6px 8px; border-bottom:1.5px solid #e3ecf7; white-space:nowrap; }
+.mb-tbl td { padding:8px; border-bottom:1px solid #f0f4f9; color:#2a3d52; vertical-align:middle; }
+.mb-tbl tr:last-child td { border-bottom:none; }
+.mb-tbl .mb-num { text-align:right; white-space:nowrap; }
+.mb-tbl .mb-num small { display:block; font-size:10.5px; color:#8fa3b8; font-weight:400; }
+.mb-key { display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:7px; vertical-align:middle; }
+.mb-over  { color:#C62828; font-weight:700; }   /* แย่กว่าเป้า */
+.mb-under { color:#2E7D32; font-weight:700; }   /* ดีกว่าเป้า */
+.mb-dim   { color:#b0bfd0; }
+.mb-tbl tr.mb-worst { background:#fff5f5; box-shadow:inset 3px 0 0 #C62828; }
+.mb-share { display:flex; align-items:center; gap:6px; min-width:96px; }
+.mb-share-fill { height:7px; border-radius:4px; background:linear-gradient(90deg,#EF5350,#B71C1C); min-width:2px; }
+.mb-share span { font-size:11px; color:#6b7f99; font-weight:600; }
+.mb-check { margin-top:11px; padding-top:9px; border-top:1px dashed #dbe5f0; font-size:11.5px; color:#6b7f99; font-family:'Inter'; }
+.mb-check b { color:#0d1b2a; } .mb-ok { color:#2E7D32; font-weight:700; } .mb-bad { color:#C62828; font-weight:700; }
+.mb-verdict { margin-top:13px; border-radius:10px; padding:12px 14px; background:#fff8e1; border-left:4px solid #F9A825; }
+.mb-verdict-h { font-weight:700; font-size:13.5px; color:#12202f; margin-bottom:5px; }
+.mb-verdict-b { font-size:12.5px; color:#3d5266; line-height:1.75; }
+.mb-note { color:#7b8fa3; font-size:11.5px; font-style:italic; }
+/* สายพลังงาน: อ้อย → ชานอ้อย → ไอ → ไฟ */
+.mb-chain { display:flex; align-items:stretch; gap:4px; flex-wrap:wrap; }
+.mb-node { flex:1 1 110px; min-width:110px; background:#fff; border:1px solid #e3ecf7; border-radius:10px;
+  padding:10px 8px; text-align:center; box-shadow:0 1px 4px rgba(13,71,161,0.05); }
+.mb-node-ico { font-size:19px; margin-bottom:3px; }
+.mb-node-v { font-family:'Inter'; font-weight:700; font-size:14px; color:#0D47A1; }
+.mb-node-l { font-size:11.5px; color:#4a6580; margin-top:2px; }
+.mb-node-s { font-size:10.5px; color:#8fa3b8; margin-top:3px; line-height:1.5; }
+.mb-arrow { display:flex; align-items:center; color:#b0bfd0; font-size:17px; font-weight:700; }
+@media(max-width:640px){
+  .mb-chain { flex-direction:column; } .mb-arrow { justify-content:center; transform:rotate(90deg); height:16px; }
+  .mb-tbl { font-size:11.5px; } .mb-tbl th, .mb-tbl td { padding:6px 4px; }
+}
 .ana-item { padding:7px 0 7px 18px; position:relative; border-bottom:1px solid #eef2f7; color:#2a3d52; }
 .ana-item:last-child { border-bottom:none; }
 .ana-item::before { content:''; position:absolute; left:2px; top:14px; width:7px; height:7px; border-radius:50%; background:#90a4b8; }
@@ -4940,6 +4990,194 @@ const jMin = (good, warn) => v => v>=good?'good':((warn!==undefined&&v>=warn)?'w
 const jBand = (lo, hi) => v => (v>=lo&&v<=hi)?'good':'bad';
 const jTgt = (targetRaw) => v => { let s=evalTargetStatus(targetRaw,v); return s==='pass'?'good':(s==='fail'?'bad':'skip'); };
 
+/* ═══════════════════════════════════════════════════════════════
+   MASS BALANCE — "น้ำตาลเข้ามา 100% แล้วหายไปไหนบ้าง"
+
+   หลักการ (Rein บทที่ 15 Sugar losses): ก่อนจะแก้ปัญหา ต้องรู้ก่อนว่า
+   น้ำตาลหายที่ไหน สมดุลมวลบังคับให้ทุกส่วนบวกกันได้ 100% พอดี
+   จึงชี้จุดรั่วที่ใหญ่ที่สุดได้ทันที แทนที่จะไล่ดูทีละค่าแล้วให้
+   น้ำหนักเท่ากันหมด
+   ═══════════════════════════════════════════════════════════════ */
+
+const SUGAR_PRICE_THB = 18000; // บาท/ตันน้ำตาล (สมมติฐานสำหรับประเมินมูลค่า)
+
+// ดึงตัวเลขเป้าหมายออกจาก string เช่น "<1.61", "> 97", "84-89"
+function anaTargetNum(raw){
+  if(raw===undefined||raw===null) return null;
+  let s = String(raw).replace(/[<>=\s]/g,'');
+  if(s.indexOf('-')>0){ s = s.split('-')[0]; } // ช่วงค่า → ใช้ขอบล่าง
+  let n = parseFloat(s.replace(/,/g,''));
+  return isNaN(n) ? null : n;
+}
+
+/* แถบสัดส่วนแบบ stacked — ให้เห็นภาพว่าก้อนไหนใหญ่ */
+function anaBar(parts){
+  let tot = parts.reduce((s,p)=>s+Math.max(0,p.v),0);
+  if(!(tot>0)) return '';
+  return `<div class="mb-bar">` + parts.map(p=>{
+    let w = Math.max(0, p.v)/tot*100;
+    if(w<=0) return '';
+    return `<div class="mb-seg ${p.cls}" style="width:${w.toFixed(2)}%" title="${p.label} ${fn(p.v,2)}%">${w>7?fn(p.v,1):''}</div>`;
+  }).join('') + `</div>`;
+}
+
+function buildSugarMassBalance(){
+  const cane = anaNum(D.cane_today), polC = anaNum(D.pol_today);
+  const rec  = anaNum(D.recov_today);
+  const lBag = anaNum(D.loss_bag_today), lFc = anaNum(D.loss_fc_today);
+  const lFm  = anaNum(D.loss_fm_today),  lUd = anaNum(D.loss_undet_today);
+
+  if(rec===null || lBag===null || lFc===null || lFm===null || lUd===null) return '';
+
+  // น้ำตาล (pol) ที่เข้ามาในอ้อยวันนี้ = ฐาน 100% ของสมดุล
+  const polIn = (cane!==null && polC!==null) ? cane*polC/100 : null;
+  const tPol  = v => (polIn!==null) ? polIn*v/100 : null;   // % → ตัน pol
+  const money = t => (t!==null) ? t*SUGAR_PRICE_THB : null; // ตัน → บาท
+
+  const rows = [
+    {key:'rec',  label:'เก็บได้เป็นน้ำตาล (Recovery)', v:rec,  tgt:anaTargetNum(D.recov_target),     cls:'ok',  good:'high'},
+    {key:'bag',  label:'หายกับชานอ้อย',                v:lBag, tgt:anaTargetNum(D.loss_bag_target),  cls:'l1',  good:'low'},
+    {key:'fc',   label:'หายกับกากหม้อกรอง',            v:lFc,  tgt:anaTargetNum(D.loss_fc_target),   cls:'l2',  good:'low'},
+    {key:'fm',   label:'หายกับกากน้ำตาล',              v:lFm,  tgt:anaTargetNum(D.loss_fm_target),   cls:'l3',  good:'low'},
+    {key:'ud',   label:'หายแบบไม่รู้สาเหตุ (Undetermined)', v:lUd, tgt:anaTargetNum(D.loss_undet_target), cls:'l4', good:'low'}
+  ];
+
+  // ส่วนต่างจากเป้า: บวก = แย่กว่าเป้า (สำหรับ loss คือหายเกิน, สำหรับ recovery คือเก็บได้ขาด)
+  rows.forEach(r=>{
+    r.gap = (r.tgt===null) ? null : (r.good==='low' ? r.v-r.tgt : r.tgt-r.v);
+  });
+
+  const lossRows = rows.filter(r=>r.good==='low');
+  const totalGap = lossRows.reduce((s,r)=>s+Math.max(0,r.gap||0),0);
+  lossRows.forEach(r=> r.share = (totalGap>0 && r.gap>0) ? r.gap/totalGap*100 : 0);
+
+  const worst = lossRows.slice().sort((a,b)=>(b.gap||0)-(a.gap||0))[0];
+  const sumCheck = rec+lBag+lFc+lFm+lUd;
+
+  const cell = r => {
+    let gapTxt = (r.gap===null) ? '<span class="mb-dim">—</span>'
+      : (r.gap>0.005 ? `<span class="mb-over">+${fn(r.gap,2)}</span>`
+      : `<span class="mb-under">${fn(r.gap,2)}</span>`);
+    let shareTxt = (r.good==='low' && r.share>0)
+      ? `<div class="mb-share"><div class="mb-share-fill" style="width:${Math.min(100,r.share).toFixed(1)}%"></div><span>${fn(r.share,0)}%</span></div>`
+      : '<span class="mb-dim">—</span>';
+    let tons = tPol(r.v);
+    return `<tr class="${r.key===(worst&&worst.key)&&r.gap>0?'mb-worst':''}">
+      <td><span class="mb-key ${r.cls}"></span>${r.label}</td>
+      <td class="mb-num"><b>${fn(r.v,2)}%</b>${tons!==null?`<small>${fi(tons)} ต.</small>`:''}</td>
+      <td class="mb-num">${r.tgt!==null?fn(r.tgt,2)+'%':'<span class="mb-dim">—</span>'}</td>
+      <td class="mb-num">${gapTxt}</td>
+      <td>${shareTxt}</td></tr>`;
+  };
+
+  // ข้อสรุปหลัก — ชี้จุดรั่วใหญ่สุดพร้อมมูลค่า
+  let verdict = '';
+  if(worst && worst.gap>0){
+    const excessT = tPol(worst.gap), excessB = money(excessT);
+    verdict = `<div class="mb-verdict">
+      <div class="mb-verdict-h">🎯 จุดรั่วใหญ่ที่สุดของวันนี้: ${worst.label}</div>
+      <div class="mb-verdict-b">หายเกินเป้า <b>${fn(worst.gap,2)} จุด</b> คิดเป็น <b>${fn(worst.share,0)}%</b> ของช่องว่างทั้งหมด
+      ${excessT!==null?` ≈ <b>${fi(excessT)} ตันน้ำตาล/วัน</b>`:''}${excessB!==null?` (~${fi(Math.round(excessB/1000))},000 บาท/วัน ที่ราคา ${fi(SUGAR_PRICE_THB)} บาท/ตัน)`:''}
+      <br><span class="mb-note">หลัก Rein: แก้จุดที่ช่องว่างใหญ่สุดก่อนเสมอ (biggest gap first) — แก้จุดเล็กก่อนคือเสียเวลาเปล่า</span></div></div>`;
+  }
+
+  /* Undetermined สูงผิดปกติ = ปัญหา "บัญชีไม่ตรง" ก่อนจะเป็น "น้ำตาลรั่ว"
+     Rein: ค่าปกติ <2% — ถ้าเห็นเลขสองหลัก น้ำตาลปริมาณนั้นรั่วออกจากโรงงาน
+     จริงไม่ได้ในทางกายภาพ ต้องไล่ที่ระบบวัดก่อน ไม่ใช่ส่งช่างไปหารอยรั่ว */
+  if(lUd >= 8){
+    const udT = tPol(lUd);
+    const udTodate = anaNum(D.loss_undet_todate);
+    verdict += `<div class="mb-verdict" style="background:#fdecea;border-left-color:#C62828;margin-top:10px">
+      <div class="mb-verdict-h">🔬 เจาะลึก: Undetermined ${fn(lUd,1)}% สูงผิดปกติ — อ่านให้ถูกก่อนลงมือ</div>
+      <div class="mb-verdict-b">
+        ค่านี้แปลว่า <b>${udT!==null?fi(udT)+' ตันน้ำตาล/วัน':'น้ำตาลจำนวนมาก'}</b> เข้ามาแล้วหาไม่เจอในบัญชี
+        ${udTodate!==null?` (สะสมทั้งฤดู ${fn(udTodate,1)}% — <b>ไม่ใช่ความผิดปกติของวันเดียว</b>)`:''}
+        <br><b>ข้อสังเกตเชิงวิศวกรรม:</b> Rein ระบุค่าปกติ &lt;2% การรั่วไหลทางกายภาพระดับนี้จะมองเห็นได้ด้วยตา
+        (น้ำเชื่อมท่วมพื้น) จึงเป็นไปได้ยาก — <b>ลำดับความน่าจะเป็นคือ "ระบบวัด" มาก่อน "รอยรั่ว"</b>
+        <div style="margin-top:8px;padding-left:2px">
+          <b>ไล่ตรวจตามลำดับนี้:</b><br>
+          ① <b>เครื่องชั่งอ้อย</b> — ถ้าชั่งเกินจริง น้ำตาลขาเข้าจะถูกบวกเกิน สร้าง UD เทียมทันที (สอบเทียบด้วยน้ำหนักมาตรฐาน)<br>
+          ② <b>Pol %Cane</b> — วิธีเก็บตัวอย่าง/คำนวณ ถ้าสูงเกินจริง ตัวตั้งของสมดุลผิดทั้งสมการ<br>
+          ③ <b>น้ำหนัก + Purity กากน้ำตาล</b> — ขาออกก้อนใหญ่ ถ้าบันทึกขาด UD จะรับไปเต็มๆ<br>
+          ④ <b>น้ำตาลค้างในระบบ (in-process inventory)</b> — massecuite ใน pan/crystallizer ที่ยังไม่ออกมาเป็นน้ำตาล ถ้าไม่ตัดบัญชีจะโผล่เป็น UD<br>
+          ⑤ <b>แล้วค่อยหา entrainment/รอยรั่วจริง</b> — วัดน้ำตาลใน condensate (แท็บคุณภาพน้ำ) เพื่อยืนยัน
+        </div>
+        <span class="mb-note">ทำ pol balance รายสถานี (station-by-station) จะชี้ได้ว่าสมดุลเริ่มไม่ปิดตรงช่วงไหน — คุ้มกว่าไล่เดาทั้งโรงงาน</span>
+      </div></div>`;
+  }
+
+  return `
+    <div class="ana-sec mb">⚖️ สมดุลมวลน้ำตาล — น้ำตาลในอ้อย 100% หายไปไหน</div>
+    <div class="mb-wrap">
+      <div class="mb-lead">อ้อย ${cane!==null?fi(cane):'—'} ตัน × Pol ${polC!==null?fn(polC,2):'—'}% =
+        <b>${polIn!==null?fi(polIn):'—'} ตันน้ำตาลที่มีอยู่ในอ้อย</b> — ทุกอย่างด้านล่างรวมกันต้องได้ 100%</div>
+      ${anaBar(rows.map(r=>({v:r.v, cls:'s-'+r.cls, label:r.label})))}
+      <div class="mb-legend">${rows.map(r=>`<span><i class="s-${r.cls}"></i>${r.label} ${fn(r.v,2)}%</span>`).join('')}</div>
+      <table class="mb-tbl">
+        <thead><tr><th>รายการ</th><th class="mb-num">วันนี้</th><th class="mb-num">เป้า</th><th class="mb-num">ส่วนต่าง</th><th>สัดส่วนของช่องว่าง</th></tr></thead>
+        <tbody>${rows.map(cell).join('')}</tbody>
+      </table>
+      <div class="mb-check">ตรวจสมดุล: ${fn(rec,2)} + ${fn(lBag,2)} + ${fn(lFc,2)} + ${fn(lFm,2)} + ${fn(lUd,2)} = <b>${fn(sumCheck,2)}%</b> ${Math.abs(sumCheck-100)<0.5?'<span class="mb-ok">✓ สมดุลปิด</span>':'<span class="mb-bad">⚠ ไม่ปิด — ตรวจการบันทึกข้อมูล</span>'}</div>
+      ${verdict}
+    </div>`;
+}
+
+function buildPowerMassBalance(){
+  const cane  = anaNum(D.cane_today);
+  const bagPc = anaNum(D.bagcane_today);          // ชานอ้อย % อ้อย
+  const steam = anaNum(D.steam_today);            // ไอน้ำผลิต (ตัน)
+  const stTc  = anaNum(D.avgsteam_today);         // kg ไอ/ตันอ้อย
+  const gen   = anaNum(D.kwhgen_today);           // ไฟผลิต
+  const proc  = anaNum(D.kwhproc_today);          // ไฟใช้ในกระบวนการ
+  const edl   = anaNum(D.edl_today);              // ไฟขายออก
+  const moist = W ? anaNum(W.moist_today) : null; // ความชื้นชานอ้อย
+
+  if(cane===null || steam===null) return '';
+
+  const bagT   = (bagPc!==null) ? cane*bagPc/100 : null;   // ชานอ้อยที่ได้ (ตัน)
+  const evapR  = (bagT!==null && bagT>0) ? steam/bagT : null; // kg ไอ/kg ชานอ้อย
+  const stPc   = (stTc!==null) ? stTc/10 : null;            // kg/tc → % on cane
+  const exportPc = (gen!==null && gen>0 && edl!==null) ? edl/gen*100 : null;
+
+  const chain = [
+    {ico:'🌾', lbl:'อ้อยเข้าหีบ',   val: fi(cane)+' ตัน',                          sub:'ต้นทางพลังงานทั้งหมด'},
+    {ico:'🪵', lbl:'ชานอ้อย',       val: bagT!==null?fi(bagT)+' ตัน':'—',          sub: bagPc!==null?fn(bagPc,2)+'% ของอ้อย'+(moist!==null?' · ชื้น '+fn(moist,1)+'%':''):''},
+    {ico:'💨', lbl:'ไอน้ำผลิตได้',  val: fi(steam)+' ตัน',                          sub: evapR!==null?fn(evapR,2)+' kg ไอ/kg ชานอ้อย':''},
+    {ico:'⚡', lbl:'ไฟฟ้าผลิตได้',  val: gen!==null?fi(gen)+' kWh':'—',            sub: (cane&&gen)?fn(gen/cane,1)+' kWh/ตันอ้อย':''},
+    {ico:'💰', lbl:'ไฟขายออก',      val: edl!==null?fi(edl)+' kWh':'—',            sub: exportPc!==null?fn(exportPc,1)+'% ของที่ผลิตได้':'ใช้เองทั้งหมด'}
+  ];
+
+  // จุดคอขวดของสายพลังงาน
+  let bottleneck = '';
+  if(evapR!==null && evapR<2.0){
+    const lostSteam = (2.2-evapR)*bagT; // เทียบ benchmark กลาง 2.2
+    bottleneck = `<div class="mb-verdict">
+      <div class="mb-verdict-h">🎯 คอขวด: หม้อไอน้ำเปลี่ยนเชื้อเพลิงเป็นไอได้ต่ำ</div>
+      <div class="mb-verdict-b">ได้ไอเพียง <b>${fn(evapR,2)} kg ไอ/kg ชานอ้อย</b> เทียบมาตรฐาน 2.0–2.4
+      ${moist!==null&&moist<50?` — และความชื้นเชื้อเพลิง ${fn(moist,1)}% ถือว่าดีอยู่แล้ว จึงไม่ใช่สาเหตุ ต้องไปหาที่ excess air / ตะกรัน / unburnt แทน`:''}
+      ${lostSteam>0?`<br>ถ้าดันขึ้นถึง 2.2 จะได้ไอเพิ่ม ~<b>${fi(lostSteam)} ตัน/วัน</b> โดยใช้เชื้อเพลิงเท่าเดิม`:''}
+      <br><span class="mb-note">วิธีตรวจ (ห้ามเดา): วัด O₂ ในไอเสีย (เป้า 4–6%) และอุณหภูมิไอเสีย (เป้า ≤150–170°C) เทียบ baseline ที่โหลดเดียวกัน</span></div></div>`;
+  } else if(edl!==null && edl===0 && gen!==null && gen>0){
+    bottleneck = `<div class="mb-verdict">
+      <div class="mb-verdict-h">🎯 ไฟที่ผลิตได้ถูกใช้เองทั้งหมด ไม่มีส่วนเหลือขาย</div>
+      <div class="mb-verdict-b">ผลิต ${fi(gen)} kWh ใช้เอง ${proc!==null?fi(proc):'—'} kWh เหลือขาย 0
+      ${stPc!==null?`<br>ไอที่ใช้ ${fn(stPc,1)}% ของอ้อย (world-class &lt;45%) — ไอยิ่งถูก process กินมาก ยิ่งเหลือผ่านช่วง condensing ของกังหันน้อย ไฟขายจึงเป็นศูนย์`:''}
+      <br><span class="mb-note">หลัก Rillieux: ทุก 1% steam%cane ที่ลดได้ ไอที่เหลือไปช่วง condensing ให้ไฟเพิ่ม ~220–260 kWh/ตันไอ</span></div></div>`;
+  }
+
+  return `
+    <div class="ana-sec mb">⚖️ สมดุลพลังงาน — อ้อย 1 ตัน กลายเป็นไอและไฟเท่าไร</div>
+    <div class="mb-wrap">
+      <div class="mb-chain">${chain.map((c,i)=>`
+        <div class="mb-node"><div class="mb-node-ico">${c.ico}</div>
+          <div class="mb-node-v">${c.val}</div>
+          <div class="mb-node-l">${c.lbl}</div>
+          ${c.sub?`<div class="mb-node-s">${c.sub}</div>`:''}</div>
+        ${i<chain.length-1?'<div class="mb-arrow">→</div>':''}`).join('')}</div>
+      ${bottleneck}
+    </div>`;
+}
+
 function buildSugarAnalysis(){
   let L = {goods:[], bads:[], causes:[], fixes:[], missing:[]};
   const burnt=anaNum(D.burnt_today), trash=anaNum(D.trash_today), pi=anaNum(D.prepidx_today), imb=anaNum(D.imbfiber_today), phm=anaNum(D.ph_mixed_today);
@@ -5182,6 +5420,7 @@ function openAnalysis(topic){
     </div>
     <div class="ana-sec ov">📊 ภาพรวมการผลิตวันนี้</div>
     <div class="ana-ov-grid">${ov.map(c=>`<div class="ana-ov-cell"><div class="v">${c.v}</div><div class="l">${c.l}</div></div>`).join('')}</div>
+    ${topic==='sugar' ? buildSugarMassBalance() : buildPowerMassBalance()}
     <div class="ana-sec good">✅ จุดที่ดี (${L.goods.length})</div>
     ${L.goods.length?L.goods.join(''):'<div class="ana-item">— ไม่มีรายการที่ผ่านเกณฑ์เด่นชัดจากข้อมูลวันนี้ —</div>'}
     <div class="ana-sec bad">⚠️ จุดที่ด้อย (${L.bads.length})</div>
