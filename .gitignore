@@ -1,0 +1,15 @@
+# Publish only the web app (index.html + assets/). Everything else stays local.
+*
+
+!.gitignore
+!index.html
+!assets/
+!assets/*.jpg
+!assets/*.png
+
+# Never publish: real production data, reference PDFs, local tooling, backups.
+# (covered by the blanket "*" above — listed here so the intent is explicit)
+# รายงานน้ำและไฟฟ้า/ รายงานผลวิเคราะห์น้ำตาล/ รายงานหยุดหีบ/  → factory Excel data
+# Sugar Tech/ Boiler/                                        → copyrighted PDFs, skill files
+# Background*.png icon.png                                   → multi-MB source images
+# index.html.bak                                             → pre-optimization backup
