@@ -2770,8 +2770,11 @@ function parseDailyExcel(wb, filename){
     // Clarifying Station (col 20=T)
     fej_brix: cvn(ws,33,20), fej_pol: cvn(ws,34,20), fej_purity: cvn(ws,35,20),
     mj_brix: cvn(ws,37,20), mj_pol: cvn(ws,38,20), mj_purity: cvn(ws,39,20),
-    cj_brix: cvn(ws,41,20), cj_pol: cvn(ws,42,20), cj_purity: cvn(ws,43,20),
-    rs_brix: cvn(ws,45,20), rs_purity: cvn(ws,47,20),
+    /* แถวจริงของ CLARIFYING STATION (คอลัมน์ T = TO-DAY ตามหัวตารางแถว 5):
+       33-36 FEJ · 37-40 MJ · 41 MJ Phosphate · 42-44 Last Exp. Juice
+       45-48 Clarified Juice · 49 Turbidity · 53-54 Mud Filtrate · 55-56 Raw Syrup */
+    cj_brix: cvn(ws,45,20), cj_pol: cvn(ws,46,20), cj_purity: cvn(ws,47,20),
+    rs_brix: cvn(ws,55,20), rs_purity: cvn(ws,56,20),
     /* Clarified Juice อ่านตรงจากเซลล์ — คอลัมน์ T = TO-DAY (หัวตารางแถว 5)
        กลุ่ม CLARIFIED JUICE จริงอยู่แถว 45/46/47 ส่วน 41/42/43 คือ
        PHOSPHATE กับ LAST EXP. JUICE คนละกลุ่มกัน                        */
