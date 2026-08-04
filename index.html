@@ -95,6 +95,13 @@ body.guide-bg::after { background: rgba(8,17,31,0.72); }
   box-shadow: 0 2px 24px rgba(0,0,0,0.45);
 }
 .header-left { display:flex; align-items:center; gap:14px; }
+/* ตราสัญลักษณ์ iDash เล็กๆ ต่อท้ายชื่อบริษัท — พื้นขาวเพื่อให้อ่านออกบนพื้นเข้มทุกหน้า */
+.idash-badge {
+  display:inline-flex; align-items:center; vertical-align:middle;
+  background:#fff; border-radius:6px; padding:2px 7px; margin-left:9px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.18);
+}
+.idash-badge svg { height:13px; width:auto; display:block; }
 .logo {
   width:44px; height:44px; border-radius:10px;
   background:#fff;
@@ -1424,7 +1431,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   <div class="header-left">
     <div class="logo"><img src="assets/logo.png" alt="Mitr Phol Logo"></div>
     <div>
-      <h1>MITR LAO SUGAR</h1>
+      <h1>MITR LAO SUGAR<span class="idash-badge"><svg viewBox="0 0 152 44" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="24" width="8" height="20" rx="3" fill="#1E49E2"/><rect x="12" y="15" width="8" height="29" rx="3" fill="#3D6EF7"/><rect x="24" y="7" width="8" height="37" rx="3" fill="#6D97F8"/><rect x="36" y="0" width="8" height="44" rx="3" fill="#A8C3FB"/><text x="50" y="36" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="38" fill="#1D49DB">iDash</text></svg></span></h1>
       <div class="sub hide-mobile">Daily Processing Status Dashboard</div>
     </div>
   </div>
@@ -1472,7 +1479,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
 <div id="homePage" class="home-page">
   <div class="home-container">
     <div class="welcome-logo"><img src="assets/logo.png" alt="Mitr Phol Logo"></div>
-    <h2>Mitr Lao Sugar Dashboard</h2>
+    <h2>Mitr Lao Sugar Dashboard<span class="idash-badge"><svg viewBox="0 0 152 44" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="24" width="8" height="20" rx="3" fill="#1E49E2"/><rect x="12" y="15" width="8" height="29" rx="3" fill="#3D6EF7"/><rect x="24" y="7" width="8" height="37" rx="3" fill="#6D97F8"/><rect x="36" y="0" width="8" height="44" rx="3" fill="#A8C3FB"/><text x="50" y="36" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="38" fill="#1D49DB">iDash</text></svg></span></h2>
     <p class="welcome-sub">ระบบรายงานผลการผลิตน้ำตาลทราย ประจำฤดูหีบ 2025/26</p>
     <div class="home-cards">
       <div class="home-card" onclick="goUpload()">
