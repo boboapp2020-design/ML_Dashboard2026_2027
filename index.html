@@ -2442,6 +2442,12 @@ function cvn(ws,r,c){
   if(typeof v === 'number') return v.toFixed(2);
   return String(v||'');
 }
+// เหมือน cvn แต่เก็บ 4 ตำแหน่ง — สำหรับค่าสัมประสิทธิ์ที่ต่างกันหลักหมื่น เช่น Kb/Kp
+function cvn4(ws,r,c){
+  let v = cv(ws,r,c);
+  if(typeof v === 'number') return v.toFixed(4);
+  return String(v||'');
+}
 // scan column `col` between rows [startRow,endRow] for a cell whose text contains all given fragments (case-insensitive); returns row number or -1
 function findRowByLabel(ws, fragments, startRow, endRow, col){
   col = col || 1;
@@ -2798,6 +2804,10 @@ function parseDailyExcel(wb, filename){
     purity_today: cvn(ws,98,4), purity_week: cvn(ws,98,5), purity_period: cvn(ws,98,6), purity_todate: cvn(ws,98,7), purity_target: cvn(ws,98,8),
     // %ME: I76=label, L76=today, M76=week, N76=period, O76=todate, P76=target
     me_today: cvn(ws,76,12), me_week: cvn(ws,76,13), me_period: cvn(ws,76,14), me_todate: cvn(ws,76,15), me_target: cvn(ws,76,16),
+    // Kb/Kp — ค่าสัมประสิทธิ์ Milling House (ป้ายชื่อ I7/I8, ค่าคอลัมน์ L-P = today/week/period/todate/target)
+    // ค่าอยู่ช่วง 0.95-0.98 ต้องเก็บ 4 ตำแหน่ง — ถ้าใช้ cvn (2 ตำแหน่ง) จะกลายเป็น 0.97 เหมือนกันหมดทุกวัน
+    kb_today: cvn4(ws,7,12), kb_week: cvn4(ws,7,13), kb_period: cvn4(ws,7,14), kb_todate: cvn4(ws,7,15), kb_target: cvs(ws,7,16),
+    kp_today: cvn4(ws,8,12), kp_week: cvn4(ws,8,13), kp_period: cvn4(ws,8,14), kp_todate: cvn4(ws,8,15), kp_target: cvs(ws,8,16),
     _raw: bkRaw(ws)   // สำเนาสำรองทั้งแผ่น
   };
 
