@@ -1478,13 +1478,13 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
       <div class="home-card" onclick="goUpload()">
         <div class="hc-icon"><i data-lucide="upload-cloud"></i></div>
         <h3>อัปโหลดข้อมูล</h3>
-        <p>อัปโหลดไฟล์ Daily Report และ Water Report<br>ข้อมูลจะถูกบันทึกไปยัง Google Sheet</p>
+        <p>อัปโหลดไฟล์ Daily Report และ Water Report<br>ข้อมูลจะถูกบันทึกไปยัง Database</p>
         <span class="hc-badge">เลือกไฟล์ Excel</span>
       </div>
       <div class="home-card" id="homeViewBtn" onclick="goViewDashboard()">
         <div class="hc-icon"><i data-lucide="bar-chart-3"></i></div>
         <h3>ดู Dashboard</h3>
-        <p>ดูข้อมูลที่อัปโหลดไว้แล้ว<br>โหลดจาก Google Sheet อัตโนมัติ</p>
+        <p>ดูข้อมูลที่อัปโหลดไว้แล้ว<br>โหลดจาก Database อัตโนมัติ</p>
         <span class="hc-badge" id="homeDataBadge">โหลดข้อมูล</span>
       </div>
       <div class="home-card" onclick="goGuide()">
@@ -3642,11 +3642,11 @@ async function processUpload(){
   stopData.sort((a,b)=>(a.fileDate||'').localeCompare(b.fileDate||''));
 
   if(API_URL && (parsedDaily.length || parsedWater.length || parsedStop.length)){
-    updateUploadProgress('กำลังบันทึกไปยัง Google Sheet...');
+    updateUploadProgress('กำลังบันทึกลง Database...');
     let sumEl = document.createElement('div');
     sumEl.className = 'upload-item';
     sumEl.innerHTML = `<span class="ui-icon">☁️</span>
-      <span class="ui-name">กำลังส่งข้อมูลไปยัง Google Sheet...</span>
+      <span class="ui-name">กำลังบันทึกลง Database...</span>
       <span class="ui-status loading">uploading...</span>`;
     statusDiv.appendChild(sumEl);
 
@@ -3854,7 +3854,7 @@ async function loadFromSheet(){
   showOverlay('กรุณารอสักครู่....', 'กำลังโหลดข้อมูล');
   try {
     let result = await takeWarmData();
-    if(!result) throw new Error('เชื่อมต่อ Google Sheet ไม่สำเร็จ');
+    if(!result) throw new Error('เชื่อมต่อ Database ไม่สำเร็จ');
     if(result.success){
       applySheetData(result.daily, result.water, result.stop);
       saveSheetCache(dailyData, waterData, stopData);
@@ -3862,7 +3862,7 @@ async function loadFromSheet(){
       if(dailyData.length > 0 || waterData.length > 0){
         showDashboard();
       } else {
-        alert('⚠️ ไม่พบข้อมูลใน Google Sheet - กรุณา upload ไฟล์ Excel ก่อน');
+        alert('⚠️ ไม่พบข้อมูลใน Database - กรุณา upload ไฟล์ Excel ก่อน');
         goHome();
       }
     } else {
