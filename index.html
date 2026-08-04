@@ -2772,6 +2772,20 @@ function parseDailyExcel(wb, filename){
     mj_brix: cvn(ws,37,20), mj_pol: cvn(ws,38,20), mj_purity: cvn(ws,39,20),
     cj_brix: cvn(ws,41,20), cj_pol: cvn(ws,42,20), cj_purity: cvn(ws,43,20),
     rs_brix: cvn(ws,45,20), rs_purity: cvn(ws,47,20),
+    /* Clarified Juice อ่านตรงจากเซลล์ — คอลัมน์ T = TO-DAY (หัวตารางแถว 5)
+       กลุ่ม CLARIFIED JUICE จริงอยู่แถว 45/46/47 ส่วน 41/42/43 คือ
+       PHOSPHATE กับ LAST EXP. JUICE คนละกลุ่มกัน                        */
+    turbidity: cvn(ws,49,20),            // T49  น้ำอ้อยใสขุ่นแค่ไหน (วันนี้)
+    turbidity_todate: cvn(ws,49,23),     // W49  สะสม
+    turbidity_target: cvs(ws,49,24),     // X49  "<10"
+    cj_purity_real: cvn(ws,47,20),       // T47  Purity น้ำอ้อยใส
+    mj_purity_real: cvn(ws,39,20),       // T39  Purity น้ำอ้อยรวม
+    purity_rise: (function(){
+      // Purity Rise = CJ − MJ : การทำใสควรดึง Purity ขึ้น ถ้าติดลบแปลว่าผิดปกติ
+      let cj = cvn(ws,47,20), mj = cvn(ws,39,20);
+      let c = parseFloat(cj), m = parseFloat(mj);
+      return (isNaN(c) || isNaN(m)) ? '' : (c - m).toFixed(2);
+    })(),
     // Filter Cake (col 12=L=Today, 13=M=Week, 14=N=Period, 15=O=ToDate, 16=P=Target) — rows 28-31
     fc_today: fmtNum(cv(ws,28,12)), fc_week: fmtNum(cv(ws,28,13)), fc_period: fmtNum(cv(ws,28,14)), fc_todate: fmtNum(cv(ws,28,15)), fc_target: fmtNum(cv(ws,28,16)),
     fc_pctcane_today: cvn(ws,29,12), fc_pctcane_week: cvn(ws,29,13), fc_pctcane_period: cvn(ws,29,14), fc_pctcane_todate: cvn(ws,29,15), fc_pctcane_target: cvs(ws,29,16),
