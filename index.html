@@ -1540,8 +1540,12 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   </div>
 
   <div class="upload-actions">
-    <button class="upload-btn" id="btnUpload" disabled onclick="processUpload()">📧 อัปโหลดและส่ง Email</button>
+    <button class="upload-btn" id="btnUpload" disabled onclick="processUpload()">📤 อัปโหลดข้อมูล</button>
   </div>
+  <label style="display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Kanit';font-size:12.5px;color:rgba(255,255,255,0.7);margin:10px 0 0;cursor:pointer">
+    <input type="checkbox" id="chkSendEmail" checked style="width:15px;height:15px;accent-color:#42A5F5;cursor:pointer">
+    ส่ง Email แจ้งเตือนหลังอัปโหลด <span style="color:rgba(255,255,255,0.4)">(ปิดไว้ตอนอัปย้อนหลังหลายวัน จะได้ไม่สแปมผู้รับ)</span>
+  </label>
   <p style="text-align:center;font-family:'Kanit';font-size:12px;color:rgba(255,255,255,0.45);margin:8px 0 0;">รายชื่อผู้รับ Email จัดการได้ที่ Tab <strong style="color:rgba(255,255,255,0.65);">EmailList</strong> ใน Google Sheet</p>
 
   <div class="upload-rule">
@@ -3677,8 +3681,11 @@ async function processUpload(){
         sumEl.querySelector('.ui-status').textContent='✓ บันทึกสำเร็จ (Daily:'+result.dailySaved+' Water:'+result.waterSaved+' Stop:'+(result.stopSaved||0)+')';
         clearSheetCache(); // ล้าง cache ให้ dashboard โหลดข้อมูลใหม่ครั้งหน้า
 
-        // send email notification
-        sendEmailNotification(parsedDaily[0]||null, parsedWater[0]||null, parsedStop[0]||null, statusDiv);
+        // ส่งอีเมลเฉพาะเมื่อติ๊กไว้ — อัปย้อนหลังหลายวันจะได้ไม่สแปมผู้รับ
+        const chk = document.getElementById('chkSendEmail');
+        if(!chk || chk.checked){
+          sendEmailNotification(parsedDaily[0]||null, parsedWater[0]||null, parsedStop[0]||null, statusDiv);
+        }
       } else {
         sumEl.querySelector('.ui-status').className='ui-status err';
         sumEl.querySelector('.ui-status').textContent='✗ '+result.error;
