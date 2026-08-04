@@ -2233,6 +2233,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
       style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);font-family:'Kanit';font-size:14px;text-align:center;box-sizing:border-box;margin-bottom:8px"
       onkeydown="if(event.key==='Enter') checkUploadPassword()">
     <div id="uploadPwError" style="display:none;color:#EF4444;font-family:'Kanit';font-size:12.5px;text-align:center;margin-bottom:8px">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</div>
+    <div id="uploadPwHint" style="display:none;color:#6b7f99;font-family:'Kanit';font-size:12px;text-align:center;margin-bottom:8px"></div>
     <div style="display:flex;gap:8px;margin-top:6px">
       <button onclick="closeUploadPwModal()" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--text2);font-family:'Kanit';cursor:pointer">ยกเลิก</button>
       <button id="uploadPwBtn" onclick="checkUploadPassword()" style="flex:1;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:'Kanit';font-weight:600;cursor:pointer">ยืนยัน</button>
@@ -3223,6 +3224,9 @@ function goUpload(){
   document.getElementById('uploadPwError').style.display = 'none';
   document.getElementById('uploadPwOverlay').classList.remove('hidden');
   setTimeout(()=>document.getElementById('uploadPwInput').focus(), 50);
+  // Apps Script ที่ไม่ถูกเรียกสักพักจะ "หลับ" — ครั้งแรกที่ปลุกกินเวลาหลายวินาที
+  // ยิงคำขอเบาๆ ตั้งแต่กล่องรหัสเปิด เพื่อให้มันตื่นระหว่างผู้ใช้กำลังพิมพ์
+  warmFetchSheet();
 }
 function closeUploadPwModal(){
   document.getElementById('uploadPwOverlay').classList.add('hidden');
@@ -3238,6 +3242,16 @@ async function checkUploadPassword(){
   const btnText = btn ? btn.textContent : '';
   if(btn){ btn.disabled = true; btn.textContent = 'กำลังตรวจสอบ...'; }
   errEl.style.display = 'none';
+
+  // ถ้าเซิร์ฟเวอร์เพิ่งตื่น อาจใช้เวลาหลายวินาที — บอกผู้ใช้ว่ายังทำงานอยู่ ไม่ได้ค้าง
+  const hint = document.getElementById('uploadPwHint');
+  const t0 = Date.now();
+  let ticker = setInterval(()=>{
+    if(!hint) return;
+    const s = Math.round((Date.now()-t0)/1000);
+    if(s>=2){ hint.style.display='block'; hint.textContent = `กำลังปลุกเซิร์ฟเวอร์... ${s} วินาที (ครั้งแรกของวันจะนานหน่อย)`; }
+  }, 500);
+  const done = ()=>{ clearInterval(ticker); if(hint){ hint.style.display='none'; hint.textContent=''; } };
 
   try {
     const resp = await fetch(API_URL, {
@@ -3264,6 +3278,7 @@ async function checkUploadPassword(){
     errEl.textContent = 'เชื่อมต่อไม่ได้ กรุณาลองใหม่';
     errEl.style.display = 'block';
   } finally {
+    done();
     if(btn){ btn.disabled = false; btn.textContent = btnText; }
   }
 }
