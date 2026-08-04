@@ -1919,6 +1919,50 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   </div>
 </div>
 
+<!-- PAGE: BACKFILL (เครื่องมือแอดมิน — เปิดด้วย #backfill เท่านั้น ไม่มีลิงก์จากหน้าปกติ) -->
+<div id="backfillPage" class="hidden" style="max-width:900px;margin:0 auto;padding:24px 20px 80px">
+  <div style="background:#fff;border-radius:16px;padding:24px 26px;box-shadow:0 8px 30px rgba(13,71,161,0.12)">
+    <h2 style="font-family:'Kanit';font-size:20px;color:#0d1b2a;margin-bottom:6px">🗄️ อัปโหลดย้อนหลังทั้งโฟลเดอร์</h2>
+    <p style="font-family:'Kanit';font-size:13px;color:#6b7f99;line-height:1.75;margin-bottom:18px">
+      เลือกโฟลเดอร์ทั้ง 3 แล้วกดเริ่ม ระบบจะอ่านทุกไฟล์ จับคู่ตามวันที่ในชื่อไฟล์ แล้วส่งขึ้น Google Sheet ทีละชุด<br>
+      เขียนทับวันเดิมให้เอง ไม่เกิดข้อมูลซ้ำ · ถ้ามีไฟล์ R1/R2 จะใช้เวอร์ชันล่าสุดของวันนั้น
+    </p>
+
+    <div id="bfPick" style="display:grid;gap:12px">
+      <label class="bf-row"><span class="bf-lbl">📋 รายงานผลวิเคราะห์น้ำตาล</span>
+        <input type="file" id="bfDaily" webkitdirectory directory multiple onchange="bfScan()"></label>
+      <label class="bf-row"><span class="bf-lbl">💧 รายงานน้ำและไฟฟ้า</span>
+        <input type="file" id="bfWater" webkitdirectory directory multiple onchange="bfScan()"></label>
+      <label class="bf-row"><span class="bf-lbl">⏱️ รายงานหยุดหีบ</span>
+        <input type="file" id="bfStop" webkitdirectory directory multiple onchange="bfScan()"></label>
+    </div>
+
+    <div id="bfSummary" style="margin-top:16px;font-family:'Kanit';font-size:13px;color:#2a3d52"></div>
+
+    <div style="margin-top:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input type="password" id="bfPw" placeholder="รหัสผ่านอัปโหลด" autocomplete="off"
+        style="flex:1;min-width:200px;padding:10px 12px;border-radius:8px;border:1px solid #e3ecf7;font-family:'Kanit';font-size:14px">
+      <button id="bfGo" onclick="bfRun()" disabled
+        style="padding:11px 26px;border-radius:8px;border:none;background:#1565C0;color:#fff;font-family:'Kanit';font-weight:600;font-size:14px;cursor:pointer">เริ่มอัปโหลด</button>
+    </div>
+
+    <div id="bfProg" style="display:none;margin-top:18px">
+      <div style="height:10px;border-radius:6px;background:#eef2f7;overflow:hidden">
+        <div id="bfBar" style="height:100%;width:0;background:linear-gradient(90deg,#42A5F5,#1565C0);transition:width .3s"></div>
+      </div>
+      <div id="bfStat" style="font-family:'Kanit';font-size:12.5px;color:#4a6580;margin-top:8px"></div>
+      <div id="bfLog" style="margin-top:10px;max-height:260px;overflow-y:auto;font-family:'Inter';font-size:11.5px;
+        background:#f8fafd;border:1px solid #e3ecf7;border-radius:8px;padding:10px;line-height:1.9"></div>
+    </div>
+  </div>
+</div>
+<style>
+.bf-row { display:flex; align-items:center; gap:14px; padding:12px 14px; border:1px solid #e3ecf7; border-radius:10px; background:#fbfdff; }
+.bf-lbl { font-family:'Kanit'; font-size:13.5px; color:#2a3d52; min-width:210px; font-weight:500; }
+.bf-row input[type=file] { font-family:'Inter'; font-size:12px; flex:1; }
+.bf-ok { color:#2E7D32; } .bf-err { color:#C62828; } .bf-skip { color:#8fa3b8; }
+</style>
+
 <!-- ERROR MODAL -->
 <div id="errModalBg" class="err-modal-bg" style="display:none" onclick="if(event.target===this)closeErrModal()">
   <div class="err-modal">
@@ -5494,6 +5538,149 @@ function openAnalysis(topic){
 }
 function closeAnalysis(){ document.getElementById('anaOverlay').classList.add('hidden'); }
 
+/* ═══════════════════════════════════════════════════════════════
+   BACKFILL — อัปโหลดย้อนหลังทั้งโฟลเดอร์ (เครื่องมือแอดมิน)
+   ใช้ parseDailyExcel / parseWaterExcel / parseStoptimeExcel ตัวเดียว
+   กับหน้าอัปโหลดปกติ จึงได้การอ่านเซลล์ชุดที่แก้แล้วเหมือนกัน
+   ═══════════════════════════════════════════════════════════════ */
+
+const BF_BATCH = 5;      // ส่งครั้งละกี่วัน — กัน Apps Script ทำงานเกินเวลา
+let bfFiles = { daily:[], water:[], stop:[] };
+
+function bfLog(msg, cls){
+  const el = document.getElementById('bfLog');
+  el.innerHTML += `<div class="${cls||''}">${msg}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
+
+// เก็บเฉพาะ .xlsx/.xls ที่มีรหัสวันที่ในชื่อ และถ้าวันซ้ำให้ใช้ revision สูงสุด (R1/R2)
+function bfCollect(input){
+  const best = {};
+  [...(input.files||[])].forEach(f=>{
+    if(!/\.xlsx?$/i.test(f.name)) return;
+    const code = fileToDateCode(f.name);
+    if(!code) return;
+    const rev = fileRevision(f.name);
+    if(!best[code] || rev > best[code].rev) best[code] = { file:f, rev };
+  });
+  return best;
+}
+
+function bfScan(){
+  bfFiles.daily = bfCollect(document.getElementById('bfDaily'));
+  bfFiles.water = bfCollect(document.getElementById('bfWater'));
+  bfFiles.stop  = bfCollect(document.getElementById('bfStop'));
+
+  const dates = new Set([...Object.keys(bfFiles.daily), ...Object.keys(bfFiles.water), ...Object.keys(bfFiles.stop)]);
+  const sorted = [...dates].sort();
+  const n = k => Object.keys(bfFiles[k]).length;
+
+  document.getElementById('bfSummary').innerHTML = sorted.length ? `
+    พบ <b>${n('daily')}</b> วัน (ผลวิเคราะห์) · <b>${n('water')}</b> วัน (น้ำ-ไฟฟ้า) · <b>${n('stop')}</b> วัน (หยุดหีบ)<br>
+    รวมทั้งหมด <b>${sorted.length} วัน</b> — ตั้งแต่ ${formatDateCode(sorted[0])} ถึง ${formatDateCode(sorted[sorted.length-1])}
+    <span style="color:#6b7f99">(จะส่งครั้งละ ${BF_BATCH} วัน รวม ${Math.ceil(sorted.length/BF_BATCH)} รอบ)</span>` : '';
+
+  document.getElementById('bfGo').disabled = sorted.length === 0;
+  return sorted;
+}
+
+async function bfParse(entry, parser){
+  if(!entry) return null;
+  try {
+    const buf = await entry.file.arrayBuffer();
+    const wb  = XLSX.read(new Uint8Array(buf), {type:'array'});
+    return parser(wb, entry.file.name);
+  } catch(e){ return { __error: e.message }; }
+}
+
+async function bfRun(){
+  const pw = document.getElementById('bfPw').value;
+  if(!pw){ alert('ใส่รหัสผ่านก่อน'); return; }
+
+  const dates = bfScan();
+  if(!dates.length) return;
+
+  const go = document.getElementById('bfGo');
+  go.disabled = true; go.textContent = 'กำลังทำงาน...';
+  document.getElementById('bfProg').style.display = 'block';
+  document.getElementById('bfLog').innerHTML = '';
+
+  try { await ensureXLSX(); }
+  catch(e){ bfLog('โหลดตัวอ่าน Excel ไม่สำเร็จ', 'bf-err'); go.disabled=false; go.textContent='เริ่มอัปโหลด'; return; }
+
+  // แลกรหัสเป็น token ครั้งเดียว แล้วใช้กับทุกรอบ
+  bfLog('กำลังตรวจรหัสผ่าน...');
+  let token = '';
+  try {
+    const r = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({ action:'verifyPassword', password: pw }) });
+    const j = await r.json();
+    if(!j.success || !j.token){ bfLog('✗ ' + (j.error||'รหัสผ่านไม่ถูกต้อง'), 'bf-err'); go.disabled=false; go.textContent='เริ่มอัปโหลด'; return; }
+    token = j.token;
+    bfLog('✓ รหัสผ่านถูกต้อง เริ่มอ่านไฟล์', 'bf-ok');
+  } catch(e){ bfLog('✗ เชื่อมต่อไม่ได้: '+e.message, 'bf-err'); go.disabled=false; go.textContent='เริ่มอัปโหลด'; return; }
+
+  let sent = 0, failed = 0, skipped = 0;
+  const total = dates.length;
+
+  for(let i=0; i<dates.length; i+=BF_BATCH){
+    const chunk = dates.slice(i, i+BF_BATCH);
+    const payload = { action:'saveBoth', token, daily:[], water:[], stop:[] };
+
+    for(const code of chunk){
+      const [d,w,s] = await Promise.all([
+        bfParse(bfFiles.daily[code], parseDailyExcel),
+        bfParse(bfFiles.water[code], parseWaterExcel),
+        bfParse(bfFiles.stop[code],  parseStoptimeExcel)
+      ]);
+      let parts = [];
+      if(d && !d.__error){ payload.daily.push(d); parts.push('daily'); }
+      else if(d && d.__error) bfLog(`${formatDateCode(code)} daily อ่านไม่ได้: ${d.__error}`, 'bf-err');
+      if(w && !w.__error){ payload.water.push(w); parts.push('water'); }
+      else if(w && w.__error) bfLog(`${formatDateCode(code)} water อ่านไม่ได้: ${w.__error}`, 'bf-err');
+      if(s && !s.__error){ payload.stop.push(s); parts.push('stop'); }
+      else if(s && s.__error) bfLog(`${formatDateCode(code)} stop อ่านไม่ได้: ${s.__error}`, 'bf-err');
+      if(!parts.length){ skipped++; bfLog(`${formatDateCode(code)} — ไม่มีข้อมูลที่อ่านได้ ข้าม`, 'bf-skip'); }
+    }
+
+    const label = `${formatDateCode(chunk[0])}–${formatDateCode(chunk[chunk.length-1])}`;
+    if(!payload.daily.length && !payload.water.length && !payload.stop.length){
+      document.getElementById('bfStat').textContent = `ข้าม ${label}`;
+    } else {
+      try {
+        const r = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) });
+        const j = await r.json();
+        if(j.success){
+          sent += chunk.length;
+          bfLog(`✓ ${label} — daily ${j.dailySaved||0} · water ${j.waterSaved||0} · stop ${j.stopSaved||0}`, 'bf-ok');
+        } else {
+          failed += chunk.length;
+          bfLog(`✗ ${label} — ${j.error||'ไม่ทราบสาเหตุ'}`, 'bf-err');
+          if(j.authRequired){ bfLog('token หมดอายุ — หยุดการทำงาน กรุณาเริ่มใหม่', 'bf-err'); break; }
+        }
+      } catch(e){ failed += chunk.length; bfLog(`✗ ${label} — ${e.message}`, 'bf-err'); }
+    }
+
+    const done = Math.min(i+BF_BATCH, total);
+    document.getElementById('bfBar').style.width = (done/total*100).toFixed(1)+'%';
+    document.getElementById('bfStat').textContent = `${done} / ${total} วัน — สำเร็จ ${sent} · ผิดพลาด ${failed} · ข้าม ${skipped}`;
+  }
+
+  bfLog(`— จบการทำงาน: สำเร็จ ${sent} วัน · ผิดพลาด ${failed} · ข้าม ${skipped} —`, failed?'bf-err':'bf-ok');
+  clearSheetCache(); // ให้แดชบอร์ดดึงข้อมูลชุดใหม่
+  go.disabled = false; go.textContent = 'เริ่มอัปโหลด';
+  document.getElementById('bfPw').value = '';
+}
+
+function bfOpen(){
+  ['homePage','uploadPage','dashboardPanel','guidePage'].forEach(id=>{
+    const el = document.getElementById(id); if(el) el.classList.add('hidden');
+  });
+  document.getElementById('backfillPage').classList.remove('hidden');
+  document.getElementById('appHeader').style.display = 'none';
+  document.body.classList.remove('upload-bg','dashboard-bg','guide-bg');
+}
+
 /* ─── WATER TAB ─── */
 const CONDWASTE_ITEMS = [
   {key:'evap1', label:'EVAP 1',            group:'cond',  limit:50,  color:'#10B981'},
@@ -5905,6 +6092,7 @@ document.addEventListener('DOMContentLoaded',function(){
   goHome();
   try { lucide.createIcons(); } catch(e){}
   warmFetchSheet(); // เผื่อกรณี warm fetch ตอน parse ถูกใช้ไปแล้ว
+  if(location.hash === '#backfill') bfOpen(); // เครื่องมือแอดมิน ไม่มีลิงก์จากหน้าปกติ
 });
 </script>
 </body>
