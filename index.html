@@ -1940,8 +1940,6 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
     <div id="bfSummary" style="margin-top:16px;font-family:'Kanit';font-size:13px;color:#2a3d52"></div>
 
     <div style="margin-top:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <input type="password" id="bfPw" placeholder="รหัสผ่านอัปโหลด" autocomplete="off"
-        style="flex:1;min-width:200px;padding:10px 12px;border-radius:8px;border:1px solid #e3ecf7;font-family:'Kanit';font-size:14px">
       <button id="bfGo" onclick="bfRun()" disabled
         style="padding:11px 26px;border-radius:8px;border:none;background:#1565C0;color:#fff;font-family:'Kanit';font-weight:600;font-size:14px;cursor:pointer">เริ่มอัปโหลด</button>
     </div>
@@ -2225,66 +2223,6 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
   </div>
 </div>
 
-<!-- UPLOAD PASSWORD GATE -->
-<div class="overlay hidden" id="uploadPwOverlay" onclick="if(event.target===this) closeUploadPwModal()">
-  <div class="overlay-box" style="max-width:340px">
-    <svg viewBox="0 0 200 320" style="width:130px;height:auto;display:block;margin:0 auto 10px" xmlns="http://www.w3.org/2000/svg">
-      <!-- leaves -->
-      <g stroke="#2E7D32" stroke-width="2" stroke-linejoin="round">
-        <path d="M100 95 C 70 70, 40 40, 20 5 C 55 15, 80 40, 100 80 Z" fill="#66BB6A"/>
-        <path d="M100 95 C 80 60, 65 25, 60 -5 C 90 10, 100 45, 108 85 Z" fill="#4CAF50"/>
-        <path d="M100 95 C 100 55, 100 15, 100 -12 C 112 15, 112 55, 108 90 Z" fill="#43A047"/>
-        <path d="M100 95 C 120 60, 135 25, 140 -5 C 110 10, 100 45, 92 85 Z" fill="#4CAF50"/>
-        <path d="M100 95 C 130 70, 160 40, 180 5 C 145 15, 120 40, 100 80 Z" fill="#66BB6A"/>
-      </g>
-      <!-- small flower -->
-      <g transform="translate(100,28)">
-        <circle cx="0" cy="-9" r="7" fill="#F48FB1" stroke="#EC407A" stroke-width="1.5"/>
-        <circle cx="8" cy="-2" r="7" fill="#F48FB1" stroke="#EC407A" stroke-width="1.5"/>
-        <circle cx="-8" cy="-2" r="7" fill="#F48FB1" stroke="#EC407A" stroke-width="1.5"/>
-        <circle cx="5" cy="7" r="7" fill="#F48FB1" stroke="#EC407A" stroke-width="1.5"/>
-        <circle cx="-5" cy="7" r="7" fill="#F48FB1" stroke="#EC407A" stroke-width="1.5"/>
-        <circle cx="0" cy="0" r="5" fill="#FFEB3B"/>
-      </g>
-      <!-- top leaf band -->
-      <path d="M55 95 Q100 108 145 95 L145 112 Q100 122 55 112 Z" fill="#7CB342" stroke="#33691E" stroke-width="2"/>
-      <!-- stalk segments -->
-      <rect x="60" y="112" width="80" height="70" rx="14" fill="#D4E157" stroke="#9E9D24" stroke-width="2.5"/>
-      <rect x="55" y="178" width="90" height="75" rx="14" fill="#C0CA33" stroke="#827717" stroke-width="2.5"/>
-      <rect x="58" y="249" width="84" height="55" rx="12" fill="#D4E157" stroke="#9E9D24" stroke-width="2.5"/>
-      <!-- waving arm -->
-      <path d="M138 145 Q168 140 172 108" stroke="#AFB42B" stroke-width="9" stroke-linecap="round" fill="none"/>
-      <circle cx="172" cy="104" r="10" fill="#FBC02D" stroke="#F9A825" stroke-width="1.5"/>
-      <!-- other arm -->
-      <path d="M62 150 Q40 175 45 205" stroke="#AFB42B" stroke-width="9" stroke-linecap="round" fill="none"/>
-      <circle cx="45" cy="209" r="9" fill="#FBC02D" stroke="#F9A825" stroke-width="1.5"/>
-      <!-- feet -->
-      <ellipse cx="82" cy="308" rx="13" ry="8" fill="#558B2F"/>
-      <ellipse cx="118" cy="308" rx="13" ry="8" fill="#558B2F"/>
-      <!-- bow tie -->
-      <path d="M100 168 L82 158 L82 178 Z" fill="#42A5F5" stroke="#1565C0" stroke-width="1.5"/>
-      <path d="M100 168 L118 158 L118 178 Z" fill="#42A5F5" stroke="#1565C0" stroke-width="1.5"/>
-      <circle cx="100" cy="168" r="6" fill="#1E88E5"/>
-      <!-- face -->
-      <circle cx="82" cy="135" r="7" fill="#3E2723"/><circle cx="118" cy="135" r="7" fill="#3E2723"/>
-      <circle cx="84" cy="133" r="2" fill="#fff"/><circle cx="120" cy="133" r="2" fill="#fff"/>
-      <circle cx="70" cy="145" r="6" fill="#FFAB91" opacity="0.7"/><circle cx="130" cy="145" r="6" fill="#FFAB91" opacity="0.7"/>
-      <path d="M85 148 Q100 158 115 148" stroke="#5D4037" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    </svg>
-    <h3 style="text-align:center">กรุณาใส่รหัสผ่านก่อนอัปโหลดข้อมูล</h3>
-    <p style="text-align:center;margin-bottom:14px">ติดต่อผู้ดูแลระบบหากไม่ทราบรหัสผ่าน</p>
-    <input type="password" id="uploadPwInput" placeholder="รหัสผ่าน" autocomplete="off"
-      style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);font-family:'Kanit';font-size:14px;text-align:center;box-sizing:border-box;margin-bottom:8px"
-      onkeydown="if(event.key==='Enter') checkUploadPassword()">
-    <div id="uploadPwError" style="display:none;color:#EF4444;font-family:'Kanit';font-size:12.5px;text-align:center;margin-bottom:8px">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</div>
-    <div id="uploadPwHint" style="display:none;color:#6b7f99;font-family:'Kanit';font-size:12px;text-align:center;margin-bottom:8px"></div>
-    <div style="display:flex;gap:8px;margin-top:6px">
-      <button onclick="closeUploadPwModal()" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:#fff;color:var(--text2);font-family:'Kanit';cursor:pointer">ยกเลิก</button>
-      <button id="uploadPwBtn" onclick="checkUploadPassword()" style="flex:1;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:'Kanit';font-weight:600;cursor:pointer">ยืนยัน</button>
-    </div>
-  </div>
-</div>
-
 <!-- LOADING OVERLAY -->
 <div class="overlay hidden" id="loadingOverlay">
   <div class="overlay-box">
@@ -2530,6 +2468,24 @@ function stBadge(val,target,mode='gt'){
   if(mode==='gtpf') return v>=t?'<span class="st pass">Pass</span>':'<span class="st fail">Fail</span>';
   if(mode==='ltpf') return v<=t?'<span class="st pass">Pass</span>':'<span class="st fail">Fail</span>';
   return '';
+}
+
+/* สำเนาสำรองทั้งแผ่น — เก็บทุกเซลล์ที่มีข้อมูลเป็น JSON ก้อนเดียว {A1:ค่า}
+   ใช้เป็น backup เผื่อวันหลังอยากได้ค่าที่ parser ยังไม่ได้ดึงออกมา
+   ปัดทศนิยม 6 ตำแหน่งเพื่อคุมขนาดให้ต่ำกว่าลิมิต 50,000 ตัวอักษร/เซลล์ของ Sheets
+   ฟิลด์นี้ขึ้นต้นด้วย _ ฝั่ง Apps Script จะไม่ส่งกลับมาตอนโหลดแดชบอร์ด    */
+function bkRaw(ws){
+  try {
+    const o = {};
+    for(const k in ws){
+      if(k[0] === '!') continue;
+      const v = ws[k].v;
+      if(v === undefined || v === null || String(v).trim() === '') continue;
+      o[k] = (typeof v === 'number') ? +v.toFixed(6) : String(v);
+    }
+    const s = JSON.stringify(o);
+    return s.length > 49000 ? s.slice(0, 49000) : s;  // กันเกินลิมิตเซลล์
+  } catch(e){ return ''; }
 }
 
 function fileToDateCode(filename){
@@ -2841,7 +2797,8 @@ function parseDailyExcel(wb, filename){
     // %Purity: B98=today, E98=week, F98=period, G98=todate, H98=target
     purity_today: cvn(ws,98,4), purity_week: cvn(ws,98,5), purity_period: cvn(ws,98,6), purity_todate: cvn(ws,98,7), purity_target: cvn(ws,98,8),
     // %ME: I76=label, L76=today, M76=week, N76=period, O76=todate, P76=target
-    me_today: cvn(ws,76,12), me_week: cvn(ws,76,13), me_period: cvn(ws,76,14), me_todate: cvn(ws,76,15), me_target: cvn(ws,76,16)
+    me_today: cvn(ws,76,12), me_week: cvn(ws,76,13), me_period: cvn(ws,76,14), me_todate: cvn(ws,76,15), me_target: cvn(ws,76,16),
+    _raw: bkRaw(ws)   // สำเนาสำรองทั้งแผ่น
   };
 
   // ── น้ำใช้/น้ำเสียประจำวัน: anchor-based (row position varies by report) ──
@@ -2976,6 +2933,7 @@ function parseWaterExcel(wb, filename){
     result.polycsr_today = cvn(ws,wtAnchor+8,3); result.polycsr_todate = cvn(ws,wtAnchor+8,5);
   }
 
+  result._raw = bkRaw(ws);   // สำเนาสำรองทั้งแผ่น
   return result;
 }
 
@@ -3050,7 +3008,8 @@ function parseStoptimeExcel(wb, filename){
     lostpct_today:cvpct(ws,28,8), lostpct_period:cvpct(ws,28,10), lostpct_todate:cvpct(ws,28,12),
     overalleff_today:cvpct(ws,29,8), overalleff_period:cvpct(ws,29,10), overalleff_todate:cvpct(ws,29,12),
     mecheff_today:cvpct(ws,30,8), mecheff_period:cvpct(ws,30,10), mecheff_todate:cvpct(ws,30,12),
-    causesJson: JSON.stringify(causes)
+    causesJson: JSON.stringify(causes),
+    _raw: bkRaw(ws)   // สำเนาสำรองทั้งแผ่น
   };
 }
 function getCauses(s){
@@ -3265,84 +3224,8 @@ function openGuideSub(btn, id){
   document.getElementById('guideSubtabs').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-/* ── สิทธิ์การอัปโหลด ──────────────────────────────────────────
-   รหัสผ่านอยู่ฝั่ง Apps Script ไม่ได้ฝังในหน้าเว็บแล้ว
-   ตรวจผ่านแล้วได้ token กลับมา เก็บไว้ใน sessionStorage
-   (หมดอายุเมื่อปิดแท็บ) แล้วแนบไปกับทุก request ที่เขียนข้อมูล  */
-const UPLOAD_TOKEN_KEY = 'mlUploadToken';
-
-function getUploadToken(){
-  try { return sessionStorage.getItem(UPLOAD_TOKEN_KEY) || ''; } catch(e){ return ''; }
-}
-function setUploadToken(t){
-  try { t ? sessionStorage.setItem(UPLOAD_TOKEN_KEY, t) : sessionStorage.removeItem(UPLOAD_TOKEN_KEY); } catch(e){}
-}
-
-function goUpload(){
-  // มี token ที่ยังไม่หมดอายุอยู่แล้ว ไม่ต้องถามรหัสซ้ำ
-  if(getUploadToken()){ goUploadReal(); return; }
-  document.getElementById('uploadPwInput').value = '';
-  document.getElementById('uploadPwError').style.display = 'none';
-  document.getElementById('uploadPwOverlay').classList.remove('hidden');
-  setTimeout(()=>document.getElementById('uploadPwInput').focus(), 50);
-  // Apps Script ที่ไม่ถูกเรียกสักพักจะ "หลับ" — ครั้งแรกที่ปลุกกินเวลาหลายวินาที
-  // ยิงคำขอเบาๆ ตั้งแต่กล่องรหัสเปิด เพื่อให้มันตื่นระหว่างผู้ใช้กำลังพิมพ์
-  warmFetchSheet();
-}
-function closeUploadPwModal(){
-  document.getElementById('uploadPwOverlay').classList.add('hidden');
-}
-
-async function checkUploadPassword(){
-  const input   = document.getElementById('uploadPwInput');
-  const errEl   = document.getElementById('uploadPwError');
-  const val     = input.value;
-  if(!val){ errEl.style.display='block'; input.select(); return; }
-
-  const btn = document.getElementById('uploadPwBtn');
-  const btnText = btn ? btn.textContent : '';
-  if(btn){ btn.disabled = true; btn.textContent = 'กำลังตรวจสอบ...'; }
-  errEl.style.display = 'none';
-
-  // ถ้าเซิร์ฟเวอร์เพิ่งตื่น อาจใช้เวลาหลายวินาที — บอกผู้ใช้ว่ายังทำงานอยู่ ไม่ได้ค้าง
-  const hint = document.getElementById('uploadPwHint');
-  const t0 = Date.now();
-  let ticker = setInterval(()=>{
-    if(!hint) return;
-    const s = Math.round((Date.now()-t0)/1000);
-    if(s>=2){ hint.style.display='block'; hint.textContent = `กำลังปลุกเซิร์ฟเวอร์... ${s} วินาที (ครั้งแรกของวันจะนานหน่อย)`; }
-  }, 500);
-  const done = ()=>{ clearInterval(ticker); if(hint){ hint.style.display='none'; hint.textContent=''; } };
-
-  try {
-    const resp = await fetch(API_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify({ action:'verifyPassword', password: val })
-    });
-    const result = await resp.json();
-    if(result.success && result.token){
-      setUploadToken(result.token);
-      input.value = '';
-      closeUploadPwModal();
-      goUploadReal();
-    } else if(result.error && result.error.indexOf('Unknown action') !== -1){
-      // Apps Script ยังเป็นเวอร์ชันเก่า ยังไม่รู้จัก verifyPassword
-      errEl.textContent = 'ระบบหลังบ้านยังไม่อัปเดต — กรุณา Deploy Apps Script เวอร์ชันใหม่ก่อน';
-      errEl.style.display = 'block';
-    } else {
-      errEl.textContent = result.error || 'รหัสผ่านไม่ถูกต้อง';
-      errEl.style.display = 'block';
-      input.select();
-    }
-  } catch(e){
-    errEl.textContent = 'เชื่อมต่อไม่ได้ กรุณาลองใหม่';
-    errEl.style.display = 'block';
-  } finally {
-    done();
-    if(btn){ btn.disabled = false; btn.textContent = btnText; }
-  }
-}
+/* ไม่มีการตรวจรหัสผ่านแล้ว — ผู้ใช้เลือกเอาออก เข้าหน้าอัปโหลดได้ตรงๆ */
+function goUpload(){ goUploadReal(); }
 function goUploadReal(){
   document.getElementById('homePage').classList.add('hidden');
   document.getElementById('uploadPage').classList.remove('hidden');
@@ -3773,21 +3656,12 @@ async function processUpload(){
         headers:{'Content-Type':'text/plain'},
         body: JSON.stringify({
           action:'saveBoth',
-          token: getUploadToken(),
           daily: parsedDaily,
           water: parsedWater,
           stop: parsedStop
         })
       });
       let result = await resp.json();
-      if(result.authRequired){
-        setUploadToken('');          // token หมดอายุ → ให้ใส่รหัสใหม่
-        sumEl.querySelector('.ui-status').className='ui-status err';
-        sumEl.querySelector('.ui-status').textContent='✗ หมดเวลาเข้าใช้งาน กรุณาใส่รหัสผ่านใหม่';
-        hideUploadProgress();
-        goUpload(); // token ถูกล้างแล้ว จึงเด้งถามรหัสอีกครั้ง
-        return;
-      }
       if(result.success){
         sumEl.querySelector('.ui-status').className='ui-status ok';
         sumEl.querySelector('.ui-status').textContent='✓ บันทึกสำเร็จ (Daily:'+result.dailySaved+' Water:'+result.waterSaved+' Stop:'+(result.stopSaved||0)+')';
@@ -3865,7 +3739,7 @@ async function sendEmailNotification(daily, water, stop, statusDiv){
     const imageBase64 = generateKPIImage(kpis, dateLabel);
     const resp = await fetch(API_URL, {
       method:'POST', headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify({ action:'sendEmailWithImage', token: getUploadToken(), imageBase64, dateLabel, revNote })
+      body: JSON.stringify({ action:'sendEmailWithImage', imageBase64, dateLabel, revNote })
     });
     const result = await resp.json();
     if(result.success){
@@ -5594,9 +5468,6 @@ async function bfParse(entry, parser){
 }
 
 async function bfRun(){
-  const pw = document.getElementById('bfPw').value;
-  if(!pw){ alert('ใส่รหัสผ่านก่อน'); return; }
-
   const dates = bfScan();
   if(!dates.length) return;
 
@@ -5608,24 +5479,13 @@ async function bfRun(){
   try { await ensureXLSX(); }
   catch(e){ bfLog('โหลดตัวอ่าน Excel ไม่สำเร็จ', 'bf-err'); go.disabled=false; go.textContent='เริ่มอัปโหลด'; return; }
 
-  // แลกรหัสเป็น token ครั้งเดียว แล้วใช้กับทุกรอบ
-  bfLog('กำลังตรวจรหัสผ่าน...');
-  let token = '';
-  try {
-    const r = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify({ action:'verifyPassword', password: pw }) });
-    const j = await r.json();
-    if(!j.success || !j.token){ bfLog('✗ ' + (j.error||'รหัสผ่านไม่ถูกต้อง'), 'bf-err'); go.disabled=false; go.textContent='เริ่มอัปโหลด'; return; }
-    token = j.token;
-    bfLog('✓ รหัสผ่านถูกต้อง เริ่มอ่านไฟล์', 'bf-ok');
-  } catch(e){ bfLog('✗ เชื่อมต่อไม่ได้: '+e.message, 'bf-err'); go.disabled=false; go.textContent='เริ่มอัปโหลด'; return; }
-
+  bfLog('เริ่มอ่านไฟล์...');
   let sent = 0, failed = 0, skipped = 0;
   const total = dates.length;
 
   for(let i=0; i<dates.length; i+=BF_BATCH){
     const chunk = dates.slice(i, i+BF_BATCH);
-    const payload = { action:'saveBoth', token, daily:[], water:[], stop:[] };
+    const payload = { action:'saveBoth', daily:[], water:[], stop:[] };
 
     for(const code of chunk){
       const [d,w,s] = await Promise.all([
@@ -5656,7 +5516,6 @@ async function bfRun(){
         } else {
           failed += chunk.length;
           bfLog(`✗ ${label} — ${j.error||'ไม่ทราบสาเหตุ'}`, 'bf-err');
-          if(j.authRequired){ bfLog('token หมดอายุ — หยุดการทำงาน กรุณาเริ่มใหม่', 'bf-err'); break; }
         }
       } catch(e){ failed += chunk.length; bfLog(`✗ ${label} — ${e.message}`, 'bf-err'); }
     }
@@ -5669,7 +5528,6 @@ async function bfRun(){
   bfLog(`— จบการทำงาน: สำเร็จ ${sent} วัน · ผิดพลาด ${failed} · ข้าม ${skipped} —`, failed?'bf-err':'bf-ok');
   clearSheetCache(); // ให้แดชบอร์ดดึงข้อมูลชุดใหม่
   go.disabled = false; go.textContent = 'เริ่มอัปโหลด';
-  document.getElementById('bfPw').value = '';
 }
 
 function bfOpen(){
