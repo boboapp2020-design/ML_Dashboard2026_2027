@@ -5667,11 +5667,20 @@ function renderWaterTabCharts(){
    CHARTS
    ═══════════════════════════════════════════════════════════════ */
 
-Chart.defaults.font.family="'Inter','Kanit',sans-serif";
-Chart.defaults.color='#6b7f99';
-Chart.defaults.borderColor='rgba(0,0,0,0.06)';
+/* chart.js โหลดแบบ defer — ตอนสคริปต์นี้รัน Chart อาจยังมาไม่ถึง
+   ห้ามแตะ Chart.defaults ที่ top-level ตรงๆ (จะ throw แล้วฆ่าสคริปต์ทั้งไฟล์
+   รวมถึงตัวสร้างไอคอนท้ายไฟล์ — บั๊กไอคอนหายที่เคยเกิด) */
+function applyChartDefaults(){
+  if(!window.Chart) return false;
+  Chart.defaults.font.family="'Inter','Kanit',sans-serif";
+  Chart.defaults.color='#6b7f99';
+  Chart.defaults.borderColor='rgba(0,0,0,0.06)';
+  return true;
+}
+if(!applyChartDefaults()) window.addEventListener('load', applyChartDefaults);
 
 function makeChart(id,type,data,extraOpts){
+  applyChartDefaults(); // เผื่อวาดกราฟก่อนเหตุการณ์ load (แค่กันเหนียว — เรียกซ้ำไม่มีผลเสีย)
   let canvas=document.getElementById(id);
   if(!canvas||!canvas.getContext) return;
   if(charts[id]){charts[id].destroy();}
@@ -5946,12 +5955,30 @@ function renderStopCharts(){
    DRAG & DROP
    ═══════════════════════════════════════════════════════════════ */
 
+/* สร้างไอคอน lucide แบบทนทาน — ถ้าไลบรารียังมาไม่ถึงหรือยังแปลงไม่ครบ
+   (เกิดเป็นครั้งคราวตอนโหลดครั้งแรก) จะลองซ้ำถี่ๆ จนสำเร็จหรือครบ ~10 วิ */
+function initIcons(){
+  const pending = () => document.querySelectorAll('i[data-lucide]').length;
+  const attempt = () => {
+    if(!window.lucide) return false;
+    try { lucide.createIcons(); } catch(e){ return false; }
+    return pending() === 0;
+  };
+  if(attempt()) return;
+  let tries = 0;
+  const t = setInterval(()=>{
+    if(attempt() || ++tries > 40) clearInterval(t);
+  }, 250);
+}
+
 document.addEventListener('DOMContentLoaded',function(){
-  goHome();
-  try { lucide.createIcons(); } catch(e){}
+  try { goHome(); } catch(e){}
+  initIcons();
   warmFetchSheet(); // เผื่อกรณี warm fetch ตอน parse ถูกใช้ไปแล้ว
   if(location.hash === '#backfill') bfOpen(); // เครื่องมือแอดมิน ไม่มีลิงก์จากหน้าปกติ
 });
+// กันเหนียวอีกชั้น: เผื่อเหตุการณ์ DOMContentLoaded มีปัญหา หรือ handler ตายกลางทาง
+window.addEventListener('load', initIcons);
 </script>
 </body>
 </html>
