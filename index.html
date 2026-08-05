@@ -5446,7 +5446,10 @@ function closeAnalysis(){ document.getElementById('anaOverlay').classList.add('h
    กับหน้าอัปโหลดปกติ จึงได้การอ่านเซลล์ชุดที่แก้แล้วเหมือนกัน
    ═══════════════════════════════════════════════════════════════ */
 
-const BF_BATCH = 5;      // ส่งครั้งละกี่วัน — กัน Apps Script ทำงานเกินเวลา
+/* ส่งครั้งละกี่วัน — Apps Script คิดค่าผ่านทางคงที่ ~4.6 วิ/คำขอ ไม่ว่าจะส่งอะไร
+   ส่วนข้อมูลเพิ่มแค่ ~1.2 วิ/วัน ดังนั้นก้อนยิ่งใหญ่ยิ่งคุ้ม
+   15 วัน ≈ 23 วิ/คำขอ ยังห่างจากลิมิต 6 นาทีของ Apps Script มาก */
+const BF_BATCH = 15;
 let bfFiles = { daily:[], water:[], stop:[] };
 
 function bfLog(msg, cls){
@@ -6005,6 +6008,10 @@ document.addEventListener('DOMContentLoaded',function(){
   initIcons();
   warmFetchSheet(); // เผื่อกรณี warm fetch ตอน parse ถูกใช้ไปแล้ว
   if(location.hash === '#backfill') bfOpen(); // เครื่องมือแอดมิน ไม่มีลิงก์จากหน้าปกติ
+});
+// รองรับกรณีพิมพ์ #backfill ต่อท้ายตอนหน้าเปิดอยู่แล้ว (ไม่ได้โหลดหน้าใหม่)
+window.addEventListener('hashchange', function(){
+  if(location.hash === '#backfill') bfOpen();
 });
 // กันเหนียวอีกชั้น: เผื่อเหตุการณ์ DOMContentLoaded มีปัญหา หรือ handler ตายกลางทาง
 window.addEventListener('load', initIcons);
