@@ -1452,24 +1452,7 @@ body.upload-bg .upload-item .ui-status.loading { color:#79c3ff; }
     </div>
     <div class="header-badge" id="metaBadge">Crop 2025/26</div>
     <span class="data-count-badge" id="dataCountBadge" style="display:none"></span>
-    <div class="dl-wrap" id="dlWrap">
-      <button class="dl-btn" onclick="toggleDlMenu(event)">
-        <i data-lucide="download" style="width:14px;height:14px"></i> <span class="hide-mobile">ดาวน์โหลดไฟล์</span> <i data-lucide="chevron-down" style="width:12px;height:12px" id="dlChevron"></i>
-      </button>
-      <div class="dl-menu" id="dlMenu">
-        <div class="dl-menu-item" id="dlDaily" onclick="downloadFile('daily')">
-          <span class="dl-dot" style="background:#4F9DFF"></span>
-          <span id="dlDailyLabel">Daily Report</span>
-        </div>
-        <div class="dl-menu-item" id="dlWater" onclick="downloadFile('water')">
-          <span class="dl-dot" style="background:#10B981"></span>
-          <span id="dlWaterLabel">Water Report</span>
-        </div>
-        <div class="dl-menu-item" id="dlStop" onclick="downloadFile('stop')">
-          <span class="dl-dot" style="background:#F59E0B"></span>
-          <span id="dlStopLabel">Stoptime Report</span>
-        </div>
-      </div>
+    <div class="dl-wrap" id="dlWrap" style="display:none">
     </div>
     <button class="header-upload-btn" id="btnGoHome" onclick="goHome()" style="display:none"><i data-lucide="home" style="width:14px;height:14px"></i> <span class="hide-mobile">Home</span></button>
   </div>
@@ -3368,19 +3351,10 @@ function handleSlotFile(file, type){
     return;
   }
   c.set(file);
-  // บันทึกไฟล์ลง localStorage โดยใช้ dateCode เป็น key เพื่อให้ดาวน์โหลดตามวันที่เลือกได้
-  let fileCode = fileToDateCode(file.name);
-  if(fileCode){
-    let reader = new FileReader();
-    reader.onload = function(e){
-      try {
-        let b64 = arrayBufferToBase64(e.target.result);
-        localStorage.setItem('mlFile_'+type+'_'+fileCode, b64);
-        localStorage.setItem('mlFileName_'+type+'_'+fileCode, file.name);
-      } catch(err){ /* ไฟล์ใหญ่เกิน localStorage — ข้ามได้ */ }
-    };
-    reader.readAsArrayBuffer(file);
-  }
+  /* ไม่เก็บสำเนาไฟล์ Excel ลงเครื่องแล้ว — เดิมเก็บเป็น base64 (~250 KB/ไฟล์)
+     พออัปหลายวันจะกิน localStorage จนเต็ม แล้ว cache ของแดชบอร์ดเซฟไม่ลง
+     ทำให้ทุกครั้งที่เปิดเว็บต้องโหลดใหม่ทั้งก้อน (สาเหตุที่ดึงข้อมูลมีปัญหาบ่อย)
+     ไฟล์ต้นฉบับอยู่ในเครื่องผู้ใช้อยู่แล้ว และทุกเซลล์ถูกสำรองไว้ที่คอลัมน์ _raw */
 
   let slot = document.getElementById(c.slot);
   slot.classList.add('has-file');
@@ -3797,12 +3771,33 @@ async function sendEmailNotification(daily, water, stop, statusDiv){
 const ML_CACHE_KEY = 'mlSheetCache_v2';
 const ML_CACHE_TTL = 10 * 60 * 1000; // 10 นาที
 
-function saveSheetCache(daily, water, stop){
+/* ล้างสำเนาไฟล์ Excel ที่เวอร์ชันเก่าเคยเก็บไว้ (mlFile_/mlFileName_)
+   เครื่องที่ใช้มาก่อนจะมีของพวกนี้ค้างอยู่หลาย MB จนพื้นที่ไม่พอเซฟ cache
+   เรียกครั้งเดียวตอนเปิดเว็บ เพื่อคืนพื้นที่ให้ cache ของแดชบอร์ด */
+function purgeLegacyStoredFiles(){
   try {
-    localStorage.setItem(ML_CACHE_KEY, JSON.stringify({
-      ts: Date.now(), daily, water, stop
-    }));
-  } catch(e) {}
+    const doomed = [];
+    for(let i=0;i<localStorage.length;i++){
+      const k = localStorage.key(i);
+      if(k && (k.indexOf('mlFile_')===0 || k.indexOf('mlFileName_')===0)) doomed.push(k);
+    }
+    doomed.forEach(k=>{ try{ localStorage.removeItem(k); }catch(e){} });
+    return doomed.length;
+  } catch(e){ return 0; }
+}
+
+/* cache ของแดชบอร์ดคือสิ่งเดียวที่เก็บลงเครื่องแล้ว — ถ้าเซฟไม่ลง
+   ให้ล้างของเก่าที่ค้างแล้วลองใหม่อีกครั้ง */
+function saveSheetCache(daily, water, stop){
+  const payload = JSON.stringify({ ts: Date.now(), daily, water, stop });
+  try {
+    localStorage.setItem(ML_CACHE_KEY, payload);
+    return true;
+  } catch(e) {
+    purgeLegacyStoredFiles();
+    try { localStorage.setItem(ML_CACHE_KEY, payload); return true; }
+    catch(e2){ return false; }
+  }
 }
 function clearSheetCache(){
   try { localStorage.removeItem(ML_CACHE_KEY); } catch(e) {}
@@ -3829,6 +3824,17 @@ function applySheetData(daily, water, stop){
    พอกด "ดูแดชบอร์ด" ข้อมูลมักจะมาถึงแล้ว → เข้าได้ทันที        */
 let warmDataPromise = null;
 
+/* fetch ที่มีเวลาหมดอายุ — fetch ปกติไม่มี timeout ในตัว ถ้า Apps Script
+   ค้างสาย (เกิดจริงเป็นระยะ) หน้าเว็บจะรอตลอดกาลและค้างที่ "กำลังโหลดข้อมูล"
+   ตัดที่ 25 วิ แล้วโยน error ออกมาให้ตัว retry จัดการต่อ */
+function fetchWithTimeout(url, opts, ms){
+  const ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+  const timer = setTimeout(()=>{ if(ctl) ctl.abort(); }, ms || 25000);
+  const o = Object.assign({}, opts || {});
+  if(ctl) o.signal = ctl.signal;
+  return fetch(url, o).finally(()=>clearTimeout(timer));
+}
+
 /* รวมแถวใหม่เข้ากับชุดเดิม — วันซ้ำใช้ตัวใหม่แทน วันใหม่ต่อท้าย */
 function mergeRows(base, extra){
   (extra||[]).forEach(r=>{
@@ -3851,7 +3857,7 @@ function warmFetchSheet(){
     const last = (fresh && c.daily && c.daily.length) ? c.daily[c.daily.length-1].fileDate : '';
     if(last){ mode = 'delta'; url = API_URL + '?action=getSince&after=' + last; }
   } catch(e){}
-  warmDataPromise = fetch(url)
+  warmDataPromise = fetchWithTimeout(url, null, 25000)
     .then(r => r.json())
     .then(d => ({ mode, data: d }))
     .catch(() => null);
@@ -3868,7 +3874,7 @@ async function takeWarmData(){
   if(w.mode === 'full') return w.data;
   // delta ล้มเหลว (เช่น เซิร์ฟเวอร์ยังไม่รู้จัก getSince) → ถอยไปขอเต็ม
   if(!(w.data && w.data.success)){
-    try { return await (await fetch(API_URL + '?action=getAll')).json(); }
+    try { return await (await fetchWithTimeout(API_URL + '?action=getAll', null, 25000)).json(); }
     catch(e){ return null; }
   }
   const c = loadSheetCache() || {};
@@ -3930,7 +3936,7 @@ async function loadFromSheet(){
       showOverlay('กรุณารอสักครู่....', 'กำลังโหลดข้อมูล (ลองใหม่ครั้งที่ '+(i+1)+')');
       await new Promise(r=>setTimeout(r, 1500*(i+1)));
       try {
-        const resp = await fetch(API_URL + '?action=getAll&retry=' + i + '&t=' + Date.now());
+        const resp = await fetchWithTimeout(API_URL + '?action=getAll&retry=' + i + '&t=' + Date.now(), null, 25000);
         result = await resp.json();
       } catch(e){ result = null; }
     }
@@ -3960,65 +3966,9 @@ async function loadFromSheet(){
 /* ═══════════════════════════════════════════════════════════════
    DOWNLOAD FILES FROM LOCALSTORAGE
    ═══════════════════════════════════════════════════════════════ */
-function updateDlMenu(){
-  let dateCode = (D && D.fileDate) ? D.fileDate : '';
-  let labelMap = {daily:'Daily Report', water:'Water Report', stop:'Stoptime Report'};
-  ['daily','water','stop'].forEach(type=>{
-    let fname = dateCode ? localStorage.getItem('mlFileName_'+type+'_'+dateCode) : null;
-    let hasFile = dateCode ? !!localStorage.getItem('mlFile_'+type+'_'+dateCode) : false;
-    let capType = type.charAt(0).toUpperCase()+type.slice(1);
-    let el = document.getElementById('dl'+capType);
-    let labelEl = document.getElementById('dl'+capType+'Label');
-    if(!el || !labelEl) return;
-    if(hasFile && fname){
-      el.classList.remove('disabled');
-      labelEl.textContent = fname;
-    } else {
-      el.classList.add('disabled');
-      labelEl.textContent = labelMap[type]+(dateCode?' ('+formatDateCode(dateCode)+')':'')+' — ไม่มีไฟล์';
-    }
-  });
-}
-
-function toggleDlMenu(e){
-  e.stopPropagation();
-  let wrap = document.getElementById('dlWrap');
-  let isOpen = wrap.classList.toggle('open');
-  let chevron = document.getElementById('dlChevron');
-  if(chevron) chevron.style.transform = isOpen ? 'rotate(180deg)' : '';
-}
-
-document.addEventListener('click', function(){
-  let wrap = document.getElementById('dlWrap');
-  if(wrap) {
-    wrap.classList.remove('open');
-    let chevron = document.getElementById('dlChevron');
-    if(chevron) chevron.style.transform = '';
-  }
-});
-
-function downloadFile(type){
-  let dateCode = (D && D.fileDate) ? D.fileDate : '';
-  let b64 = dateCode ? localStorage.getItem('mlFile_'+type+'_'+dateCode) : null;
-  let fname = dateCode ? localStorage.getItem('mlFileName_'+type+'_'+dateCode) : null;
-  if(!b64 || !fname){
-    alert('ไม่พบไฟล์วันที่ '+(dateCode?formatDateCode(dateCode):'-')+'\nกรุณาอัปโหลดไฟล์ใหม่อีกครั้ง');
-    return;
-  }
-  try {
-    let bytes = Uint8Array.from(atob(b64), c=>c.charCodeAt(0));
-    let blob = new Blob([bytes], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-    let url = URL.createObjectURL(blob);
-    let a = document.createElement('a');
-    a.href = url; a.download = fname;
-    document.body.appendChild(a); a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  } catch(err){
-    alert('❌ ไม่สามารถดาวน์โหลดได้: '+err.message);
-  }
-  document.getElementById('dlWrap').classList.remove('open');
-}
+/* ฟังก์ชันดาวน์โหลดไฟล์ย้อนหลังถูกถอดออกแล้ว (ผู้ใช้เลือกให้เก็บแค่ข้อมูล)
+   updateDlMenu ถูกเรียกจากหลายที่ จึงเก็บเป็นฟังก์ชันเปล่าไว้กัน error */
+function updateDlMenu(){}
 
 /* ═══════════════════════════════════════════════════════════════
    UI HELPERS
@@ -4045,8 +3995,6 @@ function showDashboard(){
   document.getElementById('btnGoHome').style.display='inline-flex';
   document.getElementById('modeToggle').style.display='flex';
   document.getElementById('datePickerWrap').style.display='flex';
-  document.getElementById('dlWrap').style.display='flex';
-  updateDlMenu();
 
   let badge = document.getElementById('dataCountBadge');
   badge.style.display='inline';
@@ -6052,6 +6000,7 @@ function initIcons(){
 }
 
 document.addEventListener('DOMContentLoaded',function(){
+  purgeLegacyStoredFiles(); // คืนพื้นที่จากเวอร์ชันเก่าที่เคยเก็บไฟล์ Excel ไว้
   try { goHome(); } catch(e){}
   initIcons();
   warmFetchSheet(); // เผื่อกรณี warm fetch ตอน parse ถูกใช้ไปแล้ว
