@@ -3686,7 +3686,18 @@ async function processUpload(){
       if(result.success){
         sumEl.querySelector('.ui-status').className='ui-status ok';
         sumEl.querySelector('.ui-status').textContent='✓ บันทึกสำเร็จ (Daily:'+result.dailySaved+' Water:'+result.waterSaved+' Stop:'+(result.stopSaved||0)+')';
-        clearSheetCache(); // ล้าง cache ให้ dashboard โหลดข้อมูลใหม่ครั้งหน้า
+        // รวมข้อมูลที่เพิ่งอัปเข้า cache ในเครื่องทันที (ตัด _raw ก้อนใหญ่ออกก่อน)
+        // — แดชบอร์ดใช้ได้เลย ไม่ต้องดึงใหม่ทั้งก้อนซึ่งเป็นจุดช้า
+        try {
+          const strip = r => { const o = Object.assign({}, r); delete o._raw; return o; };
+          const c = loadSheetCache() || { daily:[], water:[], stop:[] };
+          const byDate = (a,b)=>(a.fileDate||'').localeCompare(b.fileDate||'');
+          saveSheetCache(
+            mergeRows(c.daily||[], parsedDaily.map(strip)).sort(byDate),
+            mergeRows(c.water||[], parsedWater.map(strip)).sort(byDate),
+            mergeRows(c.stop ||[], parsedStop.map(strip)).sort(byDate)
+          );
+        } catch(e){ clearSheetCache(); }
 
         // ส่งอีเมลเฉพาะเมื่อติ๊กไว้ — อัปย้อนหลังหลายวันจะได้ไม่สแปมผู้รับ
         const chk = document.getElementById('chkSendEmail');
@@ -3818,20 +3829,55 @@ function applySheetData(daily, water, stop){
    พอกด "ดูแดชบอร์ด" ข้อมูลมักจะมาถึงแล้ว → เข้าได้ทันที        */
 let warmDataPromise = null;
 
+/* รวมแถวใหม่เข้ากับชุดเดิม — วันซ้ำใช้ตัวใหม่แทน วันใหม่ต่อท้าย */
+function mergeRows(base, extra){
+  (extra||[]).forEach(r=>{
+    if(!r || !r.fileDate) return;
+    const i = base.findIndex(x=>x.fileDate===r.fileDate);
+    if(i>=0) base[i] = r; else base.push(r);
+  });
+  return base;
+}
+
 function warmFetchSheet(){
   if(!API_URL) return null;
   if(warmDataPromise) return warmDataPromise;
-  warmDataPromise = fetch(API_URL + '?action=getAll')
+  /* ถ้ามี cache ที่ไม่เก่าเกิน 6 ชม. → ขอเฉพาะวันที่ใหม่กว่าใน cache (เล็กและเร็วมาก)
+     ไม่มี/เก่าเกิน → ขอเต็มเหมือนเดิม (กันกรณีมีการแก้ข้อมูลย้อนหลังจากเครื่องอื่น) */
+  let mode = 'full', url = API_URL + '?action=getAll';
+  try {
+    const c = loadSheetCache();
+    const fresh = c && c.ts && (Date.now() - c.ts) < 6*60*60*1000;
+    const last = (fresh && c.daily && c.daily.length) ? c.daily[c.daily.length-1].fileDate : '';
+    if(last){ mode = 'delta'; url = API_URL + '?action=getSince&after=' + last; }
+  } catch(e){}
+  warmDataPromise = fetch(url)
     .then(r => r.json())
+    .then(d => ({ mode, data: d }))
     .catch(() => null);
   return warmDataPromise;
 }
 
-/* ดึงผลจาก warm fetch ถ้ามี ไม่งั้นยิงใหม่ — ใช้ได้ครั้งเดียวต่อรอบ */
-function takeWarmData(){
+/* ดึงผลจาก warm fetch ถ้ามี ไม่งั้นยิงใหม่ — คืนชุดข้อมูลเต็มเสมอ
+   (โหมด delta จะประกอบร่างกับ cache ให้เอง ผู้เรียกไม่ต้องรู้ความต่าง) */
+async function takeWarmData(){
   const p = warmDataPromise || warmFetchSheet();
   warmDataPromise = null; // ครั้งถัดไปให้ดึงข้อมูลสดเสมอ
-  return p;
+  const w = await p;
+  if(!w) return null;
+  if(w.mode === 'full') return w.data;
+  // delta ล้มเหลว (เช่น เซิร์ฟเวอร์ยังไม่รู้จัก getSince) → ถอยไปขอเต็ม
+  if(!(w.data && w.data.success)){
+    try { return await (await fetch(API_URL + '?action=getAll')).json(); }
+    catch(e){ return null; }
+  }
+  const c = loadSheetCache() || {};
+  return {
+    success: true,
+    daily: mergeRows((c.daily||[]).slice(), w.data.daily),
+    water: mergeRows((c.water||[]).slice(), w.data.water),
+    stop:  mergeRows((c.stop||[]).slice(),  w.data.stop)
+  };
 }
 
 // ยิงทันทีตอน parse — เร็วกว่ารอ DOMContentLoaded และไม่ต้องพึ่ง DOM
