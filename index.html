@@ -3924,7 +3924,17 @@ async function loadFromSheet(){
   showOverlay('กรุณารอสักครู่....', 'กำลังโหลดข้อมูล');
   try {
     let result = await takeWarmData();
-    if(!result) throw new Error('เชื่อมต่อ Database ไม่สำเร็จ');
+    // Google ตอบพลาดเป็นครั้งคราว (ได้หน้า error แทน JSON แล้วหายเอง)
+    // — ลองซ้ำให้เองสูงสุด 3 รอบก่อนยอมแพ้ แทนที่จะเด้ง error ตั้งแต่ครั้งแรก
+    for(let i=0; i<3 && !(result && result.success); i++){
+      showOverlay('กรุณารอสักครู่....', 'กำลังโหลดข้อมูล (ลองใหม่ครั้งที่ '+(i+1)+')');
+      await new Promise(r=>setTimeout(r, 1500*(i+1)));
+      try {
+        const resp = await fetch(API_URL + '?action=getAll&retry=' + i + '&t=' + Date.now());
+        result = await resp.json();
+      } catch(e){ result = null; }
+    }
+    if(!result) throw new Error('เชื่อมต่อ Database ไม่สำเร็จ — ลองกดใหม่อีกครั้ง');
     if(result.success){
       applySheetData(result.daily, result.water, result.stop);
       saveSheetCache(dailyData, waterData, stopData);
